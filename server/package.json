@@ -1,4 +1,17 @@
 {
   "name": "server",
   "version": "0.0.1",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "async": "^2.3.0",
+    "connect": "^3.6.0",
+    "connect-mongo": "^1.3.2",
+    "express": "latest",
+    "mongodb": "^2.2.25",
+    "mongoose": "latest",
+    "nconf": "latest",
+    "winston": "latest"
+  }
 }

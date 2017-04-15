@@ -16,6 +16,9 @@ module.exports = function (app) {
     app.get("/user", function (req, res, next) {
         User.findOne({login: req.query['login']}, function (err, user) {
             if (err) return next();
+            if (!user) {
+                next(new HttpError(404, "User not Found"));
+            }
             res.json(user);
         });
 
@@ -31,7 +34,7 @@ module.exports = function (app) {
         User.findById(id, function (err, user) {
             if (err) return next(err);
             if (!user) {
-                next(new HttpError(404, "User not Found"))
+                next(new HttpError(404, "User not Found"));
             }
             res.json(user);
         });

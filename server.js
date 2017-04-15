@@ -36,14 +36,16 @@ app.use(function(err, req, res, next){
     }
 
     if(err instanceof HttpError){
-        res.sendHttpError(err);
+        res.render('error', {
+            error: err
+        });
     }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);
         }else{
             log.error(err);
             err = new HttpError(500);
-            res.sendHttpError(err);
+            res.send(err);
         }
     }
 });

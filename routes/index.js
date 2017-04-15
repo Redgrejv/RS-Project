@@ -19,7 +19,9 @@ module.exports = function (app) {
             if (!user) {
                 next(new HttpError(404, "User not Found"));
             }
-            res.json(user);
+            res.render('user', {
+                user: user
+            });
         });
 
     });
@@ -36,7 +38,9 @@ module.exports = function (app) {
             if (!user) {
                 next(new HttpError(404, "User not Found"));
             }
-            res.json(user);
+            res.render('user', {
+                user: user
+            });
         });
     });
 

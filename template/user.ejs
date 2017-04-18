@@ -1,0 +1,12 @@
+<% layout('layout/page')%>
+
+    <h1>Данные по юзеру <%- user.login %></h1>
+
+    <p>_id: <%- user._id %></p>
+    <p>Имя: <%- user.first_name %></p>
+    <p>Фамилия: <%- user.last_name %></p>
+    <p>О юзере: <%- user.about %></p>
+    <p>Дата создания: <%- user.created %></p>
+    <p>Хешированный пароль: <%- user.hashedPassword %></p>
+    <p>"Соль": <%- user.salt %></p>
+    <p>__v: <%- user.__v %></p>

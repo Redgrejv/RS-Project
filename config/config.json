@@ -1,0 +1,15 @@
+{
+  "port": 3000,
+  "db": {
+    "uri": "mongodb://localhost/users",
+    "name": "users",
+    "options": {
+      "server": {
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+
+  }
+}

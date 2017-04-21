@@ -1,6 +1,7 @@
 /**
  * Created by redgr on 12.04.2017.
  */
+"use strict";
 
 var crypto = require('crypto');
 

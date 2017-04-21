@@ -2,6 +2,8 @@
  * Created by redgr on 10.04.2017.
  */
 
+"use strict";
+
 var mongoose =  require('mongoose'),
     log =       require('./log')(module),
     config =    require('../config/index');

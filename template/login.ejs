@@ -1,8 +1,37 @@
 <% layout('layout/page') %>
+<% block('title', 'Вход') -%>
 
 <h1>Введите данные</h1>
-<form action="/login/user" method="GET" name="user">
+<form name="user">
     <label>Логин</label></br>
-    <input type="text" name="login" /></br></br>
+    <input type="text" name="login" /></br>
+    <input type="password" name="password"><br/>
     <input type="submit" value="Отправить" />
+    <span class="error"></span>
 </form>
+
+<script>
+    $(document.forms['user']).on('submit', function (event) {
+        event.preventDefault();
+        var form = $(this);
+
+        $('.error', form).html('');
+
+        $.ajax({
+            url: '/login',
+            method: "POST",
+            data: form.serialize(),
+            statusCode: {
+                200: function () {
+                    form.html('Вы вошли на сайт');
+                    window.location.href = '/within';
+                },
+                403: function (jqXHR) {
+                    var err = JSON.parse(jqXHR.responseText);
+                    $('.error', form).html(error.message);
+                }
+            }
+        });
+        return false;
+    })
+</script>

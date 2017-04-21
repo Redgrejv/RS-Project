@@ -2,6 +2,8 @@
  * Created by redgr on 05.04.2017.
  */
 
+"use strict";
+
 var express =   require('express');
 var http =      require('http');
 var path =      require('path');
@@ -22,12 +24,25 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(require('./middleware/sendHttpError'));
-app.use(app.router);
-app.use(express.session);
-
 //app.use(express.methodOverride());
-//app.use(express.session());
 
+var MongoStore = require('connect-mongo')(express);
+app.use(express.session({
+    secret: config.get('session:secret'),
+    key: config.get('session:key'),
+    cookie: config.get('session:cookie'),
+    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+
+app.use(function (req, res, next) {
+    req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+    console.log(req.session.numberOfVisits);
+    res.render('frontpage', {
+        number: req.session.numberOfVisits
+    });
+});
+
+app.use(app.router);
 require('./routes')(app);
 
 app.use(function(err, req, res, next){

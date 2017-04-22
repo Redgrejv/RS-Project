@@ -23,7 +23,6 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(require('./middleware/sendHttpError'));
 //app.use(express.methodOverride());
 
 var MongoStore = require('connect-mongo')(express);
@@ -34,13 +33,9 @@ app.use(express.session({
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-app.use(function (req, res, next) {
-    req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
-    console.log(req.session.numberOfVisits);
-    res.render('frontpage', {
-        number: req.session.numberOfVisits
-    });
-});
+
+app.use(require('./middleware/sendHttpError'));
+app.use(require('./middleware/loadUser'));
 
 app.use(app.router);
 require('./routes')(app);
@@ -51,6 +46,7 @@ app.use(function(err, req, res, next){
     }
 
     if(err instanceof HttpError){
+        res.statusCode = err.status;
         res.render('error', {
             error: err
         });
@@ -69,4 +65,4 @@ app.use(function(err, req, res, next){
 http.createServer(app)
     .listen(config.get('port'), function () {
         console.log('Express server listening on port ' + config.get('port'));
-})
+});

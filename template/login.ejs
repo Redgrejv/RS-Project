@@ -11,6 +11,11 @@
 </form>
 
 <script>
+    function error(jqXHR) {
+        var err = jqXHR.responseText;
+        $('.error', document.forms['user']).html(err);
+    }
+
     $(document.forms['user']).on('submit', function (event) {
         event.preventDefault();
         var form = $(this);
@@ -26,12 +31,10 @@
                     form.html('Вы вошли на сайт');
                     window.location.href = '/within';
                 },
-                403: function (jqXHR) {
-                    var err = JSON.parse(jqXHR.responseText);
-                    $('.error', form).html(error.message);
+                403: error,
+                500: error
                 }
-            }
-        });
+            });
         return false;
-    })
+    });
 </script>

@@ -1,11 +1,33 @@
 <nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
         <li><a href="/"> Главная</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="/login">Войти</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="/register">Регистрация</a></li>
+        <% if(user) { %>
+            <li><a href="/within">Средина</a></li>
+        <% } %>
+        <% if(user) { %>
+            <li><form method="POST" ><a href="">Выйти</a></form></li>
+        <% } else {%>
+            <li><a href="/login">Войти</a></li>
+            <li><a href="/register">Регистрация</a></li>
+        <% } %>
+
     </ul>
 </nav>
+
+<script>
+        $('form a').on('click' ,function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/logout',
+                method: 'POST',
+                statusCode: {
+                    200: function () {
+                        window.location.href = '/';
+                }
+            }
+            });
+            return false;
+        });
+
+
+</script>

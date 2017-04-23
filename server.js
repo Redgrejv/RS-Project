@@ -2,6 +2,8 @@
  * Created by redgr on 05.04.2017.
  */
 
+"use strict";
+
 var express =   require('express');
 var http =      require('http');
 var path =      require('path');
@@ -21,13 +23,21 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(require('./middleware/sendHttpError'));
-app.use(app.router);
-app.use(express.session);
-
 //app.use(express.methodOverride());
-//app.use(express.session());
 
+var MongoStore = require('connect-mongo')(express);
+app.use(express.session({
+    secret: config.get('session:secret'),
+    key: config.get('session:key'),
+    cookie: config.get('session:cookie'),
+    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+
+
+app.use(require('./middleware/sendHttpError'));
+app.use(require('./middleware/loadUser'));
+
+app.use(app.router);
 require('./routes')(app);
 
 app.use(function(err, req, res, next){
@@ -36,6 +46,7 @@ app.use(function(err, req, res, next){
     }
 
     if(err instanceof HttpError){
+        res.statusCode = err.status;
         res.render('error', {
             error: err
         });
@@ -54,4 +65,4 @@ app.use(function(err, req, res, next){
 http.createServer(app)
     .listen(config.get('port'), function () {
         console.log('Express server listening on port ' + config.get('port'));
-})
+});

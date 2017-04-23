@@ -1,8 +1,11 @@
 /**
  * Created by redgr on 12.04.2017.
  */
+"use strict";
 
 var crypto = require('crypto');
+var async = require('async');
+var HttpError   = require('../error').HttpError;
 
 var mongoose = require('../libs/mongoose'),
     Schema = mongoose.Schema;
@@ -52,4 +55,31 @@ schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 }
 
+schema.statics.autorize = function (username, password, callback) {
+    var User = this;
+
+    if(!username || !password){
+        return next(new HttpError(403, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
+    }
+
+    async.waterfall([
+        function (callback) {
+            User.findOne({login: username}, callback);
+        },
+        function (user, callback) {
+            if (user) {
+                if (user.checkPassword(password)) {
+                    callback(null, user);
+                }else{
+                    callback(new HttpError(403, "Пароль не верен"));
+                }
+            }else{
+                callback(new HttpError(403, "Пользователь не найден"));
+            }
+        }
+    ], callback);
+}
+
 exports.User = mongoose.model('User', schema);
+
+

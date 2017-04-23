@@ -11,6 +11,5 @@ module.exports = function (error, req, res, next) {
             res.render('error', {error: error});
         }
     }
-
     next();
 }

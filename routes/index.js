@@ -2,36 +2,38 @@
  * Created by redgr on 15.04.2017.
  */
 
+"use strict";
+
 var User        = require('../models/user').User;
 var HttpError   = require('../error').HttpError;
-var ObjectID    = require('mongodb').ObjectID;
+var mongoose    = require('../libs/mongoose');
 var path        = require('path');
-var HttpError   = require('../error').HttpError;
+var async       = require('async');
+
 
 module.exports = function (app) {
 
-    app.get("/", function (req, res, next) {
-        res.render("index");
-    });
+    app.get('/', function (req, res, next) {
+        res.render('frontpage');
+    })
 
     app.get('/login', function (req, res, next){
         res.render('login');
     });
 
-    app.get('/login/user', function (req, res, next) {
-        User.findOne({login: req.query['login']}, function (err, user) {
-            if (err) return next();
-            if (!user) {
-                next(new HttpError(404, "User not Found"));
-            }
-            res.render('user', {
-                user: user
-            });
-        });
+    app.post('/login', function (req, res, next) {
+        var username = req.body.login;
+        var password = req.body.password;
+
+        User.autorize(username, password, function (err, user) {
+            if(err) return next(err);
+            req.session.user = user._id;
+            res.send({});
+        })
 
     });
 
-    app.get('/login/user/:id', function (req, res, next) {
+    app.get('/login/:id', function (req, res, next) {
         var id;
         try {
             id = new ObjectID(req.params.id);
@@ -42,22 +44,13 @@ module.exports = function (app) {
         User.findById(id, function (err, user) {
             if (err) return next(err);
             if (!user) {
-                next(new HttpError(404, "User not Found"));
+                return next(new HttpError(404, "User not Found"));
             }
             res.render('user', {
                 user: user
             });
         });
     });
-
-    app.get('/version', function(req,res,next){
-
-        var fs = require('fs');
-        var file = JSON.parse(fs.readFileSync(__dirname.replace('routes', 'package.json'), 'utf8'));
-
-        res.send("Версия back-end: " + file['version']);
-    });
-
 
     app.get('/register', function (req, res, next){
         res.render('register');
@@ -67,8 +60,10 @@ module.exports = function (app) {
 
         var data = req.body;
         if(!data['login'] || !data['password']){
-            next(new HttpError(500, 'Invalid data. Plane "login" and "password" is not may empty'))
+            next(new HttpError(403, 'Invalid data. Plane "login" and "password" is not may empty'))
+            return;
         }
+
         var new_user = new User({
             login: data['login'],
             password: data['password'],
@@ -76,16 +71,28 @@ module.exports = function (app) {
             last_name: data['last_name'],
             about: data['about']
         });
-        
+
 
         new_user.save(function (err) {
             if(err) {
                 console.log(err);
-                next(new HttpError(500, 'Login ' + data['login'] + ' is busy'));
+                return next(new HttpError(500, 'Login ' + data['login'] + ' is busy'));
             }else{
                 console.log('complete');
-                res.render('index');
             }
         });
     });
+
+    app.get('/within', function(req, res, next){
+        req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+            res.render('within', {
+                session: req.session
+            });
+    });
+
+    app.post('/logout', function (req, res, next) {
+        req.session.destroy();
+        res.redirect('/');
+    })
+
 };

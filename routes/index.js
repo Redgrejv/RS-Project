@@ -28,7 +28,7 @@ module.exports = function (app) {
         User.autorize(username, password, function (err, user) {
             if(err) return next(err);
             req.session.user = user._id;
-            res.send({});
+            res.redirect('/within');
         })
 
     });
@@ -84,10 +84,18 @@ module.exports = function (app) {
     });
 
     app.get('/within', function(req, res, next){
+        res.render('within');
+    });
+
+    app.get('/within/info/version', function (req, res, next) {
+        var fs = require('fs');
+        var data = fs.readFileSync(__dirname.replace('routes', 'package.json', 'utf-8'));
+        res.send(JSON.parse(data).version);
+    });
+
+    app.get('/within/info/session', function(req, res, next){
         req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
-            res.render('within', {
-                session: req.session
-            });
+        res.send(req.session);
     });
 
     app.post('/logout', function (req, res, next) {

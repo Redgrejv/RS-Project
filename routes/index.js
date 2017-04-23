@@ -28,6 +28,7 @@ module.exports = function (app) {
         User.autorize(username, password, function (err, user) {
             if(err) return next(err);
             req.session.user = user._id;
+            res.redirect('/within');
         })
 
     });
@@ -90,7 +91,6 @@ module.exports = function (app) {
         var fs = require('fs');
         var data = fs.readFileSync(__dirname.replace('routes', 'package.json', 'utf-8'));
         res.send(JSON.parse(data).version);
-
     });
 
     app.get('/within/info/session', function(req, res, next){

@@ -3,5 +3,40 @@
 
 <h1>You are inside</h1>
 
-<p><%=JSON.stringify(session) %></p>
+<a href="" class="get_ver">Получить версию backend`a</a><br/>
+<span class="version"></span><br><br>
+
+<a href="" class="get_sess">Получить данные сессии</a><br/>
+<span class="session"></span>
+<script>
+    $('.get_ver').click(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/within/info/version',
+            method: "GET",
+            statusCode: {
+                200: function (data) {
+                    $('.version').html("Версия backend`a: " + data);
+                }
+            }
+        });
+    });
+
+    $('.get_sess').click(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/within/info/session',
+            method: "GET",
+            statusCode: {
+                200: function (data) {
+                    $('.session').html("О сессии: " + JSON.stringify(data));
+                }
+            }
+        });
+    })
+
+</script>
+
 

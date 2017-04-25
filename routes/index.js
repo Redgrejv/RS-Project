@@ -9,6 +9,7 @@ var HttpError   = require('../error').HttpError;
 var mongoose    = require('../libs/mongoose');
 var path        = require('path');
 var async       = require('async');
+var checkAuth  = require('../middleware/checkAuth');
 
 
 module.exports = function (app) {
@@ -83,18 +84,17 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/within', function(req, res, next){
+    app.get('/within', checkAuth,function(req, res, next){
         res.render('within');
     });
 
-    app.get('/within/info/version', function (req, res, next) {
+    app.get('/within/info/version', checkAuth, function (req, res, next) {
         var fs = require('fs');
         var data = fs.readFileSync(__dirname.replace('routes', 'package.json', 'utf-8'));
         res.send(JSON.parse(data).version);
     });
 
-    app.get('/within/info/session', function(req, res, next){
-        req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+    app.get('/within/info/session', checkAuth,function(req, res, next){
         res.send(req.session);
     });
 

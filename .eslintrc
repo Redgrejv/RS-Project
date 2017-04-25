@@ -1,0 +1,30 @@
+{
+  "globals": {
+    "NODE_ENV": false
+  },
+  "extends": ["eslint:recommended"],
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+  "rules": {
+    "jsx-quotes": [1, "prefer-double"],
+    "no-console": 1,
+    "no-debugger": 1,
+    "no-else-return": 1,
+    "no-var": 1,
+    "quotes": [1, "single"],
+    "yoda": 1
+  }
+}

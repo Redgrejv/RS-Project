@@ -59,7 +59,7 @@ schema.statics.autorize = function (username, password, callback) {
     var User = this;
 
     if(!username || !password){
-        return next(new HttpError(403, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
+        return callback(new HttpError(403, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
     }
 
     async.waterfall([

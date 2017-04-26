@@ -1,24 +1,47 @@
 <% layout('layout/page')%>
 
+
 <h1>Введите данные</h1>
-<form action="register/user" method="POST" name="register">
+<form name="register">
 
     <label>Логин</label></br>
     <input type="text" name="login" require /></br></br>
+    <label>Пароль</label><br>
+    <input type="password" name="password" require/><br><br>
+     <label>Имя</label><br>
+    <input type="text" name="first_name"/><br><br>
+    <label>Фамилия</label><br>
+    <input type="text" name="last_name"/><br><br>
+    <label>О себе</label><br>
+    <input type="textarea" name="about"/><br><br>
 
-    <label>Пароль</label></br>
-    <input type="password" name="password" require/></br></br>
-
-     <label>Имя</label></br>
-    <input type="text" name="first_name"/></br></br>
-
-    <label>Фамилия</label></br>
-    <input type="text" name="last_name"/></br></br>
-
-    <label>О себе</label></br>
-    <input type="textarea" name="about"/></br></br>
-
-
-    <input type="submit" value="Отправить" />
+    <input type="submit" value="Отправить" /><br><br>
+    <span class="error"></span><br>
 
 </form>
+
+<script>
+
+    function error(jqXHR) {
+        var err = jqXHR.responseText;
+        $('.error', document.forms['user']).html(err);
+    }
+
+    $(document.forms['register']).on('submit', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: '/api/register',
+            method: 'POST',
+            data: form.serialize(),
+            statusCode: {
+                200: function () {
+                    $('.error').html('Успешно');
+                },
+                401: error,
+                403: error,
+                500: error
+            }
+        });
+    });
+</script>

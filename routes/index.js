@@ -9,98 +9,30 @@ var HttpError   = require('../error').HttpError;
 var mongoose    = require('../libs/mongoose');
 var path        = require('path');
 var async       = require('async');
-var checkAuth  = require('../middleware/checkAuth');
 
+var autorize    = require('./modules/autorization');
+var registration = require('./modules/registration');
+var info = require('./modules/info');
 
 module.exports = function (app) {
-
     app.get('/', function (req, res, next) {
         res.render('frontpage');
-    })
+    });
 
-    app.get('/login', function (req, res, next){
+    app.get('/api/login', function (req, res, next){
         res.render('login');
     });
 
-    app.post('/login', function (req, res, next) {
-        var username = req.body.login;
-        var password = req.body.password;
-
-        User.autorize(username, password, function (err, user) {
-            if(err) return next(err);
-            req.session.user = user._id;
-            res.redirect('/within');
-        })
-
-    });
-
-    app.get('/login/:id', function (req, res, next) {
-        var id;
-        try {
-            id = new ObjectID(req.params.id);
-        }catch(e) {
-            return next(404);
-        }
-
-        User.findById(id, function (err, user) {
-            if (err) return next(err);
-            if (!user) {
-                return next(new HttpError(404, "User not Found"));
-            }
-            res.render('user', {
-                user: user
-            });
-        });
-    });
-
-    app.get('/register', function (req, res, next){
+    app.get('/api/register', function (req, res, next){
         res.render('register');
     });
 
-    app.post('/register/user', function (req, res, next) {
 
-        var data = req.body;
-        if(!data['login'] || !data['password']){
-            next(new HttpError(403, 'Invalid data. Plane "login" and "password" is not may empty'))
-            return;
-        }
+    app.post('/api/login', autorize.autorize);
+    app.get('/api/login/:id', autorize.findById);
 
-        var new_user = new User({
-            login: data['login'],
-            password: data['password'],
-            first_name: data['first_name'],
-            last_name: data['last_name'],
-            about: data['about']
-        });
+    app.post('/api/register', registration.post);
 
-
-        new_user.save(function (err) {
-            if(err) {
-                console.log(err);
-                return next(new HttpError(500, 'Login ' + data['login'] + ' is busy'));
-            }else{
-                console.log('complete');
-            }
-        });
-    });
-
-    app.get('/within', checkAuth,function(req, res, next){
-        res.render('within');
-    });
-
-    app.get('/within/info/version', checkAuth, function (req, res, next) {
-        var fs = require('fs');
-        var data = fs.readFileSync(__dirname.replace('routes', 'package.json', 'utf-8'));
-        res.send(JSON.parse(data).version);
-    });
-
-    app.get('/within/info/session', checkAuth,function(req, res, next){
-        res.send(req.session);
-    });
-
-    app.post('/logout', function (req, res, next) {
-        req.session.destroy();
-        res.redirect('/');
-    })
+    app.get('/api/info/version', info.version);
 
 };

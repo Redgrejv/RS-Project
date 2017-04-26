@@ -25,9 +25,9 @@ exports.post = function (req, res, next) {
         if(err) {
             console.log(err);
             return next(new HttpError(500, 'Login ' + data['login'] + ' is busy'));
-        }else{
+        }else {
             console.log('complete');
-            res.status(200);
+            res.end('Успешно', 200);
         }
     });
 };

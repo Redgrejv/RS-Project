@@ -36,7 +36,8 @@
             data: form.serialize(),
             statusCode: {
                 200: function () {
-                    $('.error').html('Успешно');
+                    $(form).html('Успешно');
+                    window.location.href = '/';
                 },
                 401: error,
                 403: error,

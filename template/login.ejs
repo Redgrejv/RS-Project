@@ -1,5 +1,4 @@
 <% layout('layout/page') %>
-<% block('title', 'Вход') -%>
 
 <h1>Введите данные</h1>
 <form name="user">
@@ -23,15 +22,15 @@
         $('.error', form).html('');
 
         $.ajax({
-            url: '/login',
+            url: '/api/login',
             method: "POST",
             data: form.serialize(),
             statusCode: {
-                200: function () {
-                    form.html('Вы вошли на сайт');
-                    window.location.href = '/within';
+                200: function (data) {
+                    $('.error').html(data);
                 },
                 403: error,
+                404: error,
                 500: error
                 }
             });

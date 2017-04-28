@@ -10,6 +10,7 @@ var mongoose    = require('../libs/mongoose');
 var path        = require('path');
 var async       = require('async');
 
+
 var autorize    = require('./modules/autorization');
 var registration = require('./modules/registration');
 var info = require('./modules/info');
@@ -27,12 +28,11 @@ module.exports = function (app) {
         res.render('register');
     });
 
-
     app.post('/api/login', autorize.autorize);
     app.get('/api/login/:id', autorize.findById);
 
     app.post('/api/register', registration.post);
 
-    app.get('/api/info/version', info.version);
+    app.get('/api/info/version', info.vers);
 
 };

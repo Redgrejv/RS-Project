@@ -18,6 +18,7 @@
     "mongoose": "latest",
     "mpromise": "^0.5.5",
     "nconf": "latest",
+    "pkginfo": "^0.4.0",
     "serve-favicon": "^2.4.2",
     "winston": "latest"
   }

@@ -28,11 +28,11 @@ module.exports = function (app) {
         res.render('register');
     });
 
-    app.post('/api/login', autorize.autorize);
-    app.get('/api/login/:id', autorize.findById);
+    app.post('/api/login', autorize.authenticate);
+    app.get('/api/login/:id', autorize.getUserById);
 
     app.post('/api/register', registration.post);
 
-    app.get('/api/info/version', info.vers);
+    app.get('/api/info/version', info.getVersion);
 
 };

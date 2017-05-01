@@ -5,7 +5,7 @@
 var HttpError   = require('../../error').HttpError;
 var pkginfo     = require('pkginfo')(module);
 
-exports.vers = function (req, res, next) {
+exports.getVersion = function (req, res, next) {
     res.json(module.exports.version);
     res.end();
 

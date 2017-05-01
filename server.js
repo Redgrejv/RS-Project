@@ -5,20 +5,23 @@
 "use strict";
 //require('child_process').exec('start mongod');
 
-var express =   require('express');
-var http =      require('http');
-var path =      require('path');
-var bodyParser = require('body-parser');
-var config =    require('./config');
-var log =       require('./libs/log')(module);
-var mongoose =  require('./libs/mongoose');
-var HttpError = require('./error').HttpError;
+var express =       require('express');
+var passport =      require('passport');
+var http =          require('http');
+var path =          require('path');
+var bodyParser =    require('body-parser');
+var jwt =           require('jwt-simple');
+var config =        require('./config');
+var log =           require('./libs/log')(module);
+var mongoose =      require('./libs/mongoose');
+var HttpError =     require('./error').HttpError;
 
-var app =       express();
+var app = express();
 
 app.engine('ejs', require('ejs-locals'));
 app.set('views', __dirname + '/template');
 app.set('view engine', 'ejs');
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -26,10 +29,13 @@ app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.methodOverride());
 
+app.use(passport.initialize());
+
 app.use(require('./middleware/sendHttpError'));
 
 app.use(app.router);
 require('./routes')(app);
+require('./models/passport')(passport);
 
 app.use(function(err, req, res, next){
     if(typeof  err === 'number'){
@@ -51,6 +57,7 @@ app.use(function(err, req, res, next){
         }
     }
 });
+
 
 
 http.createServer(app)

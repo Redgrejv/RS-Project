@@ -55,7 +55,7 @@ schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 }
 
-schema.statics.autorize = function (username, password, callback) {
+schema.statics.checkUser = function (username, password, callback) {
     var User = this;
 
     if(!username || !password){

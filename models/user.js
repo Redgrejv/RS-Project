@@ -3,9 +3,9 @@
  */
 "use strict";
 
-var crypto = require('crypto');
-var async = require('async');
-var HttpError   = require('../error').HttpError;
+var crypto =        require('crypto');
+var async =         require('async');
+var HttpError   =   require('../error').HttpError;
 
 var mongoose = require('../libs/mongoose'),
     Schema = mongoose.Schema;
@@ -53,9 +53,9 @@ schema.virtual('password')
 
 schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
-}
+};
 
-schema.statics.autorize = function (username, password, callback) {
+schema.statics.checkUser = function (username, password, callback) {
     var User = this;
 
     if(!username || !password){

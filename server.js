@@ -41,7 +41,7 @@ app.use(passport.session());
 app.use(require('./middleware/sendHttpError'));
 app.use(app.router);
 
-require('./models/passport')(passport);
+passport.use('jwt', require('./models/passport'));
 require('./routes')(app, passport);
 
 app.use(function(err, req, res, next){

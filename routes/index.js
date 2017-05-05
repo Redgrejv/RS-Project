@@ -35,7 +35,7 @@ module.exports = function (app, passport) {
 
     app.get('/api/info/version', info.getVersion);
 
-    app.get("/secret", passport.authenticate('', { session: false }), function(req, res){
+    app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
       res.json("Success! You can not see this without a token");
     });
 

@@ -9,6 +9,7 @@ var HttpError   = require('../error').HttpError;
 var mongoose    = require('../libs/mongoose');
 var path        = require('path');
 var async       = require('async');
+var passport    = require('passport');
 
 
 var autorize    = require('./modules/autorization');
@@ -28,7 +29,7 @@ module.exports = function (app) {
         res.render('register');
     });
 
-    app.post('/api/login', autorize.authenticate);
+    app.post('/api/login', passport.authenticate(), autorize.authenticate);
     app.get('/api/login/:id', autorize.getUserById);
 
     app.post('/api/register', registration.post);

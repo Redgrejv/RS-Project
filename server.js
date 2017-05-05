@@ -5,16 +5,17 @@
 "use strict";
 //require('child_process').exec('start mongod');
 
-var express =       require('express');
-var passport =      require('passport');
-var http =          require('http');
-var path =          require('path');
-var bodyParser =    require('body-parser');
-var jwt =           require('jwt-simple');
-var config =        require('./config');
-var log =           require('./libs/log')(module);
-var mongoose =      require('./libs/mongoose');
-var HttpError =     require('./error').HttpError;
+var express =           require('express');
+var expressSession =    require('express-session');
+var passport =          require('passport');
+var passportLocal =     require('passport-local');
+var http =              require('http');
+var path =              require('path');
+var bodyParser =        require('body-parser');
+var cookieParser =      require('cookie-parser');
+var config =            require('./config');
+var log =               require('./libs/log')(module);
+var HttpError =         require('./error').HttpError;
 
 var app = express();
 
@@ -25,11 +26,18 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.cookieParser());
-app.use(express.methodOverride());
+app.use(expressSession({
+    secret: process.env.SESSION_SECRET || 'express_secret_key_session',
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 app.use(require('./middleware/sendHttpError'));
 

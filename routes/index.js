@@ -28,14 +28,14 @@ module.exports = function (app, passport) {
         res.render('register');
     });
 
-    app.post('/api/login', autorize.authenticate);
+    app.post('/api/login', autorize.autorize);
     app.get('/api/login/:id', autorize.getUserById);
 
     app.post('/api/register', registration.post);
 
     app.get('/api/info/version', info.getVersion);
 
-    app.get("/secret", passport.authenticate('jwt', { session: false }), function(req, res){
+    app.get("/secret", passport.authenticate('', { session: false }), function(req, res){
       res.json("Success! You can not see this without a token");
     });
 

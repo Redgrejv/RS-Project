@@ -6,19 +6,19 @@ var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
 var jwt         = require('jsonwebtoken');
 
-exports.authenticate = function (req, res, next) {
+exports.autorize = function (req, res, next) {
 
     var username = req.body.login;
     var password = req.body.password;
 
     User.checkUser(username, password, function (err, user) {
         if(err) return next(err);
-        var payload = {id: user.id}
-        var token = jwt.sign(payload, 'tasmanianDevil');
+        var payload = {id: user.id};
+        var token = jwt.sign(payload, 'secret_key');
         res.json({
             message: 'ok',
             sucess: true,
-            token: 'JWT' + token
+            token: 'JWT ' + token
         });
     });
 }

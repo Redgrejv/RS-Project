@@ -13,7 +13,7 @@ exports.autorize = function (req, res, next) {
 
     User.checkUser(username, password, function (err, user) {
         if(err) return next(err);
-        var payload = {id: user.id};
+        var payload = { id: user.id };
         var token = jwt.sign(payload, 'secret_key');
         res.json({
             message: 'ok',

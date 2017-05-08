@@ -7,6 +7,7 @@ var ExtractJwt  = require('passport-jwt').ExtractJwt;
 var User        = require('./user').User;
 
 
+
 var jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
 jwtOptions.secretOrKey = 'secret_key';

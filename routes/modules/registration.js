@@ -22,7 +22,7 @@ exports.post = function (req, res, next) {
     new_user.save(function (err) {
         if(err) {
             console.log(err);
-            return next(new HttpError(500, 'Логин или пароль заняты.'));
+            return next(new HttpError(500, 'Логин или email заняты.'));
         }else {
             console.log('complete');
             res.end('Успешно', 200);

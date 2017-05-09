@@ -6,6 +6,7 @@ var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
 var jwt         = require('jsonwebtoken');
 
+
 exports.autorize = function (req, res, next) {
 
     var username = req.body.login;

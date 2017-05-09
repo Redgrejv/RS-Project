@@ -13,8 +13,12 @@ var async       = require('async');
 var autorize    = require('./modules/autorization');
 var registration = require('./modules/registration');
 var info = require('./modules/info');
+var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
+
+    app.use(passport.authenticate('jwt', { session: false}));
+
     app.get('/', function (req, res, next) {
         res.render('frontpage');
     });
@@ -27,25 +31,11 @@ module.exports = function (app, passport) {
         res.render('register');
     });
 
-    // app.post('/api/login', autorize.autorize);
-    app.get('/api/login/:id', autorize.getUserById);
+    app.post('/api/login', autorize.autorize);
+    app.get('/api/login/:id', checkToken, autorize.getUserById);
 
-    //app.post('/api/register', registration.post);
-    app.post('/api/register', passport.authenticate('local.signup', {
-        sucessRedirect: 'api/info/user'
-    }));
+    app.post('/api/register', registration.post);
 
-    app.post('/api/login', passport.authenticate('local.login', {
-        sucessRedirect: '/api/info/user',
-        failureRedirect: '/api/login',
-        failureFlash: true
-    }));
-
-    app.get('/api/info/version', info.getVersion);
-
-    app.get('/api/info/user', function (req, res) {
-        console.log(req.user);
-        res.rendr('user', {user: user});
-    })
+    app.get('/api/info/version', checkToken, info.getVersion);
 
 };

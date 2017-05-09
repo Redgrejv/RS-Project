@@ -10,12 +10,15 @@ var mongoose    = require('../libs/mongoose');
 var path        = require('path');
 var async       = require('async');
 
-
 var autorize    = require('./modules/autorization');
 var registration = require('./modules/registration');
 var info = require('./modules/info');
+var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
+
+    app.use(passport.authenticate('jwt', { session: false}));
+
     app.get('/', function (req, res, next) {
         res.render('frontpage');
     });
@@ -29,14 +32,13 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/login', autorize.autorize);
-    app.get('/api/login/:id', autorize.getUserById);
+    app.get('/api/login/:id', checkToken, autorize.getUserById);
 
     app.post('/api/register', registration.post);
 
-    app.get('/api/info/version', info.getVersion);
+    app.get('/api/info/version', checkToken, info.getVersion);
 
-    app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
-      res.json("Success! You can not see this without a token");
-    });
+    app.post('/api/info/check/login', info.checkLogin);
+    app.post('/api/info/check/email', info.checkEmail);
 
 };

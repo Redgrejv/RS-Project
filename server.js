@@ -5,43 +5,59 @@
 "use strict";
 //require('child_process').exec('start mongod');
 
-var express =   require('express');
-var http =      require('http');
-var path =      require('path');
-var bodyParser = require('body-parser');
-var config =    require('./config');
-var log =       require('./libs/log')(module);
-var mongoose =  require('./libs/mongoose');
-var HttpError = require('./error').HttpError;
+var express =           require('express');
+var expressSession =    require('express-session');
+var http =              require('http');
+var path =              require('path');
+var bodyParser =        require('body-parser');
+var cookieParser =      require('cookie-parser');
+var config =            require('./config');
+var log =               require('./libs/log')(module);
+var HttpError =         require('./error').HttpError;
+var MongoStore =        require('connect-mongo')(expressSession);
+var mongoose =          require('./libs/mongoose');
 
-var app =       express();
+var app = express();
 
 app.engine('ejs', require('ejs-locals'));
-app.set('views', __dirname + '/template');
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(path.join(__dirname, 'views/public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.cookieParser());
-app.use(express.methodOverride());
+
+app.use(expressSession({
+    secret: process.env.SESSION_SECRET || 'express_secret_key_session',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+
+var passport = require('./models/passport');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(require('./middleware/sendHttpError'));
-
 app.use(app.router);
-require('./routes')(app);
+
+require('./routes')(app, passport);
 
 app.use(function(err, req, res, next){
     if(typeof  err === 'number'){
-        err = new HttpError(err);
-    }
+     err = new HttpError(err);
+     }
 
-    if(err instanceof HttpError){
-        res.statusCode = err.status;
+     if(err instanceof HttpError){
+     res.statusCode = err.status;
         res.render('error', {
             error: err
         });
-    }else{
+     }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);
         }else{
@@ -51,7 +67,6 @@ app.use(function(err, req, res, next){
         }
     }
 });
-
 
 http.createServer(app)
     .listen(config.get('port'), function () {

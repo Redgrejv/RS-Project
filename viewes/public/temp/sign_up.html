@@ -5,21 +5,21 @@
 	<title>Регистрация</title>
 
 	<script src="lib/jquery.js"></script>
-	<script src="lib/jquery-ui.js"></script>
+<!--	<script src="lib/jquery-ui.js"></script>
 	<script src="lib/inputmask.min.js"></script>
 	<script src="lib/jquery.maskedinput.min.js"></script>
 
-	<!-- <script src="lib/cross_domen_ajax.js"></script> -->
+	 <script src="lib/cross_domen_ajax.js"></script> -->
 
 	<link rel="stylesheet" href="style/sign_up.css">
-	<script src="script/sign_up.js"></script>
+	<script src="style/script/sign_up.js"></script>
 
 	<!-- <script src="lib/inputmask.min.js"></script>
 	<script src="lib/inputmask.phone.extensions.js"></script> -->
 
 </head>
 <body>
-
+	
 	<div class="header">
 		<h3>Регистрация</h3>
 
@@ -31,14 +31,14 @@
 		<div class="reg_block">
 			<div class="avatar"></div>
 
-			<form action="" method="POST">
+			<form method="POST" name="sign_up">
 
 				<label for="login"></label>
-				<input id="login" type="text" name="login" placeholder="Имя" required>
+				<input id="login" type="text" name="login" placeholder="Логин" required>
 
 				<input id="email" type="email" name="email" placeholder="Email" required>
 
-				<input id="tel" type="tel" name="tel" placeholder="Мобильный телефон" required>
+				<!--<input id="tel" type="tel" name="tel" placeholder="Мобильный телефон" required>-->
 
 				<input id="password" type="password" name="password" placeholder="Пароль" required>
 
@@ -46,7 +46,7 @@
 				<input id="confirm_password" min="6" max="15" type="password" name="confirm_password" placeholder="Подтвердить пароль" required>
 				<label for="confirm_password"></label>
 
-				<button id="sign_up" type="submit" class="uppercase">Регистрация</button>
+				<button type="submit" class="uppercase">Регистрация</button>
 			</form>
 		</div>
 

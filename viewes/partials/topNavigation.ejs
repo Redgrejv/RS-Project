@@ -1,0 +1,27 @@
+<nav class="navbar navbar-default" role="navigation">
+    <ul class="nav navbar-nav">
+        <li><a href="/"> Главная</a></li>
+        <li><a href="/api/login">Войти</a></li>
+        <li><a href="/api/register">Регистрация</a></li>
+        <li><a href="/api/info/version">Версия</a></li>
+
+    </ul>
+</nav>
+
+<script>
+        $('form a').on('click' ,function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/logout',
+                method: 'POST',
+                statusCode: {
+                    200: function () {
+                        window.location.href = '/';
+                }
+            }
+            });
+            return false;
+        });
+
+
+</script>

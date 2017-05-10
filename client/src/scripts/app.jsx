@@ -26,7 +26,7 @@ class Input extends React.Component {
     render() {
         return (
             <div>
-                <input type="text" value={this.props.value} onChange={(event)=> {
+                <input type="text" value={this.context.getSearch()} onChange={(event)=> {
                         this.props.onChange(event.target.value);
                     }} />
             </div>
@@ -34,20 +34,32 @@ class Input extends React.Component {
     }
 }
 
+Input.contextTypes = {
+    getSearch: React.PropTypes.func
+}
+
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             search: '',
             items: test
         };
     }
 
+    getChildContext() {
+        return {
+            getSearch: ()=> {
+                return this.state.search
+            }
+        }
+    }
+
     renderList() {
         let list = this.state.items.filter((item)=> {
             return item.name.match(this.state.search);
-        })
+        });
         return (
             <ul>
                 {list.map((item)=> {
@@ -63,17 +75,21 @@ class App extends React.Component {
         return (
             <div>
                 Hello world
-                <Input value={this.state.search} onChange={(data)=>{
+                <Input onChange={(data)=>{
                         this.setState({
                             search: data
                         });
-                }}/>
+                }} />
                 {this.state.search}
                 {this.renderList.call(this)}
             </div>
         );
     }
 
+}
+
+App.childContextTypes = {
+    getSearch: React.PropTypes.func
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));

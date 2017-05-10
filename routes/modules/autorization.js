@@ -4,19 +4,27 @@
 
 var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
+var jwt         = require('jsonwebtoken');
 
 
 exports.autorize = function (req, res, next) {
+
     var username = req.body.login;
     var password = req.body.password;
 
-    User.autorize(username, password, function (err, user) {
+    User.checkUser(username, password, function (err, user) {
         if(err) return next(err);
-        res.render('user', {user: user});
+        var payload = { id: user.id };
+        var token = jwt.sign(payload, 'secret_key');
+        res.json({
+            message: 'ok',
+            sucess: true,
+            token: 'JWT ' + token
+        });
     });
-};
+}
 
-exports.findById = function (req, res, next) {
+exports.getUserById = function (req, res, next) {
     User.findById(req.params.id, function (err, user) {
         if (err) return next(500, err.message);
         if (!user) {

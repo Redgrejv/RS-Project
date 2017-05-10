@@ -25,6 +25,7 @@
     "no-else-return": 1,
     "no-var": 1,
     "quotes": [1, "single"],
-    "yoda": 1
+    "yoda": 1,
+    "react/prop-types": 0
   }
 }

@@ -4,6 +4,7 @@
 
 var jwt = require('jsonwebtoken');
 var HttpError =     require('../error').HttpError;
+var config = require('../config');
 
 module.exports = function (req, res, next) {
     var token = req.headers['authorization'];

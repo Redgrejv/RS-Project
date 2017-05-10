@@ -4,6 +4,8 @@
 
 var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
+var config      = require('../../config');
+var jwt         = require('jsonwebtoken');
 
 exports.post = function (req, res, next) {
 
@@ -19,13 +21,16 @@ exports.post = function (req, res, next) {
     });
 
 
-    new_user.save(function (err) {
+    new_user.save(function (err, user) {
         if(err) {
-            console.log(err);
-            return next(new HttpError(500, 'Логин или email заняты.'));
-        }else {
-            console.log('complete');
-            res.end('Успешно', 200);
+            if (new RegExp('login_1').test(err.message))
+                return next(new HttpError(500, 'Логин занят.'));
+
+            if(new RegExp('email_1').test(err.message))
+                return next(new HttpError(500, 'Email занят.'));
         }
+
+        var token = jwt.sign(user.id, config.get('token-secret'));
+        res.status(200).json({token: token});
     });
 };

@@ -17,8 +17,6 @@ var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
 
-    app.use(passport.authenticate('jwt', { session: false}));
-
     app.get('/', function (req, res, next) {
         res.render('frontpage');
     });
@@ -32,13 +30,13 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/login', autorize.autorize);
-    app.get('/api/login/:id', checkToken, autorize.getUserById);
+    app.get('/api/user/:id', checkToken, autorize.getUserById);
 
     app.post('/api/register', registration.post);
 
     app.get('/api/info/version', checkToken, info.getVersion);
 
-    app.post('/api/info/check/login', info.checkLogin);
-    app.post('/api/info/check/email', info.checkEmail);
+    app.post('/api/info/checkLogin', info.checkLogin);
+    app.post('/api/info/checkEmail', info.checkEmail);
 
 };

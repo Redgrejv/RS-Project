@@ -11,7 +11,7 @@ exports.post = function (req, res, next) {
 
     var data = req.body;
     if(!data.login || !data.password || !data.email){
-        return next(new HttpError(403, 'Заполните все поля!'))
+        return next(new HttpError(400, 'Заполните все поля!'))
     }
 
     var new_user = new User({
@@ -24,13 +24,13 @@ exports.post = function (req, res, next) {
     new_user.save(function (err, user) {
         if(err) {
             if (new RegExp('login_1').test(err.message))
-                return next(new HttpError(500, 'Логин занят.'));
+                return next(new HttpError(400, 'Логин занят.'));
 
             if(new RegExp('email_1').test(err.message))
-                return next(new HttpError(500, 'Email занят.'));
+                return next(new HttpError(400, 'Email занят.'));
         }
 
-        var token = jwt.sign(user.id, config.get('token-secret'));
+        var token = jwt.sign({id: user.id}, config.get('token-secret'));
         res.status(200).json({token: token});
     });
 };

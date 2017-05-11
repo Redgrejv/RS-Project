@@ -17,9 +17,7 @@ exports.autorize = function (req, res, next) {
         if(err) return next(err);
         var payload = { id: user.id };
         var token = jwt.sign(payload, config.get('token-secret'));
-        res.json({
-            token: token
-        });
+        res.json({ token: token });
     });
 }
 

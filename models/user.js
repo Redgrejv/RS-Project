@@ -80,6 +80,18 @@ schema.statics.checkUser = function (email, password, callback) {
     ], callback);
 };
 
+schema.statics.getUserById = function (req, res, next) {
+
+    var User = require('./user').User;
+    User.findById(req.params.id, function (err, user) {
+        if (err) return next(500, err.message);
+        if (!user) {
+            return next(new HttpError(404, "Такой пользователь не найден"));
+        }
+        res.json(user);
+    });
+};
+
 exports.User = mongoose.model('User', schema);
 
 

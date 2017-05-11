@@ -30,7 +30,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/autorize', autorize.autorize);
-    app.get('/api/user/:id', checkToken, autorize.getUserById);
+    app.get('/api/user/:id', checkToken, User.getUserById);
 
     app.post('/api/signup', signup.post);
 

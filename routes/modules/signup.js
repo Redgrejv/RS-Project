@@ -16,7 +16,6 @@ exports.post = function (req, res, next) {
 
     var new_user = new User({
         email: data.email,
-        login: data.login,
         password: data.password,
         first_name: data.first_name,
         last_name: data.last_name

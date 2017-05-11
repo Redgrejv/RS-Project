@@ -20,8 +20,8 @@
     <nav class="navbar navbar-default" role="navigation">
         <ul class="nav navbar-nav">
             <li><a href="/"> Главная</a></li>
-            <li><a href="/api/login">Войти</a></li>
-            <li><a href="/api/register">Регистрация</a></li>
+            <li><a href="/api/autorize">Войти</a></li>
+            <li><a href="/api/signup">Регистрация</a></li>
             <li><a href="/api/info/version">Версия</a></li>
         </ul>
     </nav>
@@ -30,9 +30,11 @@
     <form name="register">
 
         <label>Email</label><br>
-        <input type="text" name="email" require /><br><br>
-        <label>Логин</label><br>
-        <input type="text" name="login" require /><br><br>
+        <input type="email" name="email" require /><br><br>
+        <label>Имя</label><br>
+        <input type="text" name="first_name" require /><br><br>
+        <label>Фамилия</label><br>
+        <input type="text" name="last_name" require /><br><br>
         <label>Пароль</label><br>
         <input type="password" name="password" require/><br><br>
 
@@ -44,8 +46,8 @@
     <script>
 
         function error(jqXHR) {
-            var err = jqXHR.responseText;
-            $('.error', document.forms['user']).html(err);
+            var err = jqXHR.responseJSON;
+            $('.error', document.forms['user']).html(err.message);
         }
 
         $(document.forms['register']).on('submit', function (event) {
@@ -53,13 +55,14 @@
 
             var form = $(this);
             $.ajax({
-                url: '/api/register',
+                url: '/api/signup',
                 method: 'POST',
                 data: form.serialize(),
                 statusCode: {
                     200: function (data) {
-                        $(form).html('Успешно');
+                        $('.error').html('Успешно');
                     },
+                    400: error,
                     401: error,
                     403: error,
                     500: error

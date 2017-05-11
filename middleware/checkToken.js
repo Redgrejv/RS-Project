@@ -7,7 +7,7 @@ var HttpError =     require('../error').HttpError;
 var config = require('../config');
 
 module.exports = function (req, res, next) {
-    var token = req.headers['authorization'];
+    var token = req.headers['authorization'] || req.token;
 
     if(!token) return next(new HttpError(401, 'Предупреждение. Нет токена!'));
 

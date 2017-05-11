@@ -54,9 +54,7 @@ app.use(function(err, req, res, next){
 
      if(err instanceof HttpError){
      res.statusCode = err.status;
-        res.render('error', {
-            error: err
-        });
+        res.send(err);
      }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);

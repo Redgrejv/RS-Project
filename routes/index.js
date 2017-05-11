@@ -11,7 +11,7 @@ var path        = require('path');
 var async       = require('async');
 
 var autorize    = require('./modules/autorization');
-var registration = require('./modules/registration');
+var signup = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 
@@ -21,22 +21,21 @@ module.exports = function (app, passport) {
         res.render('frontpage');
     });
 
-    app.get('/api/login', function (req, res, next){
+    app.get('/api/autorize', function (req, res, next){
         res.render('login');
     });
 
-    app.get('/api/register', function (req, res, next){
+    app.get('/api/signup', function (req, res, next){
         res.render('register');
     });
 
-    app.post('/api/login', autorize.autorize);
+    app.post('/api/autorize', autorize.autorize);
     app.get('/api/user/:id', checkToken, autorize.getUserById);
 
-    app.post('/api/register', registration.post);
+    app.post('/api/signup', signup.post);
 
     app.get('/api/info/version', checkToken, info.getVersion);
 
-    app.post('/api/info/checkLogin', info.checkLogin);
     app.post('/api/info/checkEmail', info.checkEmail);
 
 };

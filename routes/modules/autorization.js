@@ -10,10 +10,10 @@ var jwt         = require('jsonwebtoken');
 
 exports.autorize = function (req, res, next) {
 
-    var username = req.body.login;
+    var email = req.body.email;
     var password = req.body.password;
 
-    User.checkUser(username, password, function (err, user) {
+    User.checkUser(email, password, function (err, user) {
         if(err) return next(err);
         var payload = { id: user.id };
         var token = jwt.sign(payload, config.get('token-secret'));

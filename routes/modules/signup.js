@@ -24,10 +24,7 @@ exports.post = function (req, res, next) {
 
 
     new_user.save(function (err, user) {
-        if(err) {
-            if(new RegExp('email_1').test(err.message))
-                return next(new HttpError(400, 'Email занят.'));
-        }
+        if(err) return next(new HttpError(400, 'Email занят.'));
 
         var token = jwt.sign({id: user.id}, config.get('token-secret'));
         res.status(200).json({token: token});

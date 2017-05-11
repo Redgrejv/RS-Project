@@ -10,22 +10,21 @@ var jwt         = require('jsonwebtoken');
 exports.post = function (req, res, next) {
 
     var data = req.body;
-    if(!data.login || !data.password || !data.email){
+    if(!data.password || !data.email){
         return next(new HttpError(400, 'Заполните все поля!'))
     }
 
     var new_user = new User({
         email: data.email,
         login: data.login,
-        password: data.password
+        password: data.password,
+        first_name: data.first_name,
+        last_name: data.last_name
     });
 
 
     new_user.save(function (err, user) {
         if(err) {
-            if (new RegExp('login_1').test(err.message))
-                return next(new HttpError(400, 'Логин занят.'));
-
             if(new RegExp('email_1').test(err.message))
                 return next(new HttpError(400, 'Email занят.'));
         }

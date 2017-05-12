@@ -48,15 +48,12 @@ app.use(app.router);
 require('./routes')(app, passport);
 
 app.use(function(err, req, res, next){
-    if(typeof  err === 'number'){
-     err = new HttpError(err);
+     if(typeof  err === 'number'){
+        err = new HttpError(err);
      }
 
      if(err instanceof HttpError){
-     res.statusCode = err.status;
-        res.render('error', {
-            error: err
-        });
+        res.status(err.status).send(err);
      }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);

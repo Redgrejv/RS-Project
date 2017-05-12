@@ -16,22 +16,28 @@
     }
 */
 
+var form = null;
+
 $(document).ready(function () {
-    var form = $(document.forms['sign_up'])[0];
+ var form = $(document.forms['sign_up']);
 
     $('.uppercase').on('click', function (event) {
+        console.log(form);
         event.preventDefault();
-
+        function error(data) {
+            // body...
+        }
         if(check(form)){
             $.ajax({
-                url: '/api/register',
+                url: 'http://localhost:3000/api/register',
                 method: 'POST',
-                data: form.serialize()
+                data: form.serialize(),
+                statusCode: {
+                    200: error,
+                    400: error,
+                    500: error,
+                }
 
-            }).sucess(function () {
-                // body...
-            }).error(function (argument) {
-                // body...
             });
         }else{
 
@@ -40,9 +46,9 @@ $(document).ready(function () {
         return false;
     });
 
-    $(form.login).on('blur', function (event) {
+    $(document.forms['sign_up']).on('blur', function (event) {
         $.ajax({
-            url: '/api/info/checkLogin',
+            url: 'localhost:3000/api/info/checkLogin',
             method: 'POST',
             data: font.login,
             statusCode: {
@@ -58,27 +64,34 @@ $(document).ready(function () {
 
 });
 
-
 function check(form) {
-  var login = form.login.value;
-  var password = form.password.value;
-  var message = form.email.value;
-  var confirm_password = form.confirm_password.value;
-  var bad = "";
-  if (login.length < 3)
-     bad += "Имя слишком короткое" + "\n";
-  if (login.length > 32)
-    bad += "Имя слишком длинное" + "\n";
-  if (password.length < 6)
-    bad += "Пароль слишком короткий" + "\n";
-  if (password.length > 15)
-    bad += "Пароль слишком длинный" + "\n";
-  if (email.length < 3)
-    bad += "Неверно введённая почта" + "\n";
+    form = form[0];
+    var first_name = form.first_name.value;
+    var last_name = form.last_name;
+    var email = form.email.value;
+    var password = form.password.value;
+    // var message = form.email.value;
+    var confirm_password = form.confirm_password.value;
+    var bad = "";
+
+    if (first_name.length < 3)
+       bad += "Имя слишком короткое" + "\n";
+    if (first_name.length > 32)
+       bad += "Имя слишком длинное" + "\n";
+   if (last_name.length < 3)
+       bad += "Фамилия слишком короткая" + "\n";
+    if (last_name.length > 32)
+       bad += "Фамилия слишком длинная" + "\n";
+    if (password.length < 3)
+        bad += "Пароль слишком короткий" + "\n";
+    if (password.length > 15)
+        bad += "Пароль слишком длинный" + "\n";
+   // if (email.length < 3)
+   //     bad += "Неверно введённая почта" + "\n";
     if (bad != "") {
-    bad += "Неверно заполнена форма:" + "\n" + bad;
-    alert(bad);
-    return false;
-  }
+        bad += "Неверно заполнена форма:" + "\n" + bad;
+        alert(bad);
+        return false;
+    }
   return true;
 }

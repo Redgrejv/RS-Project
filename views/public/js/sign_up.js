@@ -29,13 +29,13 @@ $(document).ready(function () {
         }
         if(check(form)){
             $.ajax({
-                url: 'http://localhost:3000/api/register',
+                url: 'http://localhost:3000/api/signup',
                 method: 'POST',
                 data: form.serialize(),
                 statusCode: {
                     200: error,
                     400: error,
-                    500: error,
+                    500: error
                 }
 
             });

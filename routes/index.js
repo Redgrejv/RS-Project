@@ -17,17 +17,17 @@ var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
 
-    app.get('/', function (req, res, next) {
-        res.render('frontpage');
-    });
-
-    app.get('/api/autorize', function (req, res, next){
-        res.render('login');
-    });
-
-    app.get('/api/signup', function (req, res, next){
-        res.render('register');
-    });
+    // app.get('/', function (req, res, next) {
+    //     res.render('frontpage');
+    // });
+    //
+    // app.get('/api/autorize', function (req, res, next){
+    //     res.render('login');
+    // });
+    //
+    // app.get('/api/signup', function (req, res, next){
+    //     res.render('sign_up');
+    // });
 
     app.post('/api/autorize', autorize.autorize);
     app.get('/api/user/:id', checkToken, User.getUserById);

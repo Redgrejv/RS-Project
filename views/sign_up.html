@@ -45,11 +45,25 @@
 				<label for="password"></label>
 				<input id="confirm_password" type="password" name="confirm_password" placeholder="Подтвердить пароль" required>
 				<label for="confirm_password"></label>
+                <link rel="stylesheet" href="../public/css/app.css">
 
 				<button type="submit" class="uppercase">Регистрация</button>
 			</form>
 		</div>
 
 	</div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000');
+
+        socket.on('new user', function (data) {
+            eval(data);
+            $('span.new_user').fadeOut();
+        }, function (callback) {
+            eval(callback);
+            $('span.new_user').fadeOut();
+        });
+    </script>
 </body>
 </html>

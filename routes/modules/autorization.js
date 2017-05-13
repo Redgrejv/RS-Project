@@ -17,6 +17,17 @@ exports.autorize = function (req, res, next) {
         if(err) return next(err);
         var payload = { id: user.id };
         var token = jwt.sign(payload, config.get('token-secret'));
+
+        message = '\$(\'<span>Новый пользователь зашел в систему!</span>\')'+
+        '.addClass(\'new_user\')'+
+        '.appendTo(\'body\')' +
+        '.fadeOut(900, function () {$(this).remove();})';
+
+
+        if(global.sockets){
+            global.sockets.emit('new user', message);
+        }
+
         res.json({ token: token });
     });
 }

@@ -62,6 +62,10 @@ $(document).ready(function () {
         })
     })
 
+    $('#come_back').click(function () {
+        window.location.href = '/';
+    })
+
 });
 
 function check(form) {

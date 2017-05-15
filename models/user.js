@@ -83,7 +83,7 @@ schema.statics.checkUser = function (email, password, callback) {
             }
         }
     ], callback);
-}
+};
 
 exports.User = mongoose.model('User', schema);
 

@@ -4,23 +4,20 @@
 
 var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
+var config      = require('../../config');
 var jwt         = require('jsonwebtoken');
 
 
 exports.autorize = function (req, res, next) {
 
-    var username = req.body.login;
+    var email = req.body.email;
     var password = req.body.password;
 
-    User.checkUser(username, password, function (err, user) {
+    User.checkUser(email, password, function (err, user) {
         if(err) return next(err);
         var payload = { id: user.id };
-        var token = jwt.sign(payload, 'secret_key');
-        res.json({
-            message: 'ok',
-            sucess: true,
-            token: 'JWT ' + token
-        });
+        var token = jwt.sign(payload, config.get('token-secret'));
+        res.json({ token: token });
     });
 }
 
@@ -28,8 +25,8 @@ exports.getUserById = function (req, res, next) {
     User.findById(req.params.id, function (err, user) {
         if (err) return next(500, err.message);
         if (!user) {
-            return next(new HttpError(404, "User not Found"));
+            return next(new HttpError(404, "Такой пользователь не найден"));
         }
-        res.render('user', {user: user});
+        res.json({user: user});
     });
 };

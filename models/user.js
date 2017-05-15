@@ -60,30 +60,30 @@ schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-schema.statics.checkUser = function (username, password, callback) {
+schema.statics.checkUser = function (email, password, callback) {
     var User = this;
 
-    if(!username || !password){
-        return callback(new HttpError(403, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
+    if(!email || !password){
+        return callback(new HttpError(400, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
     }
 
     async.waterfall([
         function (callback) {
-            User.findOne({login: username}, callback);
+            User.findOne({email: email}, callback);
         },
         function (user, callback) {
             if (user) {
                 if (user.checkPassword(password)) {
                     callback(null, user);
                 }else{
-                    callback(new HttpError(403, "Пароль не верен"));
+                    callback(new HttpError(400, "Пароль не верен"));
                 }
             }else{
-                callback(new HttpError(403, "Пользователь не найден"));
+                callback(new HttpError(404, "Пользователь не найден"));
             }
         }
     ], callback);
-}
+};
 
 exports.User = mongoose.model('User', schema);
 

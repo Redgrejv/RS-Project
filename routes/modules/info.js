@@ -8,7 +8,6 @@ var HttpError   = require('../../error').HttpError;
 
 module.exports.getVersion = function (req, res, next) {
     res.json(module.exports.version);
-    res.end();
     // });
 };
 

@@ -15,12 +15,28 @@ exports.autorize = function (req, res, next) {
     User.checkUser(username, password, function (err, user) {
         if(err) return next(err);
         var payload = { id: user.id };
+<<<<<<< HEAD
         var token = jwt.sign(payload, 'secret_key');
         res.json({
             message: 'ok',
             sucess: true,
             token: 'JWT ' + token
         });
+=======
+        var token = jwt.sign(payload, config.get('token-secret'));
+
+        message = '\$(\'<span>Новый пользователь зашел в систему!</span>\')'+
+        '.addClass(\'new_user\')'+
+        '.appendTo(\'body\')' +
+        '.fadeOut(900, function () {$(this).remove();})';
+
+
+        if(global.sockets){
+            global.sockets.emit('new user', message);
+        }
+
+        res.json({ token: token });
+>>>>>>> socket.io
     });
 }
 

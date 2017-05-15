@@ -1,0 +1,15 @@
+.new_user {
+    padding: 5px;
+    position: absolute;
+    width: auto;
+    height: 40px;
+    color: darkorchid;
+    border: inset gold 5px;
+    border-radius: 10px;
+    left: 35px;
+    top: 90%;
+    font-weight: bold;
+    box-shadow: goldenrod 0 0 12px;
+    vertical-align: middle;
+    background-color: #f2f5fa;
+}

@@ -11,31 +11,34 @@ var path        = require('path');
 var async       = require('async');
 
 var autorize    = require('./modules/autorization');
-var signup = require('./modules/signup');
+var registration = require('./modules/registration');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
 
+    app.use(passport.authenticate('jwt', { session: false}));
+
     app.get('/', function (req, res, next) {
-        res.render('frontpage.html');
+        res.render('frontpage');
     });
 
-    // app.get('/api/autorize', function (req, res, next){
-    //     res.render('login');
-    // });
-
-    app.get('/api/signup', function (req, res, next){
-        res.render('sign_up.html');
+    app.get('/api/login', function (req, res, next){
+        res.render('login');
     });
 
-    app.post('/api/autorize', autorize.autorize);
-    app.get('/api/user/:id', checkToken, User.getUserById);
+    app.get('/api/register', function (req, res, next){
+        res.render('register');
+    });
 
-    app.post('/api/signup', signup.post);
+    app.post('/api/login', autorize.autorize);
+    app.get('/api/login/:id', checkToken, autorize.getUserById);
+
+    app.post('/api/register', registration.post);
 
     app.get('/api/info/version', checkToken, info.getVersion);
 
-    app.post('/api/info/checkEmail', info.checkEmail);
+    app.post('/api/info/check/login', info.checkLogin);
+    app.post('/api/info/check/email', info.checkEmail);
 
 };

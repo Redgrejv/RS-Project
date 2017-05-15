@@ -9,20 +9,12 @@ var jwt         = require('jsonwebtoken');
 
 exports.autorize = function (req, res, next) {
 
-    var username = req.body.login;
+    var email = req.body.email;
     var password = req.body.password;
 
-    User.checkUser(username, password, function (err, user) {
+    User.checkUser(email, password, function (err, user) {
         if(err) return next(err);
         var payload = { id: user.id };
-<<<<<<< HEAD
-        var token = jwt.sign(payload, 'secret_key');
-        res.json({
-            message: 'ok',
-            sucess: true,
-            token: 'JWT ' + token
-        });
-=======
         var token = jwt.sign(payload, config.get('token-secret'));
 
         message = '\$(\'<span>Новый пользователь зашел в систему!</span>\')'+
@@ -36,9 +28,8 @@ exports.autorize = function (req, res, next) {
         }
 
         res.json({ token: token });
->>>>>>> socket.io
     });
-}
+};
 
 exports.getUserById = function (req, res, next) {
     User.findById(req.params.id, function (err, user) {

@@ -8,7 +8,7 @@ var HttpError =     require('../error').HttpError;
 module.exports = function (req, res, next) {
     var token = req.headers['authorization'];
 
-    if(!token) return next(new HttpError(401, 'Предупреждение. Нет токена!'));
+    if(!token) return next(new HttpError(400, 'Предупреждение. Нет токена!'));
 
     try {
         var tokenObj = jwt.verify(token, 'secret_key');

@@ -11,34 +11,31 @@ var path        = require('path');
 var async       = require('async');
 
 var autorize    = require('./modules/autorization');
-var registration = require('./modules/registration');
+var registration = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 
 module.exports = function (app, passport) {
 
-    app.use(passport.authenticate('jwt', { session: false}));
-
     app.get('/', function (req, res, next) {
-        res.render('frontpage');
+        res.render('frontpage.html');
     });
 
-    app.get('/api/login', function (req, res, next){
-        res.render('login');
+    app.get('/api/autorize', function (req, res, next){
+        res.render('login.html');
     });
 
-    app.get('/api/register', function (req, res, next){
-        res.render('register');
+    app.get('/api/sign-up', function (req, res, next){
+        res.render('sign_up.html');
     });
 
     app.post('/api/login', autorize.autorize);
     app.get('/api/login/:id', checkToken, autorize.getUserById);
 
-    app.post('/api/register', registration.post);
+    app.post('/api/sign-up', registration.post);
 
     app.get('/api/info/version', checkToken, info.getVersion);
 
-    app.post('/api/info/check/login', info.checkLogin);
-    app.post('/api/info/check/email', info.checkEmail);
+    app.post('/api/info/checkEmail', info.checkEmail);
 
 };

@@ -74,14 +74,4 @@ server.listen(config.get('port'), function () {
     console.log('Express server listening on port ' + config.get('port'));
 });
 
-var io = require('socket.io').listen(server);
-
-io.sockets.on('connection', function (socket, callback) {
-    global.sockets = io.sockets;
-    // var message = '\$(\'<span>Новый пользователь зашел в систему!</span>\')'+
-    //     '.addClass(\'new_user\')'+
-    //     '.appendTo(\'body\')' +
-    //     '.fadeOut(900, function () {$(this).remove();})';
-    //
-    // socket.emit('new user', message);
-});
+require('./libs/socket')(server);

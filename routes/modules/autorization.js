@@ -5,6 +5,7 @@
 var HttpError   = require('../../error').HttpError;
 var User        = require('../../models/user').User;
 var jwt         = require('jsonwebtoken');
+var config      = require('../../config');
 
 
 exports.autorize = function (req, res, next) {

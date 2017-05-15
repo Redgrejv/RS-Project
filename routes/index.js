@@ -29,8 +29,8 @@ module.exports = function (app, passport) {
         res.render('sign_up.html');
     });
 
-    app.post('/api/login', autorize.autorize);
-    app.get('/api/login/:id', checkToken, autorize.getUserById);
+    app.post('/api/autorize', autorize.autorize);
+    app.get('/api/user/:id', checkToken, autorize.getUserById);
 
     app.post('/api/sign-up', registration.post);
 

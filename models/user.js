@@ -11,10 +11,10 @@ var mongoose = require('../libs/mongoose'),
     Schema = mongoose.Schema;
 
 var schema = new mongoose.Schema({
-    email: {
+    login: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required: true
     },
     hashedPassword: {
         type: String,
@@ -25,18 +25,23 @@ var schema = new mongoose.Schema({
         required: true
     },
     first_name: {
-        type: String,
-        required: true
+        type: String
     },
     last_name: {
-        type: String,
-        required: true
+        type: String
+    },
+    about: {
+        type: String
     },
     created: {
         type: Date,
         default: Date.now
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
     }
-
 });
 
 schema.methods.encryptPassword = function (password) {
@@ -55,42 +60,30 @@ schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-schema.statics.checkUser = function (email, password, callback) {
+schema.statics.checkUser = function (username, password, callback) {
     var User = this;
 
-    if(!email || !password){
-        return callback(new HttpError(400, "Неправильные данные. Поле email`а и пароля не должно быть пустым"));
+    if(!username || !password){
+        return callback(new HttpError(403, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
     }
 
     async.waterfall([
         function (callback) {
-            User.findOne({email: email}, callback);
+            User.findOne({login: username}, callback);
         },
         function (user, callback) {
             if (user) {
                 if (user.checkPassword(password)) {
                     callback(null, user);
                 }else{
-                    callback(new HttpError(400, "Пароль не верен"));
+                    callback(new HttpError(403, "Пароль не верен"));
                 }
             }else{
-                callback(new HttpError(404, "Пользователь не найден"));
+                callback(new HttpError(403, "Пользователь не найден"));
             }
         }
     ], callback);
-};
-
-schema.statics.getUserById = function (req, res, next) {
-
-    var User = require('./user').User;
-    User.findById(req.params.id, function (err, user) {
-        if (err) return next(500, err.message);
-        if (!user) {
-            return next(new HttpError(404, "Такой пользователь не найден"));
-        }
-        res.json(user);
-    });
-};
+}
 
 exports.User = mongoose.model('User', schema);
 

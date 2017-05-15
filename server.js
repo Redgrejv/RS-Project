@@ -19,11 +19,13 @@ var mongoose =          require('./libs/mongoose');
 
 var app = express();
 
-app.engine('ejs', require('ejs-locals'));
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.configure(function(){
+    app.set("view options", {layout: false});
+    app.engine('html', require('ejs').renderFile);
+    app.use('/public', express.static(__dirname +'/public'));
+});
 
-app.use(express.static(path.join(__dirname, 'views/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -54,9 +56,7 @@ app.use(function(err, req, res, next){
 
      if(err instanceof HttpError){
      res.statusCode = err.status;
-        res.render('error', {
-            error: err
-        });
+        res.send(err);
      }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);

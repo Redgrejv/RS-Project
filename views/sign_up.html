@@ -3,6 +3,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Registration</title>
+	<link rel="icon" href="style/image/logo.png"/>
+	<script src="public/style/lib/jquery.js"></script>
 	<link rel="icon" href="../public/image/logo.png"/>
 
 	<script src="../public/lib/jquery.js"></script>
@@ -12,6 +14,8 @@
 
 	 <script src="lib/cross_domen_ajax.js"></script> -->
 
+	<link rel="stylesheet" href="public/style/sign_up.css">
+	<script src="public/style/script/sign_up.js"></script>
 	<link rel="stylesheet" href="../public/css/sign_up.css">
 	<script src="../public/js/sign_up.js"></script>
 
@@ -24,8 +28,8 @@
 <body>
 	
 	<div class="header">
-		<h3>Registration</h3>
-		<a id="come_back">Назад</a>
+		<h3>Регистрация</h3>
+		<a href="/" class="uppercase" id="come_back">Назад</a>
 	</div>
 
 	<div class="main_block">
@@ -55,18 +59,5 @@
 		</div>
 
 	</div>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect('http://localhost:3000');
-
-        socket.on('new user', function (data) {
-            eval(data);
-            $('span.new_user').fadeOut();
-        }, function (callback) {
-            eval(callback);
-            $('span.new_user').fadeOut();
-        });
-    </script>
 </body>
 </html>

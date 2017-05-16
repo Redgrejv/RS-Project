@@ -21,7 +21,7 @@ var form = null;
 $(document).ready(function () {
  var form = $(document.forms['sign_up']);
 
-    $('.uppercase').on('click', function (event) {
+    $('button', form).on('click', function (event) {
         console.log(form);
         event.preventDefault();
         function error(data) {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <title>RS-Project</title>
+    <link rel="stylesheet" href="../public/css/app.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="../public/lib/jquery.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../public/js/main.js"></script>
+</head>
+<body>
+
+<section class="container">
+
+    <nav class="navbar navbar-default" role="navigation">
+        <ul class="nav navbar-nav">
+            <li><a href="/"> Главная</a></li>
+            <li><a href="/api/autorize">Войти</a></li>
+            <li><a href="/api/sign-up">Регистрация</a></li>
+            <li><a href="/api/info/version">Версия</a></li>
+        </ul>
+    </nav>
+
+</section>
+
+<footer>
+</footer>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:3000');
+
+    socket.on('new user', function (data) {
+        eval(data);
+        $('span.new_user').fadeOut();
+    }, function (callback) {
+        eval(callback);
+        $('span.new_user').fadeOut();
+    });
+</script>
+</body>
+</html>

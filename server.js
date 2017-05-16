@@ -19,17 +19,19 @@ var mongoose =          require('./libs/mongoose');
 
 var app = express();
 
-app.engine('ejs', require('ejs-locals'));
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.configure(function(){
+    app.set("view options", {layout: false});
+    app.engine('html', require('ejs').renderFile);
+    app.use('/public', express.static(__dirname +'/public'));
+});
 
-app.use(express.static(path.join(__dirname, 'views/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.cookieParser());
 
-app.use(expressSession({
+app.use(express.session({
     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
     resave: true,
     saveUninitialized: true,
@@ -48,12 +50,13 @@ app.use(app.router);
 require('./routes')(app, passport);
 
 app.use(function(err, req, res, next){
-     if(typeof  err === 'number'){
-        err = new HttpError(err);
+    if(typeof  err === 'number'){
+     err = new HttpError(err);
      }
 
      if(err instanceof HttpError){
-        res.status(err.status).send(err);
+     res.statusCode = err.status;
+        res.send(err);
      }else{
         if(app.get('env') === 'development') {
             express.errorHandler()(err, req, res, next);
@@ -65,7 +68,10 @@ app.use(function(err, req, res, next){
     }
 });
 
-http.createServer(app)
-    .listen(config.get('port'), function () {
-        console.log('Express server listening on port ' + config.get('port'));
+var server = http.createServer(app);
+
+server.listen(config.get('port'), function () {
+    console.log('Express server listening on port ' + config.get('port'));
 });
+
+require('./libs/socket')(server);

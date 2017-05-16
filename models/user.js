@@ -11,10 +11,13 @@ var mongoose = require('../libs/mongoose'),
     Schema = mongoose.Schema;
 
 var schema = new mongoose.Schema({
-    login: {
+    email: {
         type: String,
+        required: true,
+        trim: true,
+        index: true,
         unique: true,
-        required: true
+        sparse: true
     },
     hashedPassword: {
         type: String,
@@ -25,10 +28,12 @@ var schema = new mongoose.Schema({
         required: true
     },
     first_name: {
-        type: String
+        type: String,
+        require: true
     },
     last_name: {
-        type: String
+        type: String,
+        require: true
     },
     about: {
         type: String
@@ -36,11 +41,6 @@ var schema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
     }
 });
 
@@ -64,7 +64,7 @@ schema.statics.checkUser = function (email, password, callback) {
     var User = this;
 
     if(!email || !password){
-        return callback(new HttpError(400, "Неправильные данные. Поле \"login\" and \"password\" не должно быть пустым"));
+        return callback(new HttpError(400, "Заполните все поля."));
     }
 
     async.waterfall([

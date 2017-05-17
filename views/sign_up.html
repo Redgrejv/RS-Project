@@ -37,11 +37,19 @@
 			}
 		});
 
+		var RegBlock = React.createClass({
+			render: function(){
+
+			}
+		});
+
 
 		ReactDOM.render(
 			<RegHeader />,
 			document.getElementById("header")
 		)
+
+
 	</script>
 	<div id="header" class="header"></div>
 
@@ -53,7 +61,7 @@
 			<form method="POST" name="sign_up">
 
 				<!--<label for="login"></label>
-				<input id="login" type="text" name="login" placeholder="Логин" required>-->
+				<input id="login" type="text" name="login" placeholder="Логин" required>-->+
 				<input id="first_name" type="text" name="first_name" placeholder="Имя" required>
 				<input id="last_name" type="text" name="last_name" placeholder="Фамилия" required>
 				<input id="email" type="email" name="email" placeholder="Email" required>

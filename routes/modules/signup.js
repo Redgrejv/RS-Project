@@ -21,15 +21,18 @@ exports.post = function (req, res, next) {
         last_name: data.last_name
     });
 
+    User.findOne({email: new_user.email}, function (err, user) {
+        if(user) return next(new HttpError(400, "Email уже используется"));
 
-    new_user.save(function (err) {
-        if(err) return next(new HttpError(400, "Email уже используется"));
+        if(!user) {
+            new_user.save(function (err, save_user) {
+                if(err) return next(new HttpError(400, "Email уже используется"));
 
-        User.findOne({email: new_user.email}, function (err, user) {
-            if(err) return next(err);
+                var token = jwt.sign({id: save_user.id}, config.get('token-secret'));
+                res.status(200).json({token: token});
+            });
+        }
 
-            var token = jwt.sign({id: user.id}, config.get('token-secret'));
-            res.status(200).json({token: token});
-        })
+
     });
 };

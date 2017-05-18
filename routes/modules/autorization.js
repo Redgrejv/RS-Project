@@ -24,7 +24,7 @@ exports.autorize = function (req, res, next) {
         '.fadeOut(1200, function () {$(this).remove();})';
 
 
-        if(global.sockets){
+        if(global.io){
             global.socket.broadcast.emit('new user', message);
         }
 

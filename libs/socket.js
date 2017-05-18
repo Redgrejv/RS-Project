@@ -10,7 +10,8 @@ module.exports = function (server) {
 
 
     io.sockets.on('connection', function (socket) {
-        global.sockets = io.sockets;
+        global.io = io;
+        global.socket = socket;
     });
 
 };

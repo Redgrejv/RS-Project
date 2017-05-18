@@ -25,7 +25,7 @@ exports.autorize = function (req, res, next) {
 
 
         if(global.sockets){
-            global.sockets.emit('new user', message);
+            global.socket.broadcast.emit('new user', message);
         }
 
         res.json({ token: token });

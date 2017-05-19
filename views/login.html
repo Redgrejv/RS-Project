@@ -4,29 +4,29 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Авторизация</title>
 
-	<script src="../public/lib/jquery.js"></script>
+<!-- 	<script src="../public/lib/jquery.js"></script> -->
 
 	<link rel="stylesheet" href="../public/css/login.css">
-	<script src="../public/js/login.js"></script>
+	<!-- <script src="../public/js/login.js"></script>
 	<link rel="stylesheet" href="../public/css/app.css">
 
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="../public/js/main.js"></script>
+	<script src="../public/js/main.js"></script> -->
 
 </head>
 <body>
 	
-	<div class="header">
+	<header>
 		<h3>Авторизация</h3>
 
-		<a href="/" class="uppercase" id="come_back">Назад</a>
-	</div>
+		<a href="/" class="uppercase" id="come_back"><img src="../public/image/back.png" alt=""></a>
+	</header>
 
 	<div class="main_block">
 
 
 		<div class="reg_block">
-			<div class="avatar"></div>
+			<img src="../public/image/avatar.png" alt="">
 
 			<form action="" method="POST">
 
@@ -34,8 +34,9 @@
 
 				<input id="email" type="email" name="email" placeholder="Email" required>
 				<input id="password" type="password" name="password" placeholder="Пароль" required>
-
-				<button id="sign_up" type="submit" class="uppercase">Вход</button>
+				<button id="sign_in" type="submit" class="uppercase">Вход</button>
+				<p>или</p>
+				<button id="sign_up" type="submit" class="uppercase">Регистрация</button>
 			</form>
 		</div>
 

@@ -1,8 +1,6 @@
-body {	
-	width: 1920px;
+body {
 	margin: 0;
     left: 0;
-    height: 1080px;
 }
 
 .uppercase {
@@ -19,7 +17,6 @@ body {
 	vertical-align: middle;
 	color: #fffffc;
 	font: 20px arial;
-	padding: 10px 25px;
 
 }
 
@@ -101,4 +98,3 @@ height:100%;
 }
 
 .reg_block form input:focus { outline: none; }
-

@@ -15,7 +15,7 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('build:css', function () {
-    gulp.src('client/src/styles/main.scss')
+    gulp.src('client/src/styles/*.scss')
     .pipe(sass())
     .pipe(autoprefix())
     .pipe(gulp.dest('client/build/'));
@@ -44,5 +44,5 @@ gulp.task('eslint', function () {
 
 gulp.task('watcher', function() {
     gulp.watch('client/src/styles/**/*.scss', ['build:css']);
-  gulp.watch('client/src/scripts/**/*.jsx', ['build:js']);
+    gulp.watch('client/src/scripts/**/*.jsx', ['build:js']);
 })

@@ -38,16 +38,16 @@ app.use(express.session({
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-var passport = require('./models/passport');
-
-app.use(passport.initialize());
-app.use(passport.session());
+// var passport = require('./models/passport');
+//
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 app.use(require('./middleware/sendHttpError'));
 app.use(app.router);
 
-require('./routes')(app, passport);
+require('./routes')(app);
 
 app.use(function(err, req, res, next){
     if(typeof  err === 'number'){
@@ -75,3 +75,4 @@ server.listen(config.get('port'), function () {
 });
 
 require('./libs/socket')(server);
+

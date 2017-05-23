@@ -4,7 +4,6 @@
 
 "use strict";
 
-var User        = require('../models/user').User;
 var HttpError   = require('../error').HttpError;
 var mongoose    = require('../libs/mongoose');
 var path        = require('path');

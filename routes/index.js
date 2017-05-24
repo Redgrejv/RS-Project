@@ -13,6 +13,7 @@ var autorize    = require('./modules/autorization');
 var registration = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
+var admin_project = require('./modules/administration_project');
 
 module.exports = function (app, passport) {
 
@@ -37,4 +38,5 @@ module.exports = function (app, passport) {
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
+    app.post('/api/project/create', checkToken, admin_project.createProject);
 };

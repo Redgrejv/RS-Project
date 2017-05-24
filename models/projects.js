@@ -17,6 +17,7 @@ var projectSchema = new Schema({
     _parent: [{
     	type: ObjectId,
     	unique: true,
+        require: true,
     	ref: 'User'
     }]
 });

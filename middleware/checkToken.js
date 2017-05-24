@@ -18,6 +18,5 @@ module.exports = function (req, res, next) {
     }
 
     req.tokenObj = tokenObj;
-    console.log(tokenObj);
     next();
 };

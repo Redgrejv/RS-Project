@@ -40,6 +40,6 @@ module.exports = function (app, passport) {
 
     app.post('/api/project/getUserAllProject', checkToken, admin_project.getUserAllProject);
     app.post('/api/project/create', checkToken, admin_project.createProject);
-    app.post('/api/project/update', checkToken, admin_project.updateProject); // СДЕЛАТЬ
-    app.post('/api/project/remove', checkToken, admin_project.removeProject); // СДЕЛАТЬ
+    app.post('/api/project/update', checkToken, admin_project.updateProject);
+    app.post('/api/project/remove', checkToken, admin_project.removeProject);
 };

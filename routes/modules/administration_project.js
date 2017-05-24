@@ -4,10 +4,10 @@ var Project     = require('../../models/projects').Project;
 // var mongoose    = require('mongoose');
 
 function getReqData(req){
-
     return data = {
         title: req.body.title,
-        id_user: req.tokenObj.id
+        id_user: req.tokenObj.id,
+        id_project: req.body.projectID
     };
 }
 
@@ -42,19 +42,21 @@ exports.updateProject = function (req, res, next) {
 
 exports.removeProject = function (req, res, next) {
     var data = getReqData(req);
-    var _id_project = req.data.id;
 
-    Project.remove({_parent: [data.user_id], _id: _id_project}, function (err, result) {
+    Project.remove({_parent: [data.id_user], _id: data.id_project}, function (err, result) {
         if(err) return next(err);
 
-        res.json({message: 'Проект удален'});
+        if(result.result.n == 0)
+            res.status(404).json({message: 'Такого проекта не существует'});
+        else
+            res.json({message: 'Проект удален', result: result});
     })
 };
 
 exports.getUserAllProject = function (req, res, next) {
     var data = getReqData(req);
 
-    Project.find({_parent: [data.user_id]}, function (err, projects) {
+    Project.find({_parent: [data.id_user]}, function (err, projects) {
         if(err) return next(err);
 
         res.json(projects);

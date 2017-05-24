@@ -30,6 +30,7 @@ body {
 }
 
 .task_panel{
+	text-align: center;
 	height: 66px;
 	width: 1668px;
 	float: right;
@@ -38,6 +39,8 @@ body {
 }
 
 .projects{
+	display: inline-block;
+	vertical-align: middle;
 	text-align: center;
 	color: white;
 	height: 1035px;
@@ -52,9 +55,11 @@ body {
 }
 
 .added_project{
+	display: inline-block;
+	vertical-align: middle;
 	height: 49px;
 	background-color: #2e323e;
-	width: auto;
+	width: 100%;
 	color: white;
 }
 .added_project:hover{
@@ -74,6 +79,9 @@ body {
 }
 
 .tasks{
+	text-align: center;
+	float: right;
+	width: 1668px;
 	background-color:#f2f5fa;
 	min-height: 1035px;
 }

@@ -36,6 +36,6 @@ exports.getUserAllProject = function (req, res, next) {
     Project.find({_parent: [user_id]}, function (err, projects) {
         if(err) return next(err);
 
-
+        res.json(projects);
     })
 };

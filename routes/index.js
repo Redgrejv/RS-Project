@@ -31,14 +31,15 @@ module.exports = function (app, passport) {
 
     app.post('/api/autorize', autorize.autorize);
     app.get('/api/user/:id', checkToken, autorize.getUserById);
+    app.get('/api/info/version', checkToken, info.getVersion);
+
 
     app.post('/api/sign-up', registration.post);
-
-    app.get('/api/info/version', checkToken, info.getVersion);
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
     app.post('/api/project/getUserAllProject', checkToken, admin_project.getUserAllProject);
-
     app.post('/api/project/create', checkToken, admin_project.createProject);
+    app.post('/api/project/update', checkToken, admin_project.updateProject); // СДЕЛАТЬ
+    app.post('/api/project/remove', checkToken, admin_project.removeProject); // СДЕЛАТЬ
 };

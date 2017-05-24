@@ -29,10 +29,11 @@ exports.createProject = function (req, res, next) {
 
 exports.updateProject = function (req, res, next) {
     var data = getReqData(req);
+    var _id_project = req.data.id;
 
     var new_title = req.body.new_title;
 
-    Project.update({_parent: [data.id_user], title: data.title}, {title: new_title}, function (err) {
+    Project.update({_parent: [data.id_user], title: data.title, _id: _id_project}, {title: new_title}, function (err) {
         if(err) return next(err);
 
         res.json({message: 'Данные обновлены'});

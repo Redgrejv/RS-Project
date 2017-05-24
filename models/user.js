@@ -10,7 +10,6 @@ var HttpError   =   require('../error').HttpError;
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
-var projectSchema = require('./projects').Project;
 
 var userSchema = new Schema({
     email: {
@@ -43,8 +42,7 @@ var userSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
-    },
-    projects: [{type: ObjectId, ref: 'Project'}]
+    }
 });
 
 userSchema.methods.encryptPassword = function (password) {

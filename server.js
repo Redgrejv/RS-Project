@@ -31,12 +31,12 @@ app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.cookieParser());
 
-app.use(express.session({
-    secret: process.env.SESSION_SECRET || 'express_secret_key_session',
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({mongooseConnection: mongoose.connection})
-}));
+// app.use(express.session({
+//     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
+//     resave: true,
+//     saveUninitialized: true,
+//     store: new MongoStore({mongooseConnection: mongoose.connection})
+// }));
 
 // var passport = require('./models/passport');
 //
@@ -75,4 +75,3 @@ server.listen(config.get('port'), function () {
 });
 
 require('./libs/socket')(server);
-

@@ -40,8 +40,6 @@ function newUser(req, res, next) {
         if(err) return next(err);
     });
 
-    new_user.projects.push(project);
-
     new_user.save(function (err) {
         if(err) return next(err);
 

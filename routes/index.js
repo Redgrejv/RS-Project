@@ -38,5 +38,7 @@ module.exports = function (app, passport) {
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
+    app.post('/api/project/getUserAllProject', checkToken, admin_project.getUserAllProject);
+
     app.post('/api/project/create', checkToken, admin_project.createProject);
 };

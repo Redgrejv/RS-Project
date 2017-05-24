@@ -29,3 +29,13 @@ exports.updateProject = function (req, res, next) {
 exports.removeProject = function (req, res, next) {
 
 };
+
+exports.getUserAllProject = function (req, res, next) {
+    var user_id = req.tokenObj.id;
+
+    Project.find({_parent: [user_id]}, function (err, projects) {
+        if(err) return next(err);
+
+
+    })
+};

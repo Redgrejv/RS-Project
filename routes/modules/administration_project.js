@@ -5,8 +5,7 @@ var Project = require('../../models/projects').Project;
 function getReqData(req) {
     return data = {
         title: req.body.title,
-        id_user: req.tokenObj.id,
-        id_project: req.body.projectID
+        id_user: req.tokenObj.id
     };
 }
 
@@ -18,7 +17,6 @@ exports.createProject = function(req, res, next) {
         _parent: [data.id_user]
     });
 
-    console.log(new_project);
     new_project.save(function(err) {
         if (err) return next(err);
 
@@ -26,26 +24,26 @@ exports.createProject = function(req, res, next) {
     })
 };
 
-exports.updateProject = function(req, res, next) {
+exports.patchProject = function(req, res, next) {
     var data = getReqData(req);
 
     var new_title = req.body.new_title;
 
-    Project.update({ _parent: [data.id_user], title: data.title, _id: data.id_project }, { title: new_title }, function(err) {
+    Project.update({ _parent: [data.id_user], title: data.title, _id: req.params.id }, { title: new_title }, function(err) {
         if (err) return next(err);
 
         res.json({ message: 'Данные обновлены' });
     });
 };
 
-exports.removeProject = function(req, res, next) {
+exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.remove({ _parent: [data.id_user], _id: data.id_project }, function(err, result) {
+    Project.remove({ _parent: [data.id_user], _id: req.params.id }, function(err, result) {
         if (err) return next(err);
 
         if (result.result.n == 0)
-            res.status(404).json({ message: 'Такого проекта не существует' });
+            res.status(204).json({ message: 'Такого проекта не существует' });
         else
             res.json({ message: 'Проект удален', result: result });
     })

@@ -9,7 +9,7 @@ function getReqData(req) {
     };
 }
 
-exports.createProject = function(req, res, next) {
+exports.insertProject = function(req, res, next) {
     var data = getReqData(req);
 
     var new_project = new Project({

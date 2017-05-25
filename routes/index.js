@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
     app.post('/api/info/checkEmail', info.checkEmail);
 
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);
-    app.post('/api/project/create', checkToken, admin_project.createProject);
+    app.post('/api/project/insert', checkToken, admin_project.insertProject);
     app.patch('/api/project/patch/:id', checkToken, admin_project.patchProject);
     app.delete('/api/project/delete/:id', checkToken, admin_project.deleteProject);
 };

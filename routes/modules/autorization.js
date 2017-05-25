@@ -22,7 +22,7 @@ exports.autorize = function (req, res, next) {
             global.socket.broadcast.emit('new user', {message: 'Новый пользователь зарегистрирован в сети!'});
         }
 
-        res.json({ token: token });
+        res.json({ token: token, user: user });
     });
 };
 

@@ -14,12 +14,23 @@ var projectSchema = new Schema({
         type: String,
         required: true
     },
-    _parent: [{
+    createdBy: {
+        type: ObjectId,
+        unique: true,
+        require: true,
+        ref: 'User'
+    },
+    users: [{
     	type: ObjectId,
     	unique: true,
         require: true,
     	ref: 'User'
-    }]
+    }],
+    dateCreated: Date.now(),
+    dateLastModification: {
+        type: Date,
+        required: true
+    }
 });
 
 exports.Project = mongoose.model('Project', projectSchema);

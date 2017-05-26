@@ -56,7 +56,7 @@ exports.deleteProject = function(req, res, next) {
 exports.getUserAllProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.find({ users: [data.id_user] }, function(err, projects) {
+    Project.find({ users: data.id_user }, function(err, projects) {
         if (err) return next(err);
 
         res.json(projects);

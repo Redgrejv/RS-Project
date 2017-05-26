@@ -17,7 +17,6 @@ var admin_project = require('./modules/administration_project');
 
 module.exports = function(app, passport) {
 
-<<<<<<< HEAD
     // app.get('/', function (req, res, next) {
     //     res.render('index.html');
     // });
@@ -27,7 +26,6 @@ module.exports = function(app, passport) {
     // });
 
     // app.get('/api/sign-up', function (req, res, next){
-=======
     // app.get('/', function(req, res, next) {
     //     res.render('frontpage.html');
     // });
@@ -37,18 +35,15 @@ module.exports = function(app, passport) {
     // });
 
     // app.get('/api/sign-up', function(req, res, next) {
->>>>>>> origin/projects_schema
     //     res.render('sign_up.html');
     // });
 
     app.post('/api/autorize', autorize.autorize);
-    app.get('/api/user/:id', checkToken, autorize.getUserById);
-    app.get('/api/info/version', checkToken, info.getVersion);
-
-
     app.post('/api/sign-up', registration.post);
-
     app.post('/api/info/checkEmail', info.checkEmail);
+
+    app.get('/api/info/version', checkToken, info.getVersion);
+    app.get('/api/user/:id', checkToken, autorize.getUserById);
 
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);
     app.post('/api/projects', checkToken, admin_project.insertProject);

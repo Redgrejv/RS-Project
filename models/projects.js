@@ -26,7 +26,10 @@ var projectSchema = new Schema({
         require: true,
     	ref: 'User'
     }],
-    dateCreated: Date.now(),
+    dateCreated: {
+        type: Date,
+        default: Date.now()
+    },
     dateLastModification: {
         type: Date,
         required: true

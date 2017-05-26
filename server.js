@@ -19,11 +19,11 @@ var mongoose =          require('./libs/mongoose');
 
 var app = express();
 
-app.configure(function(){
-    app.set("view options", {layout: false});
-    app.engine('html', require('ejs').renderFile);
-    app.use('/public', express.static(__dirname +'/public'));
-});
+// app.configure(function(){
+//     app.set("view options", {layout: false});
+//     app.engine('html', require('ejs').renderFile);
+//     app.use('/public', express.static(__dirname +'/public'));
+// });
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());
@@ -31,23 +31,23 @@ app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.cookieParser());
 
-app.use(express.session({
-    secret: process.env.SESSION_SECRET || 'express_secret_key_session',
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({mongooseConnection: mongoose.connection})
-}));
+// app.use(express.session({
+//     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
+//     resave: true,
+//     saveUninitialized: true,
+//     store: new MongoStore({mongooseConnection: mongoose.connection})
+// }));
 
-var passport = require('./models/passport');
-
-app.use(passport.initialize());
-app.use(passport.session());
+// var passport = require('./models/passport');
+//
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 app.use(require('./middleware/sendHttpError'));
 app.use(app.router);
 
-require('./routes')(app, passport);
+require('./routes')(app);
 
 app.use(function(err, req, res, next){
     if(typeof  err === 'number'){

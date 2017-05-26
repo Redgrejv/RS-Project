@@ -7,10 +7,11 @@ var crypto =        require('crypto');
 var async =         require('async');
 var HttpError   =   require('../error').HttpError;
 
-var mongoose = require('../libs/mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('../libs/mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
-var schema = new mongoose.Schema({
+var userSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -44,11 +45,11 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.methods.encryptPassword = function (password) {
+userSchema.methods.encryptPassword = function (password) {
     return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
 };
 
-schema.virtual('password')
+userSchema.virtual('password')
     .set(function (password) {
         this.__plainPassword = password;
         this.salt = Math.random() + '';
@@ -56,11 +57,11 @@ schema.virtual('password')
     })
     .get(function () { return this.__plainPassword; });
 
-schema.methods.checkPassword = function (password) {
+userSchema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-schema.statics.checkUser = function (email, password, callback) {
+userSchema.statics.checkUser = function (email, password, callback) {
     var User = this;
 
     if(!email || !password){
@@ -85,6 +86,5 @@ schema.statics.checkUser = function (email, password, callback) {
     ], callback);
 };
 
-exports.User = mongoose.model('User', schema);
-
+exports.User = mongoose.model('User', userSchema);
 

@@ -28,8 +28,9 @@ exports.post = function (req, res, next) {
         if(!user && !err) {
             new_user.save(function (err, user) {
                 if(err) return next(err);
-
-                var token = jwt.sign({id: user.id}, config.get('token-secret'));
+                
+                var payload = { id: user.id };
+                var token = jwt.sign(payload, config.get('token-secret'));
                 res.status(200).json({token: token});
             });
         }

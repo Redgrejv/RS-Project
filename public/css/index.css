@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    left: 0;
+    width: 1920px;
+    height: 100%;
+}
+
+.main_block{
+	width: 100%;
+	margin-right: 0;
+	margin-left: 0;
+	padding: 0;
+}
+
+.header {
+	height: 66px;
+	line-height: 45px;
+	color:#ffffff;
+	background-position: 25px;
+	vertical-align: middle;
+	font: 20px Arial;
+}
+
+.to_do{
+	height: 66px;
+	background: #383c47 no-repeat left;
+	width: 252px;
+	float: left;
+	box-shadow: -5px 5px 4px 0px #292d38;
+}
+
+.task_panel{
+	text-align: center;
+	height: 66px;
+	width: 1668px;
+	float: right;
+	color: black;
+	box-shadow: 0px 5px 4px 0px #d9dce3;
+}
+
+.projects{
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	color: white;
+	height: 1035px;
+	width: 252px;
+	background-color: #2e323e;
+	float: left;
+}
+
+.new_project{
+	display: none;
+	width: auto;
+}
+
+.added_project{
+	display: inline-block;
+	vertical-align: middle;
+	height: 49px;
+	background-color: #2e323e;
+	width: 100%;
+	color: white;
+}
+.added_project:hover{
+	background-color: #292d38;
+}
+
+.show_add_project{
+	height: 49px;
+}
+
+.show_add_project:hover{
+	background-color: #292d38;
+}
+
+.project_name{
+	position: center;
+}
+
+.tasks{
+	text-align: center;
+	float: right;
+	width: 1668px;
+	background-color:#f2f5fa;
+	min-height: 1035px;
+}

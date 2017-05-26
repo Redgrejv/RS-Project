@@ -17,17 +17,17 @@ var admin_project = require('./modules/administration_project');
 
 module.exports = function(app, passport) {
 
-    app.get('/', function(req, res, next) {
-        res.render('frontpage.html');
-    });
+    // app.get('/', function(req, res, next) {
+    //     res.render('frontpage.html');
+    // });
 
-    app.get('/api/autorize', function(req, res, next) {
-        res.render('login.html');
-    });
+    // app.get('/api/autorize', function(req, res, next) {
+    //     res.render('login.html');
+    // });
 
-    app.get('/api/sign-up', function(req, res, next) {
-        res.render('sign_up.html');
-    });
+    // app.get('/api/sign-up', function(req, res, next) {
+    //     res.render('sign_up.html');
+    // });
 
     app.post('/api/autorize', autorize.autorize);
     app.get('/api/user/:id', checkToken, autorize.getUserById);
@@ -38,8 +38,8 @@ module.exports = function(app, passport) {
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
-    app.get('/api/projects', checkToken, admin_project.getUserAllProject);
-    app.post('/api/project/insert', checkToken, admin_project.insertProject);
-    app.patch('/api/project/patch/:id', checkToken, admin_project.patchProject);
-    app.delete('/api/project/delete/:id', checkToken, admin_project.deleteProject);
+    app.get('/api/project', checkToken, admin_project.getUserAllProject);
+    app.post('/api/project/', checkToken, admin_project.insertProject);
+    app.patch('/api/project/:id', checkToken, admin_project.patchProject);
+    app.delete('/api/project/:id', checkToken, admin_project.deleteProject);
 };

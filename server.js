@@ -19,11 +19,11 @@ var mongoose =          require('./libs/mongoose');
 
 var app = express();
 
-// app.configure(function(){
-//     app.set("view options", {layout: false});
-//     app.engine('html', require('ejs').renderFile);
-//     app.use('/public', express.static(__dirname +'/public'));
-// });
+app.configure(function(){
+    app.set("view options", {layout: false});
+    app.engine('html', require('ejs').renderFile);
+    app.use('/public', express.static(__dirname +'/public'));
+});
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());

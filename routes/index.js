@@ -4,20 +4,19 @@
 
 "use strict";
 
-var HttpError = require('../error').HttpError;
-var mongoose = require('../libs/mongoose');
-var path = require('path');
-var async = require('async');
+var HttpError   = require('../error').HttpError;
+var mongoose    = require('../libs/mongoose');
+var path        = require('path');
+var async       = require('async');
 
-var autorize = require('./modules/autorization');
+var autorize    = require('./modules/autorization');
 var registration = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 var admin_project = require('./modules/administration_project');
 
-module.exports = function(app, passport) {
+module.exports = function (app, passport) {
 
-<<<<<<< HEAD
     // app.get('/', function (req, res, next) {
     //     res.render('index.html');
     // });
@@ -27,17 +26,6 @@ module.exports = function(app, passport) {
     // });
 
     // app.get('/api/sign-up', function (req, res, next){
-=======
-    // app.get('/', function(req, res, next) {
-    //     res.render('frontpage.html');
-    // });
-
-    // app.get('/api/autorize', function(req, res, next) {
-    //     res.render('login.html');
-    // });
-
-    // app.get('/api/sign-up', function(req, res, next) {
->>>>>>> origin/projects_schema
     //     res.render('sign_up.html');
     // });
 
@@ -50,8 +38,8 @@ module.exports = function(app, passport) {
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
-    app.get('/api/projects', checkToken, admin_project.getUserAllProject);
-    app.post('/api/projects', checkToken, admin_project.insertProject);
-    app.patch('/api/projects/:id', checkToken, admin_project.patchProject);
-    app.delete('/api/projects/:id', checkToken, admin_project.deleteProject);
+    app.post('/api/project/getUserAllProject', checkToken, admin_project.getUserAllProject);
+    app.post('/api/project/create', checkToken, admin_project.createProject);
+    app.post('/api/project/update', checkToken, admin_project.updateProject);
+    app.post('/api/project/remove', checkToken, admin_project.removeProject);
 };

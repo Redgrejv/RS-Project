@@ -22,10 +22,10 @@ exports.insertProject = function(req, res, next) {
         dateLastModification: Date.now()
     });
 
-    new_project.save(function(err) {
+    new_project.save(function(err, project) {
         if (err) return next(err);
 
-        res.json({ message: 'Проект успешно сохранен' });
+        res.json({ message: 'Проект успешно сохранен', project: project });
     })
 };
 
@@ -34,9 +34,7 @@ exports.patchProject = function(req, res, next) {
 
     var new_title = req.body.new_title;
 
-    Project.update(
-        { createdBy: data.id_user, _id: req.params.id }, 
-        { title: new_title, dateLastModification: Date.now() }, 
+    Project.update({ createdBy: data.id_user, _id: req.params.id }, { title: new_title, dateLastModification: Date.now() },
         function(err) {
             if (err) return next(err);
 
@@ -47,20 +45,20 @@ exports.patchProject = function(req, res, next) {
 exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.remove({ users: [data.id_user], _id: req.params.id }, function(err, result) {
+    Project.remove({ createdBy: data.id_user, _id: req.params.id }, function(err, status) {
         if (err) return next(err);
 
-        if (result.result.n == 0)
+        if (status.result.n == 0)
             res.status(204).json({ message: 'Такого проекта не существует' });
         else
-            res.json({ message: 'Проект удален', result: result });
+            res.json({ message: 'Проект удален', result: status });
     })
 };
 
 exports.getUserAllProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.find({ users: data.id_user }, function(err, projects) {
+    Project.find({ createdBy: data.id_user }, function(err, projects) {
         if (err) return next(err);
 
         res.json(projects);

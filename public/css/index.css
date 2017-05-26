@@ -39,14 +39,15 @@ body {
 }
 
 .projects{
-	display: inline-block;
-	vertical-align: middle;
+	/*display: inline-block;
+	vertical-align: middle;*/
 	text-align: center;
 	color: white;
 	height: 1035px;
 	width: 252px;
 	background-color: #2e323e;
 	float: left;
+	font-size: 20px;
 }
 
 .new_project{

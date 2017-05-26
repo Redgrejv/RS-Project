@@ -38,8 +38,8 @@ module.exports = function(app, passport) {
 
     app.post('/api/info/checkEmail', info.checkEmail);
 
-    app.get('/api/project', checkToken, admin_project.getUserAllProject);
-    app.post('/api/project/', checkToken, admin_project.insertProject);
-    app.patch('/api/project/:id', checkToken, admin_project.patchProject);
-    app.delete('/api/project/:id', checkToken, admin_project.deleteProject);
+    app.get('/api/projects', checkToken, admin_project.getUserAllProject);
+    app.post('/api/projects', checkToken, admin_project.insertProject);
+    app.patch('/api/projects/:id', checkToken, admin_project.patchProject);
+    app.delete('/api/projects/:id', checkToken, admin_project.deleteProject);
 };

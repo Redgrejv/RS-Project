@@ -14,7 +14,8 @@ exports.insertProject = function(req, res, next) {
 
     var new_project = new Project({
         title: data.title,
-        _parent: [data.id_user]
+        createdBy: data.id_user,
+        dateLastModification: Date.now()
     });
 
     new_project.save(function(err) {
@@ -29,17 +30,20 @@ exports.patchProject = function(req, res, next) {
 
     var new_title = req.body.new_title;
 
-    Project.update({ _parent: [data.id_user], title: data.title, _id: req.params.id }, { title: new_title }, function(err) {
-        if (err) return next(err);
+    Project.update(
+        { createdBy: data.id_user, title: data.title, _id: req.params.id }, 
+        { title: new_title, dateLastModification: Date.now() }, 
+        function(err) {
+            if (err) return next(err);
 
-        res.json({ message: 'Данные обновлены' });
-    });
+            res.json({ message: 'Данные обновлены' });
+        });
 };
 
 exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.remove({ _parent: [data.id_user], _id: req.params.id }, function(err, result) {
+    Project.remove({ users: [data.id_user], _id: req.params.id }, function(err, result) {
         if (err) return next(err);
 
         if (result.result.n == 0)
@@ -52,7 +56,7 @@ exports.deleteProject = function(req, res, next) {
 exports.getUserAllProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.find({ _parent: [data.id_user] }, function(err, projects) {
+    Project.find({ users: [data.id_user] }, function(err, projects) {
         if (err) return next(err);
 
         res.json(projects);

@@ -4,28 +4,28 @@
 
 "use strict";
 
-var User        = require('../models/user').User;
-var HttpError   = require('../error').HttpError;
-var mongoose    = require('../libs/mongoose');
-var path        = require('path');
-var async       = require('async');
+var User = require('../models/user').User;
+var HttpError = require('../error').HttpError;
+var mongoose = require('../libs/mongoose');
+var path = require('path');
+var async = require('async');
 
-var autorize    = require('./modules/autorization');
+var autorize = require('./modules/autorization');
 var registration = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
 
-    app.get('/', function (req, res, next) {
-        res.render('frontpage.html');
+    app.get('/', function(req, res, next) {
+        res.render('index.html');
     });
 
-    app.get('/api/autorize', function (req, res, next){
+    app.get('/api/autorize', function(req, res, next) {
         res.render('login.html');
     });
 
-    app.get('/api/sign-up', function (req, res, next){
+    app.get('/api/sign-up', function(req, res, next) {
         res.render('sign_up.html');
     });
 

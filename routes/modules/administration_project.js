@@ -12,6 +12,10 @@ function getReqData(req) {
 exports.insertProject = function(req, res, next) {
     var data = getReqData(req);
 
+    if (!data.title) {
+        return next(new HttpError(400, 'Укажите название проекта'));
+    }
+
     var new_project = new Project({
         title: data.title,
         createdBy: data.id_user,
@@ -31,7 +35,7 @@ exports.patchProject = function(req, res, next) {
     var new_title = req.body.new_title;
 
     Project.update(
-        { createdBy: data.id_user, title: data.title, _id: req.params.id }, 
+        { createdBy: data.id_user, _id: req.params.id }, 
         { title: new_title, dateLastModification: Date.now() }, 
         function(err) {
             if (err) return next(err);

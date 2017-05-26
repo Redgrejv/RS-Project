@@ -22,7 +22,6 @@ var projectSchema = new Schema({
     },
     users: [{
     	type: ObjectId,
-    	unique: true,
         require: true,
     	ref: 'User'
     }],
@@ -32,6 +31,7 @@ var projectSchema = new Schema({
     },
     dateLastModification: {
         type: Date,
+        default: Date.now(),
         required: true
     }
 });

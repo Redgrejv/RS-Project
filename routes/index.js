@@ -4,10 +4,6 @@
 
 "use strict";
 
-<<<<<<< HEAD
-=======
-var User = require('../models/user').User;
->>>>>>> menu.button
 var HttpError = require('../error').HttpError;
 var mongoose = require('../libs/mongoose');
 var path = require('path');
@@ -21,20 +17,6 @@ var admin_project = require('./modules/administration_project');
 
 module.exports = function(app, passport) {
 
-<<<<<<< HEAD
-    // app.get('/', function (req, res, next) {
-    //     res.render('index.html');
-    // });
-
-    // app.get('/api/autorize', function (req, res, next){
-    //     res.render('login.html');
-    // });
-
-    // app.get('/api/sign-up', function (req, res, next){
-    // app.get('/', function(req, res, next) {
-    //     res.render('frontpage.html');
-    // });
-=======
     app.get('/', function(req, res, next) {
         res.render('index.html');
     });
@@ -46,31 +28,13 @@ module.exports = function(app, passport) {
     app.get('/api/sign-up', function(req, res, next) {
         res.render('sign_up.html');
     });
->>>>>>> menu.button
 
-    // app.get('/api/autorize', function(req, res, next) {
-    //     res.render('login.html');
-    // });
-
-    // app.get('/api/sign-up', function(req, res, next) {
-    //     res.render('sign_up.html');
-    // });
-
-    app.post('/api/autorize', autorize.autorize);
-    app.post('/api/sign-up', registration.post);
-    app.post('/api/info/checkEmail', info.checkEmail);
-
-    app.get('/api/info/version', checkToken, info.getVersion);
-    app.get('/api/user/:id', checkToken, autorize.getUserById);
-
-<<<<<<< HEAD
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);
     app.post('/api/projects', checkToken, admin_project.insertProject);
     app.patch('/api/projects/:id', checkToken, admin_project.patchProject);
     app.delete('/api/projects/:id', checkToken, admin_project.deleteProject);
-=======
+
     app.post('/api/info/checkEmail', info.checkEmail);
     app.post('/api/info/checkToken', info.validToken);
 
->>>>>>> menu.button
 };

@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     $('#create_project').click(function() {
         var project_name = $('#project_name').val();
-        var his = $(this).closest('body').find('.new_project');
+        var his = $('.new_project');
 
         if (!project_name) {
             message('Укажите название проекта');
@@ -45,8 +45,9 @@ $(document).ready(function() {
                 message(response);
             }
         });
-
-        his.hide('drop', 600);
+        his.hide('drop', 600, function() {
+            $('input', this).val('');
+        });
 
         // $('.projects').append('<div class="added_project">' +
         //     '<div class="project_name">' +

@@ -26,6 +26,7 @@ $(document).ready(function() {
         if (!div.is(e.target) &&
             div.has(e.target).length === 0) {
             div.hide('drop', 400, function() {
+                $('.new_project input').val('');
                 $('.new_project').addClass('hide');
             });
         }

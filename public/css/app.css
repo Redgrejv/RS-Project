@@ -16,7 +16,7 @@
 
 .message {
     position: absolute;
-    padding: 5px;
+    padding: 5px 12px;
     font: 18px bold white Arial;
     left: 300px;
     top: 15px;

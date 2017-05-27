@@ -157,7 +157,7 @@ body {
 }
 
 .hide {
-    visibility: hidden;
+    display: none;
 }
 
 .gradient {

@@ -24,13 +24,30 @@ $(document).ready(function() {
         }
     });
 
+    // $('#projectInsert').click(function() {
+    //     $('<div class="shadow">' +
+    //         '<div class="windowProject">' +
+    //         '<p>Укажите название проекта</p>' +
+    //         '<input type="text" name=\'title\' placeholder="Название проекта">' +
+    //         '<button>Создать проект</button>' +
+    //         '</div>' +
+    //         '</div>').appendTo($('body'));
+    // });Ц
+
 });
 
 
+var localhost = 'http://localhost:3000/';
+var apiProjects = 'api/projects/'
 
+function projectInsert(token) {
+    $.ajax({
+        type: "POST",
+        url: localhost + apiProjects,
+        success: function(response) {
 
-function projectInsert(params) {
-
+        }
+    });
 }
 
 function projectPatch(params) {

@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     $('.block-menu').click(function(e) {
 
-        console.log($(e.target));
         if ($(e.target)[0] == $('.block-menu-list').find($(e.target))[0]) {
             $('.block-menu-list').hide('fold', 300, function() {
                 $('.block-menu-list').addClass('hide');
@@ -26,3 +25,18 @@ $(document).ready(function() {
     });
 
 });
+
+
+
+
+function projectInsert(params) {
+
+}
+
+function projectPatch(params) {
+
+}
+
+function projectDelete(params) {
+
+}

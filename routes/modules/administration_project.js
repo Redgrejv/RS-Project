@@ -29,32 +29,24 @@ exports.insertProject = function(req, res, next) {
     })
 };
 
-exports.updateProject = function(req, res, next) {
-    new_project.save(function(err, project) {
-        if (err) return next(err);
-
-        res.json({ message: 'Проект успешно сохранен', project: project });
-    })
-};
-
 exports.patchProject = function(req, res, next) {
     var data = getReqData(req);
 
     var new_title = req.body.new_title;
 
-    Project.update({ _parent: [data.id_user], title: data.title, _id: data.id_project }, { title: new_title }, function(err) {
-        if (err) return next(err);
+    Project.update({ createdBy: data.id_user, _id: req.params.id }, { title: new_title, dateLastModification: Date.now() },
+        function(err) {
+            if (err) return next(err);
 
-        res.json({ message: 'Данные обновлены' });
-    });
+            res.json({ message: 'Данные обновлены' });
+        });
 };
 
 exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
+    if (err) return next(err);
 
     Project.remove({ createdBy: data.id_user, _id: req.params.id }, function(err, status) {
-        if (err) return next(err);
-
         if (status.result.n == 0)
             res.status(204).json({ message: 'Такого проекта не существует' });
         else

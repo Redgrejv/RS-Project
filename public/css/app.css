@@ -4,7 +4,7 @@
     width: auto;
     height: auto;
     color: darkorchid;
-    border: inset gold 5px;
+    border: 3px groove rgb(45, 41, 56);
     border-radius: 10px;
     left: 35px;
     top: 90%;
@@ -12,4 +12,15 @@
     box-shadow: goldenrod 0 0 12px;
     vertical-align: middle;
     background-color: #f2f5fa;
+}
+
+.message {
+    position: absolute;
+    padding: 5px;
+    font: 18px bold white Arial;
+    left: 300px;
+    top: 15px;
+    border: 3px groove rgb(45, 41, 56);
+    border-radius: 8px;
+    background-color: aliceblue;
 }

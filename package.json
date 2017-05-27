@@ -2,7 +2,7 @@
   "name": "server",
   "version": "0.0.2",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "async": "^2.3.0",
@@ -21,6 +21,7 @@
     "mongoose": "latest",
     "mpromise": "^0.5.5",
     "nconf": "latest",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",

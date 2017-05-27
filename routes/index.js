@@ -37,5 +37,6 @@ module.exports = function(app, passport) {
     app.get('/api/info/version', checkToken, info.getVersion);
 
     app.post('/api/info/checkEmail', info.checkEmail);
+    app.post('/api/info/checkToken', info.validToken);
 
 };

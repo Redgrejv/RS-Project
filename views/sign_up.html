@@ -1,53 +1,56 @@
-<!DOCTYPE html> 
-<html lang="ru"> 
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-<title>Registration</title> 
-<link rel="icon" href="../public/image/logo.png"/> 
+<!DOCTYPE html>
+<html lang="ru">
 
-<script src="../public/lib/jquery.js"></script> 
-<link rel="stylesheet" href="../public/css/sign_up.css"> 
-<script src="../public/js/sign_up.js"></script> 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Registration</title>
+    <link rel="icon" href="../public/image/logo.png" />
 
-<script src="/socket.io/socket.io.js"></script> 
-<script src="../public/js/main.js"></script> 
+    <script src="../public/lib/jquery.js"></script>
+    <link rel="stylesheet" href="../public/css/sign_up.css">
+    <script src="../public/js/sign_up.js"></script>
 
-
-</head> 
-<body> 
-
-<header> 
-<h3>Регистрация</h3> 
-
-<a href="./index.html" id="come_back"><img src="../public/image/back.png" alt=""></a> 
-</header> 
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../public/js/main.js"></script>
 
 
-<div class="main_block"> 
+</head>
 
-<div class="reg_block"> 
-<img src="../public/image/avatar.png" alt=""> 
-<form method="POST" name="sign_up"> 
+<body>
 
-<!--<label for="login"></label> 
-<input id="login" type="text" name="login" placeholder="Логин" required>--> 
-<input id="first_name" type="text" name="first_name" placeholder="Имя" required> 
-<input id="last_name" type="text" name="last_name" placeholder="Фамилия" required> 
-<input id="email" type="email" name="email" placeholder="Email" required> 
+    <header>
+        <h3>Регистрация.</h3>
 
-<!--<input id="tel" type="tel" name="tel" placeholder="Мобильный телефон" required>--> 
+        <a href="./index.html" id="come_back"><img src="../public/image/back.png" alt=""></a>
+    </header>
 
-<input id="password" type="password" name="password" placeholder="Пароль" required> 
 
-<label for="password"></label> 
-<input id="confirm_password" type="password" name="confirm_password" placeholder="Подтвердить пароль" required> 
-<label for="confirm_password"></label> 
-<link rel="stylesheet" href="../public/css/app.css"> 
+    <div class="main_block">
 
-<button type="submit" class="uppercase">Зарегестрироваться</button> 
-</form> 
-</div> 
+        <div class="reg_block">
+            <img src="../public/image/avatar.png" alt="">
+            <form method="POST" name="sign_up">
 
-</div> 
-</body> 
+                <!--<label for="login"></label> 
+<input id="login" type="text" name="login" placeholder="Логин" required>-->
+                <input id="first_name" type="text" name="first_name" placeholder="Имя" required>
+                <input id="last_name" type="text" name="last_name" placeholder="Фамилия" required>
+                <input id="email" type="email" name="email" placeholder="Email" required>
+
+                <!--<input id="tel" type="tel" name="tel" placeholder="Мобильный телефон" required>-->
+
+                <input id="password" type="password" name="password" placeholder="Пароль" required>
+
+                <label for="password"></label>
+                <input id="confirm_password" type="password" name="confirm_password" placeholder="Подтвердить пароль" required>
+                <label for="confirm_password"></label>
+                <link rel="stylesheet" href="../public/css/app.css">
+
+                <button type="submit" class="uppercase">Зарегестрироваться</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+
 </html>

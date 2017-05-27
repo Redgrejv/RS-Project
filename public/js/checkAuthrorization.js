@@ -8,7 +8,7 @@ $(document).ready(function() {
             .appendTo($('body'));
 
         setTimeout(function() {
-            window.location.href = pathAutorize;
+            window.location.href = 'login.html';
         }, 1500);
     }
 });

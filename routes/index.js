@@ -17,17 +17,21 @@ var admin_project = require('./modules/administration_project');
 
 module.exports = function(app, passport) {
 
-    app.get('/', function(req, res, next) {
-        res.render('index.html');
-    });
+    // app.get('/', function(req, res, next) {
+    //     res.render('index.html');
+    // });
 
-    app.get('/api/autorize', function(req, res, next) {
-        res.render('login.html');
-    });
+    // app.get('/api/autorize', function(req, res, next) {
+    //     res.render('login.html');
+    // });
 
-    app.get('/api/sign-up', function(req, res, next) {
-        res.render('sign_up.html');
-    });
+    // app.get('/api/sign-up', function(req, res, next) {
+    //     res.render('sign_up.html');
+    // });
+
+    app.post('/api/autorize', autorize.autorize);
+    app.post('/api/sign-up', registration.post);
+
 
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);
     app.post('/api/projects', checkToken, admin_project.insertProject);

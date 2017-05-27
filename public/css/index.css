@@ -50,6 +50,26 @@ body {
 
 .new_project {
     width: auto;
+    position: absolute;
+    left: 252px;
+    top: 66px;
+    background-color: #383c47;
+    padding: 4px 16px;
+}
+
+.new_project span {
+    float: left;
+    margin-right: 10px;
+}
+
+.new_project input {
+    width: 125px;
+    padding-left: 5px;
+}
+
+.new_project button {
+    margin-left: 115px;
+    width: 134px;
 }
 
 .added_project {

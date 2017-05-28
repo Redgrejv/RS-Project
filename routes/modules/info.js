@@ -37,5 +37,5 @@ module.exports.checkToken = function(req, res, next) {
         return next(new HttpError(400, 'Токен не валидный!'));
     }
 
-    req.json({ message: 'Токен валидный', status: true });
+    res.json({ message: 'Токен валидный', status: true });
 };

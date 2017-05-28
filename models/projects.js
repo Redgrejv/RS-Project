@@ -3,7 +3,7 @@
  */
 
 
-var HttpError   =   require('../error').HttpError;
+var HttpError = require('../error').HttpError;
 
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
@@ -16,14 +16,13 @@ var projectSchema = new Schema({
     },
     createdBy: {
         type: ObjectId,
-        unique: true,
         require: true,
         ref: 'User'
     },
     users: [{
-    	type: ObjectId,
+        type: ObjectId,
         require: true,
-    	ref: 'User'
+        ref: 'User'
     }],
     dateCreated: {
         type: Date,

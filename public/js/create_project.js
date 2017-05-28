@@ -44,7 +44,7 @@ $(document).ready(function() {
             },
             error: function(response) {
                 console.log(response);
-                message(response);
+                message(response.message);
             }
         });
         his.hide('drop', 600, function() {

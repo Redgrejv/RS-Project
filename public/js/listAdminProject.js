@@ -32,7 +32,7 @@ $(document).ready(function() {
     //         '<button>Создать проект</button>' +
     //         '</div>' +
     //         '</div>').appendTo($('body'));
-    // });Ц
+    // });
 
 });
 

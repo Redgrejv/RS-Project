@@ -216,11 +216,11 @@ body {
 }
 
 .block-menu-list li:nth-child(3) {
-    background: gray url('../image/delete-circle.png') no-repeat left;
+    background: gray url('../image/exit-to-app.png') no-repeat left;
 }
 
 .block-menu-list li:nth-child(3):hover {
-    background: darkgray url('../image/delete-circle.png') no-repeat left;
+    background: darkgray url('../image/exit-to-app.png') no-repeat left;
 }
 
 .block-menu-list li:hover {

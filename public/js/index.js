@@ -90,3 +90,11 @@
 //     }
 //   return true;
 // }
+
+
+$(document).ready(function() {
+    $('#exit').click(function() {
+        localStorage.setItem('token', '');
+        window.location.href = 'index.html';
+    })
+});

@@ -95,7 +95,7 @@ body {
     background-color: #292d38;
 }
 
-.project_name {
+.project_name p {
     width: 200px;
     position: center;
     text-align: left;

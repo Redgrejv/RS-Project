@@ -6,5 +6,5 @@ function showMessage(text) {
         $('.message').hide('drop', 500, function() {
             $(this).remove();
         })
-    }, 900);
+    }, 1200);
 }

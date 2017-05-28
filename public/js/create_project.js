@@ -1,10 +1,7 @@
 $(document).ready(function() {
 
     function message(text) {
-        $('<div class="message"><span>' + text + '</span></div>')
-            .appendTo($('body'))
-            .css('display', 'none')
-            .show('highlight', 500);
+        showMessage(text);
 
         setTimeout(function() {
             $('.message').hide('drop', 500, function() {
@@ -19,6 +16,13 @@ $(document).ready(function() {
 
         if (!project_name) {
             message('Укажите название проекта');
+            return false;
+        }
+
+        console.log(project_name.length);
+
+        if (project_name.length > 20) {
+            message('Имя проекта слишком длинное. не более 20 символов');
             return false;
         }
 

@@ -75,6 +75,7 @@ body {
 .added_project {
     display: inline-block;
     vertical-align: middle;
+    text-align: left;
     height: 49px;
     background-color: #2e323e;
     width: 100%;
@@ -95,9 +96,10 @@ body {
 }
 
 .project_name {
-    width: 227px;
+    width: 200px;
     position: center;
-    text-align: center;
+    text-align: left;
+    padding-left: 27px;
     float: left;
 }
 
@@ -123,6 +125,7 @@ body {
     display: inline-block;
     color: black;
     width: 25px;
+    text-align: center;
 }
 
 .config:hover {

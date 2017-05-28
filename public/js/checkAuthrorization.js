@@ -1,12 +1,10 @@
-var localhost = 'http:localhost:3000'
-var pathAutorize = '/api/autorize';
+"use strict";
 
 $(document).ready(function() {
     var token = localStorage.getItem('token');
     if (!token) {
 
-        $('<div class="message"><span>Вы не авторизованы. Сейчас вы будете перенаправлены на страницу входа</span></div>')
-            .appendTo($('body'));
+        showMessage('Вы не авторизованы. Сейчас вы будете перенаправлены на страницу входа');
 
         setTimeout(function() {
             window.location.href = 'login.html';

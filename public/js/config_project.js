@@ -68,6 +68,7 @@ $(document).ready(function() {
                     success: function(res) {
                         showMessage(res.message);
                         patch_block.find('.project_name p').text(new_title);
+                        $('.task_panel h3').text(new_title);
                     },
                     error: function(res) {
                         console.log(res);

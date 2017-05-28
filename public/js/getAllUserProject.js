@@ -9,11 +9,20 @@ $(document).ready(function() {
         },
         success: function(response) {
             if (response.length > 0) {
-                console.log(response);
                 $(response).each(function(index) {
                     $('.projects').append('<div class="added_project" id="' + this._id + '">' +
                         '<div class="project_name">' +
                         '<p>' + this.title + '</p>' +
+                        '</div>' +
+                        '<div class="config">' +
+                        '<ul class="hide">' +
+                        '<li title="Изменить данные проекта">' +
+                        '<img src="../public/image/tooltip-edit.png" alt="">' +
+                        '</li>' +
+                        '<li title="Удалить этот проект">' +
+                        '<img src="../public/image/delete-forever.png" alt="">' +
+                        '</li>' +
+                        '</ul>' +
                         '</div>' +
                         '</div>');
                 })

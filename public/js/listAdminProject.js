@@ -24,16 +24,6 @@ $(document).ready(function() {
         }
     });
 
-    // $('#projectInsert').click(function() {
-    //     $('<div class="shadow">' +
-    //         '<div class="windowProject">' +
-    //         '<p>Укажите название проекта</p>' +
-    //         '<input type="text" name=\'title\' placeholder="Название проекта">' +
-    //         '<button>Создать проект</button>' +
-    //         '</div>' +
-    //         '</div>').appendTo($('body'));
-    // });
-
 });
 
 

@@ -63,15 +63,34 @@ setInterval(function(){
     checked();
     sizeOk=form.find('.ok').length;
     if(sizeOk>1){
-        btn.attr('disabled','true');
+        btn.attr('disabled','false');
         btn.removeClass('disable');
     }
     else{
-        btn.attr('disabled','false');
+        btn.attr('disabled','true');
         btn.addClass('disable');
     }
 },500);
 
+form.submit(function(event){
+	event.parentDefault();
+});
 
+btn.click(function(evet){
+	$.ajax({
+		url: 'http://localhost:3000/api/autorize',
+		type: 'POST',
+		data: {email: $('#email').val(),
+			   password: $('#password').val()},
+		success: function(data){
+				localStorage.setItem('token', data.token);
+				windows.location.href='index.html';
+		},
+		error: function(data){
+			 $('.lpass').text('Oshibka');		
+		}
+
+		})
+});
 })
 //А-ЯёЁ регулярка кирилица

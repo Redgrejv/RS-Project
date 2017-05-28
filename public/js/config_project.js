@@ -51,4 +51,36 @@ $(document).ready(function() {
         }
     });
 
+    $('.projects').on('click', '.patch', function() {
+
+        var patch_block = $(this).parents('.added_project');
+        var id = patch_block.attr('id');
+        var new_title = prompt('Введите новое название проекта');
+
+        if (new_title) {
+            if (new_title.length <= 26) {
+
+                $.ajax({
+                    type: "PATCH",
+                    url: "http://localhost:3000/api/projects/" + id,
+                    headers: { 'Authorization': localStorage.getItem('token') },
+                    data: { new_title: new_title },
+                    success: function(res) {
+                        showMessage(res.message);
+                        patch_block.find('.project_name p').text(new_title);
+                    },
+                    error: function(res) {
+                        console.log(res);
+                        showMessage('Ошибка изменения имени проекта: ' + response.errorText);
+                    }
+                });
+
+            } else {
+                showMessage('Проект не переименован. Новое имя должно быть меньше 26 символов.');
+            }
+        } else {
+            showMessage('Проект не переименован. Новое имя не должно быть пустым');
+
+        }
+    })
 });

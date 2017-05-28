@@ -33,6 +33,7 @@ $(document).ready(function() {
             data: { title: project_name },
             headers: { 'Authorization': localStorage.getItem('token') },
             success: function(response) {
+                console.log(response);
                 $('.projects').append(
                     '<div class="added_project" id="' + response.project._id + '">' +
                     '<div class="project_name">' +
@@ -42,6 +43,7 @@ $(document).ready(function() {
                 );
             },
             error: function(response) {
+                console.log(response);
                 message(response);
             }
         });

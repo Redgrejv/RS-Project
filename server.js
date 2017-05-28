@@ -31,6 +31,12 @@ app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.cookieParser());
 
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Method', 'GET POST DELETE PATCH');
+    next();
+});
 // app.use(express.session({
 //     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
 //     resave: true,
@@ -68,9 +74,14 @@ app.use(function(err, req, res, next) {
     }
 });
 
+// app.set(function(req, res, next) {
+// res.setHeader('Access-Control-Allow-Origin', '*');
+// res.setHeader('Access-Control-Allow-Headers', 'GET POST DELETE PATCH')
+// });
+
 var server = http.createServer(app);
 
-server.listen(config.get('port'), function() {
+server.listen(config.get('port'), function(req, res) {
     console.log('Express server listening on port ' + config.get('port'));
 });
 

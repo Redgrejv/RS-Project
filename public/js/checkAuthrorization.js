@@ -2,8 +2,8 @@ var localhost = 'http:localhost:3000'
 var pathAutorize = '/api/autorize';
 
 $(document).ready(function() {
-    var valid_token = checkToken(localStorage.getItem('token'));
-    if (!valid_token) {
+    var token = localStorage.getItem('token');
+    if (!token) {
 
         $('<div class="message"><span>Вы не авторизованы. Сейчас вы будете перенаправлены на страницу входа</span></div>')
             .appendTo($('body'));
@@ -20,10 +20,17 @@ function checkToken(token) {
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/api/info/checkToken",
-        heders: { 'Authorization': token },
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         success: function(response) {
             return true;
+        },
+        error: function(response) {
+            return false;
         }
+    }).fail(function(jqXHR) {
+        console.log(jqXHR.statusText);
     });
-    return false;
 }

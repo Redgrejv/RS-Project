@@ -44,9 +44,10 @@ exports.patchProject = function(req, res, next) {
 
 exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
-    if (err) return next(err);
 
     Project.remove({ createdBy: data.id_user, _id: req.params.id }, function(err, status) {
+        if (err) return next(err);
+
         if (status.result.n == 0)
             res.status(204).json({ message: 'Такого проекта не существует' });
         else

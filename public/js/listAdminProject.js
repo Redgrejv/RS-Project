@@ -25,25 +25,3 @@ $(document).ready(function() {
     });
 
 });
-
-
-var localhost = 'http://localhost:3000/';
-var apiProjects = 'api/projects/'
-
-function projectInsert(token) {
-    $.ajax({
-        type: "POST",
-        url: localhost + apiProjects,
-        success: function(response) {
-
-        }
-    });
-}
-
-function projectPatch(params) {
-
-}
-
-function projectDelete(params) {
-
-}

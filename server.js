@@ -33,8 +33,8 @@ app.use(express.cookieParser());
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-    res.setHeader('Access-Control-Allow-Method', 'GET POST DELETE PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
+    res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD']);
     next();
 });
 // app.use(express.session({

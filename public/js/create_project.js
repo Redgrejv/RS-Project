@@ -2,12 +2,6 @@ $(document).ready(function() {
 
     function message(text) {
         showMessage(text);
-
-        setTimeout(function() {
-            $('.message').hide('drop', 500, function() {
-                $(this).remove();
-            })
-        }, 900);
     }
 
     $('#create_project').click(function() {
@@ -21,8 +15,8 @@ $(document).ready(function() {
 
         console.log(project_name.length);
 
-        if (project_name.length > 20) {
-            message('Имя проекта слишком длинное. не более 20 символов');
+        if (project_name.length > 26) {
+            message('Имя проекта слишком длинное. не более 26 символов');
             return false;
         }
 
@@ -43,8 +37,17 @@ $(document).ready(function() {
                     '<div class="project_name">' +
                     '<p>' + response.project.title + '</p>' +
                     '</div>' +
-                    '</div>'
-                );
+                    '<div class="config">' +
+                    '<ul class="hide">' +
+                    '<li title="Изменить данные проекта" class="patch">' +
+                    '<img src="../public/image/tooltip-edit.png" alt="">' +
+                    '</li>' +
+                    '<li title="Удалить этот проект" class="delete">' +
+                    '<img src="../public/image/delete-forever.png" alt="">' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '</div>');
             },
             error: function(response) {
                 console.log(response);
@@ -54,13 +57,6 @@ $(document).ready(function() {
         his.hide('drop', 600, function() {
             $('input', this).val('');
         });
-
-        // $('.projects').append('<div class="added_project">' +
-        //     '<div class="project_name">' +
-        //     '<p>' + project_name + '</p>' +
-        //     '</div>' +
-        //     '</div>');
-        // his.hide();
     });
 
 });

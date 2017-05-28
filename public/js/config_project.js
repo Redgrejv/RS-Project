@@ -1,3 +1,5 @@
+"use strict"
+
 $(document).ready(function() {
 
     $('.projects').on('click', '.config', function(e) {
@@ -15,14 +17,38 @@ $(document).ready(function() {
         }
     });
 
-    // $(document).mouseup(function(e) {
-    //     var div = $(".config ul");
-    //     if (!div.is(e.target) &&
-    //         div.has(e.target).length === 0) {
-    //         div.hide('drop', 300, function() {
-    //             $('ul', '.config').addClass('hide');
-    //         });
-    //     }
-    // });
+    $('.projects').on('click', '.patch', function() {
+
+        console.log('Пропатчили');
+
+    });
+
+    $('.projects').on('click', '.delete', function() {
+
+        var delete_block = $(this).parents('.added_project');
+        var title = delete_block.find('.project_name p').text();
+        var id = delete_block.attr('id');
+        var confirm = prompt('Подтвердите удаление проекта, введитя его название: "' + title + '"');
+
+        if (confirm === title) {
+
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:3000/api/projects/" + id,
+                headers: { 'Authorization': localStorage.getItem('token') },
+                success: function(response) {
+                    delete_block.remove();
+                    showMessage('Проект успешно удален');
+                },
+                error: function(response) {
+                    console.log(response);
+                    showMessage('Ошибка удаления: ' + response.message);
+                }
+            });
+
+        } else {
+            showMessage('Проект не удален. Введенные данные не совпадают с именем');
+        }
+    });
 
 });

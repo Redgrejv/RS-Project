@@ -32,7 +32,6 @@ module.exports = function(app, passport) {
     app.post('/api/autorize', autorize.autorize);
     app.post('/api/sign-up', registration.post);
 
-
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);
     app.post('/api/projects', checkToken, admin_project.insertProject);
     app.patch('/api/projects/:id', checkToken, admin_project.patchProject);

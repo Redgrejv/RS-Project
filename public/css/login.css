@@ -89,7 +89,6 @@ header img{
 	color: white;
 	font: bold 14px Play-Regular;
 	cursor: pointer;
-	active: false;
 }
 
 .reg_block button.disable, .reg_block button.disable:hover{

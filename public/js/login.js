@@ -7,7 +7,6 @@ $(document).ready(function () {
     form.find('.field').addClass('empty');
 
     function checked(){
-
         form.find('.field').each(function(){
             if($(this).val()!=''){
                 $(this).removeClass('empty');
@@ -34,6 +33,7 @@ function EmptyFilds(){
                 $(this).removeClass('empty');
                 $(this).addClass('ok');
                 $('.lmail').text('');
+                ButtonDisable();
             }else{
             $('.lmail').text('Почта введена некоректно');
         }
@@ -50,6 +50,7 @@ else {
                 $(this).removeClass('empty');
                 $(this).addClass('ok');
                 $('.lpass').text('');
+                ButtonDisable();
             }else{
             $('.lpass').text('Пароль введен некоректно');
         }
@@ -59,24 +60,24 @@ else {
     }
     });
 
-setInterval(function(){
-    checked();
-    sizeOk=form.find('.ok').length;
+function ButtonDisable(){
+ sizeOk=$('.rf').find('.ok').length;
     if(sizeOk>1){
-        btn.attr('disabled','false');
-        btn.removeClass('disable');
+        $('#sign_in').prop('disabled',false);
+        $('#sign_in').removeClass('disable');
     }
     else{
-        btn.attr('disabled','true');
-        btn.addClass('disable');
+        $('#sign_in').prop('disabled',true);
+        $('#sign_in').addClass('disable');
     }
+}
+
+setInterval(function(){
+    checked();
 },500);
 
-form.submit(function(event){
-	event.parentDefault();
-});
 
-btn.click(function(evet){
+$('#sign_in').click(function(evet){
 	$.ajax({
 		url: 'http://localhost:3000/api/autorize',
 		type: 'POST',
@@ -84,10 +85,10 @@ btn.click(function(evet){
 			   password: $('#password').val()},
 		success: function(data){
 				localStorage.setItem('token', data.token);
-				windows.location.href='index.html';
+				window.location.href='index.html';
 		},
 		error: function(data){
-			 $('.lpass').text('Oshibka');		
+			 $('.lpass').text(data.errorText);		
 		}
 
 		})

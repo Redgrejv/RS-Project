@@ -1,92 +1,143 @@
-/*function validate(form) {
-        var reason = "";
+// var form = null;
 
-        if (form.login.value == "" || /[^a-zA-z]/.sign_up(form.login.value))
-            reason += "Ошибка имени ";
-        if (form.password.value == "" || /[^0-9]/.sign_up(form.password.value))
-            reason += "Ошибка пароля ";
-        if (form.email.value == "" || /[^*@*.*]/.sign_up(form.password.value))
-            reason += "ошибка почты ";
-        if (reason == "")
-            return true;  
-        else {
-            alert(reason);  
-            return false;
-        }
-    }
-*/
+// $(document).ready(function () {
+//  var form = $(document.forms['sign_up']);
 
-var form = null;
+//     $('button', form).on('click', function (event) {
+//         event.preventDefault();
+//         function error(data) {
+
+//             $('<div><span>'+data.responseJSON.message+'</span></span></div>')
+//                 .addClass('new_user')
+//                 .appendTo('body')
+//                 .fadeOut(1200, function () {$(this).remove();});
+//         }
+
+//         if(check(form)){
+//             $.ajax({
+//                 url: 'http://localhost:3000/api/sign-up',
+//                 method: 'POST',
+//                 data: form.serialize(),
+//                 statusCode: {
+//                     200: function (data) {
+//                         $('<div><span>Успешно</span></span></div>')
+//                             .addClass('new_user')
+//                             .appendTo('body')
+//                             .fadeOut(1200, function () {$(this).remove(); window.location.href = '/'});
+//                     },
+//                     400: error,
+//                     500: error
+//                 }
+
+//             });
+//         }
+
+//         return false;
+//     });
+
+//     $('#come_back').click(function () {
+//         window.location.href = '/';
+//     })
+
+// });
 
 $(document).ready(function () {
- var form = $(document.forms['sign_up']);
-
-    $('button', form).on('click', function (event) {
+    var form = $('.reg_form');
+    var btn=form.find('.sign_in');
+    form.submit(function (event) {
         event.preventDefault();
-        function error(data) {
-
-            $('<div><span>'+data.responseJSON.message+'</span></span></div>')
-                .addClass('new_user')
-                .appendTo('body')
-                .fadeOut(1200, function () {$(this).remove();});
-        }
-
-        if(check(form)){
-            $.ajax({
-                url: 'http://localhost:3000/api/sign-up',
-                method: 'POST',
-                data: form.serialize(),
-                statusCode: {
-                    200: function (data) {
-                        $('<div><span>Успешно</span></span></div>')
-                            .addClass('new_user')
-                            .appendTo('body')
-                            .fadeOut(1200, function () {$(this).remove(); window.location.href = '/'});
-                    },
-                    400: error,
-                    500: error
-                }
-
-            });
-        }
-
-        return false;
     });
+    form.find('.field').addClass('empty');
 
-    $('#come_back').click(function () {
-        window.location.href = '/';
-    })
+    function checked(){
+        form.find('.field').each(function(){
+            if($(this).val()!=''){
+                $(this).removeClass('empty');
+                }
+            else{
+                $(this).addClass('empty');
+            }
+        });
+    }
 
+function EmptyFilds(){
+    form.find('.empty').css({'border-bottom':'1px solid red'});
+
+    setTimeout(function(){
+        form.find('.empty').removeAttr('style');
+
+    },500);
+}
+
+    form.find('#email').blur(function(){
+            var pattern=/^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
+            if($(this).val() != '') {
+            if(pattern.test($(this).val())){
+                $(this).removeClass('empty');
+                $(this).addClass('ok');
+                $('.lmail').text('');
+                ButtonDisable();
+            }else{
+            $('.lmail').text('Почта введена некоректно');
+        }
+}
+else {
+    $('.lmail').text('Введите почту');
+}
 });
 
-function check(form) {
-    form = form[0];
-    var first_name = form.first_name.value;
-    var last_name = form.last_name;
-    var email = form.email.value;
-    var password = form.password.value;
-    // var message = form.email.value;
-    var confirm_password = form.confirm_password.value;
-    var bad = "";
-
-    if (first_name.length < 3)
-       bad += "Имя слишком короткое" + "\n";
-    if (first_name.length > 32)
-       bad += "Имя слишком длинное" + "\n";
-   if (last_name.length < 3)
-       bad += "Фамилия слишком короткая" + "\n";
-    if (last_name.length > 32)
-       bad += "Фамилия слишком длинная" + "\n";
-    if (password.length < 3)
-        bad += "Пароль слишком короткий" + "\n";
-    if (password.length > 15)
-        bad += "Пароль слишком длинный" + "\n";
-   // if (email.length < 3)
-   //     bad += "Неверно введённая почта" + "\n";
-    if (bad != "") {
-        bad += "Неверно заполнена форма:" + "\n" + bad;
-        alert(bad);
-        return false;
+    form.find('#password').blur(function(){
+            var regular=/^([a-zA-Z0-9]){2,20}$/;
+            if($(this).val() != '') {
+            if(regular.test($(this).val())){
+                $(this).removeClass('empty');
+                $(this).addClass('ok');
+                $('.lpass').text('');
+                ButtonDisable();
+            }else{
+            $('.lpass').text('Пароль введен некоректно');
+        }
     }
-  return true;
+    else{ 
+        $('.lpass').text('Введите пароль');
+    }
+    });
+
+function ButtonDisable(){
+ sizeOk=$('.rf').find('.ok').length;
+    if(sizeOk>1){
+        $('#sign_in').prop('disabled',false);
+        $('#sign_in').removeClass('disable');
+    }
+    else{
+        $('#sign_in').prop('disabled',true);
+        $('#sign_in').addClass('disable');
+    }
 }
+
+setInterval(function(){
+    checked();
+},500);
+
+form.submit(function(event){
+    event.preventDefault();
+});
+
+$('#sign_in').click(function(evet){
+    $.ajax({
+        url: 'http://localhost:3000/api/autorize',
+        type: 'POST',
+        data: {email: $('#email').val(),
+               password: $('#password').val()},
+        success: function(data){
+                localStorage.setItem('token', data.token);
+                window.location.href='index.html';
+        },
+        error: function(data){
+             $('.lpass').text(data.errorText);      
+        }
+
+        })
+});
+})
+//А-ЯёЁ регулярка кирилица

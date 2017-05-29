@@ -146,7 +146,7 @@ $('#sign_up').click(function(evet){
                 window.location.href='index.html';
         },
         error: function(data){
-             $('.error').text(data.errorText);      
+             $('.error').text(data.responseJSON.message);      
         }
 
         })

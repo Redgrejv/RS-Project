@@ -31,6 +31,7 @@ header h3 {
 header a {
     display: inline-block;
     color: white;
+    float: right;
     text-decoration: none;
 }
 
@@ -68,7 +69,7 @@ header img {
 .reg_block input {
     border: none;
     border-bottom: 1px solid lightgray;
-    margin-top: 10%;
+    margin: 5% 0;
     width: 100%;
     font: 15px Play-Regular;
 }
@@ -84,6 +85,19 @@ header img {
     color: white;
     font: bold 14px Play-Regular;
     cursor: pointer;
+}
+
+.reg_block button.disable, .reg_block button.disable:hover{
+    background: #afdde6;
+    cursor: default;
+}
+
+.reg_block label{
+    margin-top: 15px;
+    margin-bottom: 0;
+    font: 15px Play-Regular;
+    text-align: center;
+    color: red;
 }
 
 #sign_up {
@@ -116,3 +130,4 @@ header img {
     }
     header {}
 }
+

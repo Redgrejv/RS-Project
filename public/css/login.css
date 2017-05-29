@@ -7,7 +7,7 @@ body{
 	width: 100%;
 	height: 100%;
 	background: #f2f5fa;
-	position: absolute;
+	padding: 0;
 	margin: 0;
 }
 
@@ -73,6 +73,11 @@ header img{
 	font: 15px Play-Regular;
 }
 
+.reg_block .empty{
+	border:none;
+	border-bottom: 1px solid red;
+}
+
 .reg_block button{
 	width: 65%;
 	margin: 15% 17% 0;
@@ -86,6 +91,11 @@ header img{
 	cursor: pointer;
 }
 
+.reg_block button.disable, .reg_block button.disable:hover{
+	background: #afdde6;
+	cursor: default;
+}
+
 #sign_up{
 	margin-top: 0;
 	}
@@ -97,11 +107,19 @@ header img{
 	text-align: center;
 }
 
+.reg_block label{
+	margin-top: 15px;
+	margin-bottom: 0;
+	font: 15px Play-Regular;
+	text-align: center;
+	color: red;
+}
+
 .reg_block form input:focus {
  	outline: none; 
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
 	.reg_block button{
 		width: 100%;
 		margin-left: 0; 
@@ -110,12 +128,16 @@ header img{
 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1024px) {
 	.reg_block {
-		margin: 4% 3% 0;
-		width: 60%;
+		margin: 15% 5% 0;
+		width: 80%;
 	}
-	header{
-
+	.reg_block button{
+		font: bold 20px Play-Regular;
+		height: 55px; 
+	}
+	.reg_block input{
+		font: 28px Play-Regular;
 	}
 }

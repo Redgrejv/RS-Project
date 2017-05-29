@@ -15,4 +15,5 @@ bin/
 RS-Project.sln
 RS-Project.njsproj
 RS-Project.iml
+build/
 

@@ -1,0 +1,23 @@
+//colors
+$color_fuchsia_blue_approx: darkorchid;
+$gold:  gold;
+$golden_grass: goldenrod;
+$color_black_squeeze_approx: #f2f5fa;
+
+.new_user {
+	padding: 5px;
+	position: absolute;
+	width: auto;
+	height: auto;
+	color: $color_fuchsia_blue_approx;
+	border: inset $gold 5px;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 10px;
+	left: 35px;
+	top: 90%;
+	font-weight: bold;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: $golden_grass 0 0 12px;
+	vertical-align: middle;
+	background-color: $color_black_squeeze_approx;
+}

@@ -1,0 +1,89 @@
+//colors
+$white: #ffffff;
+$color_ship_gray_approx: #383c47;
+$color_charade_approx: #292d38;
+$black: black;
+$color_geyser_approx: #d9dce3;
+$color_outer_space_approx: #2e323e;
+$color_black_squeeze_approx: #f2f5fa;
+
+//fonts
+$font_0: Arial;
+
+body {
+	margin: 0;
+	left: 0;
+	width: 1920px;
+	height: 100%;
+}
+.main_block {
+	width: 100%;
+	margin-right: 0;
+	margin-left: 0;
+	padding: 0;
+}
+.header {
+	height: 66px;
+	line-height: 45px;
+	color: $white;
+	background-position: 25px;
+	vertical-align: middle;
+	font: 20px $font_0;
+}
+.to_do {
+	height: 66px;
+	background: $color_ship_gray_approx no-repeat left;
+	width: 252px;
+	float: left;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: -5px 5px 4px 0 $color_charade_approx;
+}
+.task_panel {
+	text-align: center;
+	height: 66px;
+	width: 1668px;
+	float: right;
+	color: $black;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 0 5px 4px 0 $color_geyser_approx;
+}
+.projects {
+	text-align: center;
+	color: $white;
+	height: 1035px;
+	width: 252px;
+	background-color: $color_outer_space_approx;
+	float: left;
+	font-size: 20px;
+}
+.new_project {
+	display: none;
+	width: auto;
+}
+.added_project {
+	display: inline-block;
+	vertical-align: middle;
+	height: 49px;
+	background-color: $color_outer_space_approx;
+	width: 100%;
+	color: $white;
+	&:hover {
+		background-color: $color_charade_approx;
+	}
+}
+.show_add_project {
+	height: 49px;
+	&:hover {
+		background-color: $color_charade_approx;
+	}
+}
+.project_name {
+	position: center;
+}
+.tasks {
+	text-align: center;
+	float: right;
+	width: 1668px;
+	background-color: $color_black_squeeze_approx;
+	min-height: 1035px;
+}

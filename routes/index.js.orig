@@ -4,6 +4,10 @@
 
 "use strict";
 
+<<<<<<< HEAD
+var User = require('../models/user').User;
+=======
+>>>>>>> newVersionSite
 var HttpError = require('../error').HttpError;
 var mongoose = require('../libs/mongoose');
 var path = require('path');
@@ -17,6 +21,19 @@ var admin_project = require('./modules/administration_project');
 
 module.exports = function(app, passport) {
 
+<<<<<<< HEAD
+    app.get('/', function(req, res, next) {
+        res.render('index.html');
+    });
+
+    app.get('/api/autorize', function(req, res, next) {
+        res.render('login.html');
+    });
+
+    app.get('/api/sign-up', function(req, res, next) {
+        res.render('sign_up.html');
+    });
+=======
     // app.get('/', function(req, res, next) {
     //     res.render('index.html');
     // });
@@ -28,10 +45,9 @@ module.exports = function(app, passport) {
     // app.get('/api/sign-up', function(req, res, next) {
     //     res.render('sign_up.html');
     // });
+>>>>>>> newVersionSite
 
     app.post('/api/autorize', autorize.autorize);
-    app.get('/api/user/:id', checkToken, autorize.getUserById);
-
     app.post('/api/sign-up', registration.post);
 
     app.get('/api/projects', checkToken, admin_project.getUserAllProject);

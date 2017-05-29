@@ -107,13 +107,14 @@ header img{
 	text-align: center;
 }
 
-.reg_block .lmail, .reg_block .lpass{
+.reg_block label{
 	margin-top: 15px;
 	margin-bottom: 0;
 	font: 15px Play-Regular;
 	text-align: center;
 	color: red;
 }
+
 .reg_block form input:focus {
  	outline: none; 
 }

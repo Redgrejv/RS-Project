@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var form = $('.rf');
     var btn=form.find('.login');
+    ButtonDisable();
+
     form.submit(function (event) {
         event.preventDefault();
     });
@@ -36,10 +38,12 @@ function EmptyFilds(){
                 ButtonDisable();
             }else{
             $('.lmail').text('Почта введена некоректно');
+            $(this).removeClass('ok');
         }
 }
 else {
     $('.lmail').text('Введите почту');
+     $(this).removeClass('ok');
 }
 });
 
@@ -53,16 +57,18 @@ else {
                 ButtonDisable();
             }else{
             $('.lpass').text('Пароль введен некоректно');
+            $(this).removeClass('ok');
         }
     }
     else{ 
         $('.lpass').text('Введите пароль');
+        $(this).removeClass('ok');
     }
     });
 
 function ButtonDisable(){
  sizeOk=$('.rf').find('.ok').length;
-    if(sizeOk>1){
+    if(sizeOk==2){
         $('#sign_in').prop('disabled',false);
         $('#sign_in').removeClass('disable');
     }
@@ -78,6 +84,7 @@ setInterval(function(){
 
 
 $('#sign_in').click(function(evet){
+    event.preventDefault();
 	$.ajax({
 		url: 'http://localhost:3000/api/autorize',
 		type: 'POST',
@@ -88,10 +95,15 @@ $('#sign_in').click(function(evet){
 				window.location.href='index.html';
 		},
 		error: function(data){
-			 $('.lpass').text(data.errorText);		
+			 $('.error').text(data.responseJSON.message);		
 		}
 
 		})
+});
+
+$('#sign_up').click(function(event){
+    event.preventDefault();
+    window.location.href='sign_up.html';
 });
 })
 //А-ЯёЁ регулярка кирилица

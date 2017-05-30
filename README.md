@@ -6,6 +6,4 @@
  > 2. Install [Node.js](https://nodejs.org/en/download/) ***v7.9***
  > 3. Start MongoDB server
  > 4. In the server directory, start the console
- > 5. In the console, type ***npm install***
- > 6. In the console, type ***npm start***
- > 7. In the browser in the URL line enter the ***localhost:3000***
+ > 5. In the console, type ***npm start***

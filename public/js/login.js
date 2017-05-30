@@ -28,14 +28,13 @@ function EmptyFilds(){
     },500);
 }
 
-    form.find('#email').blur(function(){
+    form.find('#email').on('input keyup',function(){
             var pattern=/^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
             if($(this).val() != '') {
             if(pattern.test($(this).val())){
                 $(this).removeClass('empty');
                 $(this).addClass('ok');
                 $('.lmail').text('');
-                ButtonDisable();
             }else{
             $('.lmail').text('Почта введена некоректно');
             $(this).removeClass('ok');
@@ -45,16 +44,16 @@ else {
     $('.lmail').text('Введите почту');
      $(this).removeClass('ok');
 }
+ButtonDisable();
 });
 
-    form.find('#password').blur(function(){
+    form.find('#password').on('input keyup',function(){
             var regular=/^([a-zA-Z0-9]){2,20}$/;
             if($(this).val() != '') {
             if(regular.test($(this).val())){
                 $(this).removeClass('empty');
                 $(this).addClass('ok');
                 $('.lpass').text('');
-                ButtonDisable();
             }else{
             $('.lpass').text('Пароль введен некоректно');
             $(this).removeClass('ok');
@@ -64,6 +63,7 @@ else {
         $('.lpass').text('Введите пароль');
         $(this).removeClass('ok');
     }
+    ButtonDisable();
     });
 
 function ButtonDisable(){

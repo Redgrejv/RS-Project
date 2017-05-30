@@ -26,7 +26,7 @@ $(document).ready(function(){
         }, 500);
     }
 
-form.find('#first_name').blur(function(){
+form.find('#first_name').on('input keyup', function(){
     var regular=/^([a-zA-ZА-Яа-яёЁ-]){2,20}$/;
     if($(this).val()!=''){
         if(regular.test($(this).val())){
@@ -44,7 +44,7 @@ form.find('#first_name').blur(function(){
     ButtonDisable();
 });
 
-form.find('#last_name').blur(function(){
+form.find('#last_name').on('input keyup', function(){
     var regular=/^([a-zA-ZА-Яа-яёЁ-]){2,20}$/;
     if($(this).val()!=''){
         if (regular.test($(this).val())){
@@ -63,7 +63,7 @@ form.find('#last_name').blur(function(){
     ButtonDisable();
 });
 
-form.find('#email').blur(function(){
+form.find('#email').on('input keyup', function(){
     var regular=/^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
     if ($(this).val()!=''){
         if(regular.test($(this).val())){
@@ -81,7 +81,7 @@ form.find('#email').blur(function(){
     ButtonDisable();
 });
 
-form.find('#password').blur(function(){
+form.find('#password').on('input keyup', function(){
     var regular=/^([a-zA-Z0-9]){2,20}$/;
     if ($(this).val()!=''){
         if (regular.test($(this).val())){
@@ -99,7 +99,7 @@ form.find('#password').blur(function(){
     ButtonDisable();
 });
 
-form.find('#confirm_password').blur(function(){
+form.find('#confirm_password').on('input keyup', function(){
     var regular=/^([a-zA-Z0-9]){2,20}$/;
     if ($(this).val()!='' && $(this).val()===form.find('#password').val()){
         if(regular.test($(this).val())){

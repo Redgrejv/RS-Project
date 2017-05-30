@@ -16,3 +16,6 @@ RS-Project.sln
 RS-Project.njsproj
 RS-Project.iml
 /.vscode/
+*.log
+/build/
+build/

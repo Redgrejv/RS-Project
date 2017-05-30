@@ -7,7 +7,7 @@ out
 gen
 node_modules/
 template/public/vendor/
-.idea/
+/.idea/
 mongo_database/
 .vs/
 obj/
@@ -15,4 +15,7 @@ bin/
 RS-Project.sln
 RS-Project.njsproj
 RS-Project.iml
-
+/.vscode/
+*.log
+/build/
+build/

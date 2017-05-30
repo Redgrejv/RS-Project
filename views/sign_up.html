@@ -1,59 +1,57 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Registration</title>
-	<link rel="icon" href="../public/image/logo.png"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Registration</title>
+    <link rel="icon" href="../public/image/logo.png" />
+    <link rel="stylesheet" href="../public/css/app.css">
 
-	<script src="../public/lib/jquery.js"></script>
-<!--	<script src="lib/jquery-ui.js"></script>
-	<script src="lib/inputmask.min.js"></script>
-	<script src="lib/jquery.maskedinput.min.js"></script>
+    <script src="../public/lib/jquery.js"></script>
+    <link rel="stylesheet" href="../public/css/sign_up.css">
+    <script src="../public/js/sign_up.js"></script>
 
-	 <script src="lib/cross_domen_ajax.js"></script> -->
-
-	<link rel="stylesheet" href="../public/css/sign_up.css">
-	<script src="../public/js/sign_up.js"></script>
-
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="../public/js/main.js"></script>
-	<!-- <script src="lib/inputmask.min.js"></script>
-	<script src="lib/inputmask.phone.extensions.js"></script> -->
 
 </head>
+
 <body>
-	
-	<div class="header">
-		<h3>Регистрация</h3>
-		<a href="/" class="uppercase" id="come_back">Назад</a>
-	</div>
 
-	<div class="main_block">
+    <header>
+        <h3>Регистрация</h3>
 
-		<div class="reg_block">
-			<div class="avatar">
-			</div>
-			<form method="POST" name="sign_up">
+        <a href="./index.html" id="come_back"><img src="../public/image/back.png" alt=""></a>
+    </header>
 
-				<!--<label for="login"></label>
-				<input id="login" type="text" name="login" placeholder="Логин" required>-->
-				<input id="first_name" type="text" name="first_name" placeholder="Имя" required>
-				<input id="last_name" type="text" name="last_name" placeholder="Фамилия" required>
-				<input id="email" type="email" name="email" placeholder="Email" required>
+    <div class="main_block">
 
-				<!--<input id="tel" type="tel" name="tel" placeholder="Мобильный телефон" required>-->
+        <div class="reg_block">
+            <img src="../public/image/avatar.png" alt="">
+            <form method="POST" name="sign_up" class="reg_form">
 
-				<input id="password" type="password" name="password" placeholder="Пароль" required>
+                <label class ='error'></label>
 
-				<label for="password"></label>
-				<input id="confirm_password" type="password" name="confirm_password" placeholder="Подтвердить пароль" required>
-				<label for="confirm_password"></label>
-                <link rel="stylesheet" href="../public/css/app.css">
+                <input id="first_name" type="text" name="first_name" placeholder="Имя" class="field" required>
+                <label for="last_name" class="fname"></label>
 
-				<button type="submit" class="uppercase">Регистрация</button>
-			</form>
-		</div>
+                <input id="last_name" type="text" name="last_name" placeholder="Фамилия" class="field" required>
+                <label for="last_name" class="lname"></label>
 
-	</div>
+                <input id="email" type="email" name="email" placeholder="Email" class="field" required>
+                <label for="email" class="rmail"></label>
+
+                <input id="password" type="password" name="password" placeholder="Пароль" class="field" required>
+                <label for="password" class="rpass"></label>
+
+                <input id="confirm_password" type="password" name="confirm_password" placeholder="Подтвердить пароль" class="field" required>
+                <label for="confirm_password" class="rcpass"></label>
+
+                
+
+                <button type="submit" class="uppercase" id="sign_up">Зарегестрироваться</button>
+            </form>
+        </div>
+
+    </div>
 </body>
+
 </html>

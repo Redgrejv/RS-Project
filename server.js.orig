@@ -31,6 +31,16 @@ app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.cookieParser());
 
+<<<<<<< HEAD
+app.use(express.session({
+    secret: process.env.SESSION_SECRET || 'express_secret_key_session',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
+var passport = require('./models/passport');
+=======
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
@@ -43,6 +53,7 @@ app.use(function(req, res, next) {
 //     saveUninitialized: true,
 //     store: new MongoStore({mongooseConnection: mongoose.connection})
 // }));
+>>>>>>> newVersionSite
 
 // var passport = require('./models/passport');
 //
@@ -81,7 +92,11 @@ app.use(function(err, req, res, next) {
 
 var server = http.createServer(app);
 
+<<<<<<< HEAD
+server.listen(config.get('port'), function() {
+=======
 server.listen(config.get('port'), function(req, res) {
+>>>>>>> newVersionSite
     console.log('Express server listening on port ' + config.get('port'));
 });
 

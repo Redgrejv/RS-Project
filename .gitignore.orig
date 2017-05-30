@@ -15,7 +15,12 @@ bin/
 RS-Project.sln
 RS-Project.njsproj
 RS-Project.iml
+<<<<<<< HEAD
+build/
+
+=======
 /.vscode/
 *.log
 /build/
 build/
+>>>>>>> origin/newVersionSite

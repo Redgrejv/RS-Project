@@ -8,9 +8,17 @@
 	<script src="../public/lib/jquery.js"></script>
 
 	<link rel="stylesheet" href="../public/css/login.css">
+<<<<<<< HEAD
+	<script src="../public/js/login.js"></script>
+	<link rel="stylesheet" href="../public/css/app.scss">
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../public/js/main.js"></script>
+=======
 	 <script src="../public/js/login.js"></script>
 	<!--<script src="/socket.io/socket.io.js"></script>
 	<script src="../public/js/main.js"></script> -->
+>>>>>>> origin/newVersionSite
 
 </head>
 <body>

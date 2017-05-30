@@ -95,6 +95,6 @@
 $(document).ready(function() {
     $('#exit').click(function() {
         localStorage.setItem('token', '');
-        window.location.href = 'index.html';
+        window.location.href = '/views/index.html';
     })
 });

@@ -19,12 +19,6 @@ var mongoose = require('./libs/mongoose');
 
 var app = express();
 
-app.configure(function() {
-    app.set("view options", { layout: false });
-    app.engine('html', require('ejs').renderFile);
-    app.use('/public', express.static(__dirname + '/public'));
-});
-
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -37,6 +31,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD']);
     next();
 });
+
 // app.use(express.session({
 //     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
 //     resave: true,
@@ -73,11 +68,6 @@ app.use(function(err, req, res, next) {
         }
     }
 });
-
-// app.set(function(req, res, next) {
-// res.setHeader('Access-Control-Allow-Origin', '*');
-// res.setHeader('Access-Control-Allow-Headers', 'GET POST DELETE PATCH')
-// });
 
 var server = http.createServer(app);
 

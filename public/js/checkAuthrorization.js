@@ -7,7 +7,7 @@ $(document).ready(function() {
         showMessage('Вы не авторизованы. Сейчас вас перенаправят на страницу входа');
 
         setTimeout(function() {
-            window.location.href = 'login.html';
+            window.location.href = '/views/login.html';
         }, 2000);
     }
 });

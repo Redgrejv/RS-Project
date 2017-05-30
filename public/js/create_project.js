@@ -32,7 +32,7 @@ $(document).ready(function() {
             headers: { 'Authorization': localStorage.getItem('token') },
             success: function(response) {
                 console.log(response);
-                $('.projects').append(
+                $('.menu-projects-list').append(
                     '<div class="added_project" id="' + response.project._id + '">' +
                     '<div class="project_name">' +
                     '<p>' + response.project.title + '</p>' +

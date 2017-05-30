@@ -47,8 +47,9 @@ var config = {
     },
     tunnel: true,
     host: 'localhost',
-    port: 3333,
-    logPrefix: "Frontend_Degire"
+    port: 3000,
+    logPrefix: "Frontend_Degire",
+    path: "views/index.html"
 };
 
 gulp.task('html:build', function () {

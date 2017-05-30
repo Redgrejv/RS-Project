@@ -12,10 +12,8 @@ mongo_database/
 .vs/
 obj/
 bin/
-RS-Project.sln
-RS-Project.njsproj
-RS-Project.iml
-/.vscode/
+.vscode/
 *.log
-/build/
+/build
 build/
+bower_components/

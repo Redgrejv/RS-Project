@@ -1,6 +1,6 @@
 /*Library*/
 //= ../lib/jquery.js
-
+//= ../lib/jquery-ui.min.js
 
 /*Script for index.html page*/
 //= index.js

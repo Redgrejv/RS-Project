@@ -9,37 +9,21 @@ var mongoose = require('../libs/mongoose');
 var path = require('path');
 var async = require('async');
 
-var autorize = require('./modules/autorization');
-var registration = require('./modules/signup');
-var info = require('./modules/info');
-var checkToken = require('../middleware/checkToken');
-var admin_project = require('./modules/administration_project');
+var info = require('../middleware/info');
+var checkToken = require('../utils/checkToken');
+var user_service = require('../middleware/user_service');
+var project_service = require('../middleware/project_service');
 
 module.exports = function(app, passport) {
 
-    // app.get('/', function(req, res, next) {
-    //     res.render('index.html');
-    // });
+    app.get('/api/users/:id', checkToken, user_service.getUserById);
+    app.post('/api/users/login', user_service.login);
+    app.post('/api/users/signup', user_service.signup);
+    app.post('/api/users/checkEmail', user_service.checkEmail);
 
-    // app.get('/api/autorize', function(req, res, next) {
-    //     res.render('login.html');
-    // });
-
-    // app.get('/api/sign-up', function(req, res, next) {
-    //     res.render('sign_up.html');
-    // });
-
-    app.post('/api/autorize', autorize.autorize);
-    app.get('/api/user/:id', checkToken, autorize.getUserById);
-
-    app.post('/api/sign-up', registration.post);
-
-    app.get('/api/projects', checkToken, admin_project.getUserAllProject);
-    app.post('/api/projects', checkToken, admin_project.insertProject);
-    app.patch('/api/projects/:id', checkToken, admin_project.patchProject);
-    app.delete('/api/projects/:id', checkToken, admin_project.deleteProject);
-
-    app.post('/api/info/checkEmail', info.checkEmail);
-    app.post('/api/info/checkToken', info.checkToken);
+    app.get('/api/projects/:id/user', checkToken, project_service.getUserAllProject);
+    app.post('/api/projects', checkToken, project_service.insertProject);
+    app.patch('/api/projects/:id', checkToken, project_service.patchProject);
+    app.delete('/api/projects/:id', checkToken, project_service.deleteProject);
 
 };

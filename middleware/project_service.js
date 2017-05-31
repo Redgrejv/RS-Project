@@ -1,5 +1,5 @@
-var HttpError = require('../../error').HttpError;
-var Project = require('../../models/projects').Project;
+var HttpError = require('../error').HttpError;
+var Project = require('../models/projects').Project;
 // var mongoose    = require('mongoose');
 
 function getReqData(req) {
@@ -13,7 +13,7 @@ exports.insertProject = function(req, res, next) {
     var data = getReqData(req);
 
     if (!data.title) {
-        return next(new HttpError(400, 'Укажите название проекта'));
+        return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
     }
 
     var new_project = new Project({
@@ -25,7 +25,7 @@ exports.insertProject = function(req, res, next) {
     new_project.save(function(err, project) {
         if (err) return next(err);
 
-        res.json({ message: 'Проект успешно сохранен', project: project });
+        res.json({ project: project });
     })
 };
 
@@ -34,24 +34,24 @@ exports.patchProject = function(req, res, next) {
 
     var new_title = req.body.new_title;
 
-    Project.update({ createdBy: data.id_user, _id: req.params.id }, { title: new_title, dateLastModification: Date.now() },
+    Project.update({ _id: req.params.id }, { title: new_title, dateLastModification: Date.now() },
         function(err) {
             if (err) return next(err);
 
-            res.json({ message: 'Данные обновлены' });
+            res.status(200).end();
         });
 };
 
 exports.deleteProject = function(req, res, next) {
     var data = getReqData(req);
 
-    Project.remove({ createdBy: data.id_user, _id: req.params.id }, function(err, status) {
+    Project.remove({ _id: req.params.id }, function(err, status) {
         if (err) return next(err);
 
         if (status.result.n == 0)
             res.status(204).json({ message: 'Такого проекта не существует' });
         else
-            res.json({ message: 'Проект удален', result: status });
+            res.status(200).end();
     })
 };
 

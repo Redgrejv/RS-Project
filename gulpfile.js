@@ -67,8 +67,8 @@ var config = {
 // });
 
 gulp.task('js:build', function() {
-    gulp.src(path.src.js) //Найдем наш main файл
-        .pipe(rigger()) //Прогоним через rigger
+    gulp.src(path.src.js)
+        .pipe(rigger())
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
@@ -139,7 +139,7 @@ gulp.task('webserver', function() {
                 index: './views/index.html',
                 serveStatic: ['./', './views', './build'],
                 serveStaticOptions: {
-                    extensions: ['html'] // pretty urls
+                    extensions: ['html']
                 },
                 files: [
                         './public/css/*.css',

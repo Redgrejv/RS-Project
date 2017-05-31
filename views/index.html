@@ -18,36 +18,48 @@
 </head>
 
 <body>
-    <header>
-        <div class="to_do">
-            <h3>Проекты</h3>
-        </div>
-        <div class="task_panel">
-            <h3 class="project_name">Панель тасков</h3>
-        </div>
-    </header>
+ 
+		 <header>
 
-    <div class="menu-projects">
-        <div class="projects">
+        <div class="to_do">
+            <h3>To do</h3>
             <div class="show_add_project">
                 <img src="../public/image/plus.png" alt="1">
             </div>
+        </div>
+
+        <div class="task_panel">
+            <h3 class="project_name">Панель тасков</h3>
+            <a id="exit" href="./index.html"><img src="../public/image/Exit.png" alt=""></a> 
+        </div>
+
+	</header>
+<div class="menu">
+    <div class="menu-projects">
+       
+        <div class="projects">
+
             <div class="new_project hide">
+
                 <div class="created_name">
                     <span>Создать проект</span>
                     <input type="text" id="project_name" placeholder="Название проекта">
                 </div>
+
                 <button class="create_project" id="create_project">Создать</button>
+
             </div>
         </div>
 
     </div>
 
     <div class="menu-tasks">
+
         <div>
             <span>Таски</span>
         </div>
-    </div>
+        
+    
 
     <div class="block-menu center-text-align disable-selection">
         <img src="../public/image/account-settings-variant.png" alt="+">
@@ -55,9 +67,12 @@
             <li id="projectInsert">Добавить новый проект</li>
             <li id="projectPatch">Изменить проект</li>
             <li id="projectDelete">Удалить проект</li>
-            <li id="exit">Выход</li>
+            <!-- <li id="exit">Выход</li> -->
         </ul>
     </div>
+    </div>
+    </div>
+
 
     
     <script src="../public/js/create_project.js"></script>

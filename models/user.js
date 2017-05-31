@@ -3,9 +3,9 @@
  */
 "use strict";
 
-var crypto =        require('crypto');
-var async =         require('async');
-var HttpError   =   require('../error').HttpError;
+var crypto = require('crypto');
+var async = require('async');
+var HttpError = require('../error').HttpError;
 
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
@@ -45,41 +45,45 @@ var userSchema = new Schema({
     }
 });
 
-userSchema.methods.encryptPassword = function (password) {
+userSchema.methods.encryptPassword = function(password) {
     return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
 };
 
 userSchema.virtual('password')
-    .set(function (password) {
+    .set(function(password) {
         this.__plainPassword = password;
         this.salt = Math.random() + '';
         this.hashedPassword = this.encryptPassword(password);
     })
-    .get(function () { return this.__plainPassword; });
+    .get(function() {
+        return this.__plainPassword;
+    });
 
-userSchema.methods.checkPassword = function (password) {
+userSchema.methods.checkPassword = function(password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-userSchema.statics.checkUser = function (email, password, callback) {
+userSchema.statics.checkUser = function(email, password, callback) {
     var User = this;
 
-    if(!email || !password){
+    if (!email || !password) {
         return callback(new HttpError(400, "Заполните все поля."));
     }
 
     async.waterfall([
-        function (callback) {
-            User.findOne({email: email}, callback);
+        function(callback) {
+            User.findOne({
+                email: email
+            }, callback);
         },
-        function (user, callback) {
+        function(user, callback) {
             if (user) {
                 if (user.checkPassword(password)) {
                     callback(null, user);
-                }else{
+                } else {
                     callback(new HttpError(400, "Пароль не верен"));
                 }
-            }else{
+            } else {
                 callback(new HttpError(404, "Пользователь не найден"));
             }
         }
@@ -87,4 +91,3 @@ userSchema.statics.checkUser = function (email, password, callback) {
 };
 
 exports.User = mongoose.model('User', userSchema);
-

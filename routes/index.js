@@ -31,11 +31,11 @@ module.exports = function(app, passport) {
         var email = req.body.email;
         var password = req.body.password;
 
-        if (valid.email(email)) {
+        if (!valid.email(email)) {
             return next(new HttpError(400, 'Email не валидный'));
         }
 
-        user_service.checkUser(email, password, function(err, user) {
+        user_service.login(email, password, function(err, user) {
             if (err) return next(err);
 
             var user_data = choiseUserData(user);

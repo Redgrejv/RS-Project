@@ -90,7 +90,7 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
-                    window.location.href = '/views/index.html';
+                    window.location.href = '/client/views/index.html';
                 },
                 error: function(data) {
                     $('.error').text(data.responseJSON.message);
@@ -101,7 +101,7 @@ $(document).ready(function() {
 
         $('#sign_up').click(function(event) {
             event.preventDefault();
-            window.location.href = '/views/sign_up.html';
+            window.location.href = '/client/views/sign_up.html';
         });
     })
     //А-ЯёЁ регулярка кирилица

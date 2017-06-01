@@ -57,7 +57,7 @@ var config = {
     server: {
         baseDir: "./build",
         directory: true,
-        index: './views/index.html',
+        index: './client/views/index.html',
         serveStaticOptions: {
             extensions: ["html"]
         }
@@ -171,7 +171,7 @@ gulp.task('webserver', function() {
         .init({
             server: {
                 baseDir: './',
-                index: './views/index.html',
+                index: './client/views/index.html',
                 serveStatic: ['./', './views', './build'],
                 serveStaticOptions: {
                     extensions: ['html'] // pretty urls
@@ -188,7 +188,7 @@ gulp.task('webserver', function() {
             host: 'localhost',
             port: 3333,
             path: './',
-            open: './views/index.html'
+            open: './client/views/index.html'
 
         });
 

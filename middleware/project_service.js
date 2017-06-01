@@ -1,27 +1,6 @@
 var HttpError = require('../error').HttpError;
 var Project = require('../models/projects').Project;
-// var mongoose    = require('mongoose');
-
-function getReqData(req) {
-    return data = {
-        title: req.body.title,
-        id_user: req.tokenObj.id
-    };
-}
-
-exports.service = function (req, res, next){
-    var method = req.method;
-    switch (method) {
-        case 'PATCH': 
-            var ret = patchProject(req.body.id, req.body.new_title);
-            console.log(ret);
-            res.status(ret.status).json('asd');
-            break;
-    
-        default:
-            break;
-    }
-}
+var async = require('async');
 
 exports.insertProject = function(req, res, next) {
     var data = getReqData(req);
@@ -37,17 +16,14 @@ exports.insertProject = function(req, res, next) {
     });
 
     new_project.save(function(err, project) {
-        if (err) return next(err);
+        if (project) return next(err);
 
         res.json({ project: project });
     })
 };
 
-/**
- * @params id
- * @params new_title
- */
-patchProject = function(id, new_title) {
+
+exports.patchProject = function(id, new_title) {
     var data;
     Project.update({ _id: id }, { title: new_title, dateLastModification: Date.now() },
         function(err) {

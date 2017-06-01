@@ -1,86 +1,106 @@
-/**
- * Created by redgr on 25.04.2017.
- */
-
 var HttpError = require('../error').HttpError;
 var User = require('../models/user').User;
 var jwt = require('jsonwebtoken');
 var config = require('../config');
+var async = require('async');
+var valid = require('../utils/validation');
 
-exports.signup = function(req, res, next) {
 
-    var data = req.body;
-    if (!data.email || !data.password || !data.first_name || !data.last_name) {
-        return next(new HttpError(400, 'Заполните все поля!'))
-    }
+module.exports.signup = function(data = { email, password, first_name, last_name }, callback) {
 
-    var new_user = new User({
-        email: data.email,
-        password: data.password,
-        first_name: data.first_name,
-        last_name: data.last_name
-    });
+    async.waterfall([
+        function(callback) {
+            User.findOne({ email: data.email }, callback);
+        },
+        function(user, callback) {
 
-    User.findOne({ email: new_user.email }, function(err, user) {
-        if (err) return next(err);
-        if (user) return next(new HttpError(400, "Email уже используется"));
+            if (user) return callback(new HttpError(400, "Email уже используется"));
 
-        if (!user && !err) {
+            if (!valid.email(data.email)) {
+                return callback(new HttpError(400, 'Email не валидный'));
+            }
+
+            if (!valid.password(data.password)) {
+                return callback(new HttpError(400, 'Пароль не валидный'));
+            }
+
+            if (!valid.names(data.first_name)) {
+                return callback(new HttpError(400, 'Имя не валидно'));
+            }
+
+            if (!valid.names(data.last_name)) {
+                return callback(new HttpError(400, 'Фамилия не валидна'));
+            }
+
+            var new_user = new User({
+                email: data.email,
+                password: data.password,
+                first_name: data.first_name,
+                last_name: data.last_name
+            });
+
             new_user.save(function(err, user) {
-                if (err) return next(err);
+                if (err) return callback(err, null);
 
-                var payload = { id: user.id };
-                var token = jwt.sign(payload, config.get('token-secret'));
-                res.status(200).json({ token: token });
+                callback(null, user);
             });
         }
-
-
-    });
+    ], callback);
 };
 
 
-exports.login = function(req, res, next) {
+module.exports.login = function(email, password, callback) {
 
-    var email = req.body.email;
-    var password = req.body.password;
-
-    User.checkUser(email, password, function(err, user) {
-        if (err) return next(err);
-        var payload = { id: user.id };
-        var token = jwt.sign(payload, config.get('token-secret'));
-
-        if (global.socket) {
-            global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
+    async.waterfall([
+        function(callback) {
+            User.findOne({ email: email }, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                if (user.checkPassword(password)) {
+                    callback(null, user);
+                } else {
+                    callback(new HttpError(400, "Пароль не верен"));
+                }
+            } else {
+                callback(new HttpError(404, "Пользователь не найден"));
+            }
         }
-
-        var user_data = {
-            email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            _id: user._id,
-            about: user.about
-        }
-
-        res.json({ token: token, user: user_data });
-    });
+    ], callback);
 };
 
-exports.getUserById = function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
-        if (err) return next(err);
-        if (!user) {
-            return next(new HttpError(404, 'Пользователь не найден.'));
+module.exports.getUserById = function(id_user, callback) {
+    async.waterfall([
+        function(callback) {
+            User.findById(id_user, function(err, user) {
+                if (err) callback(err, null);
+
+                callback(null, user);
+
+            });
+        },
+        function(user, callback) {
+            if (!user) {
+                callback(new HttpError(404, 'Пользователь не найден.'), null);
+            } else
+                callback(null, user);
         }
-        res.json(user);
-    });
+    ], callback);
+
+
 };
 
-exports.checkEmail = function(req, res, next) {
-    User.findOne({ email: req.body.email }, function(err, user) {
-        if (user) { return res.status(400, 'Такой email уже занят.'); }
-
-        res.status(404).json({ message: 'Email свободный.' });
-
-    });
+module.exports.checkEmail = function(email, callback) {
+    async.waterfall([
+        function(callback) {
+            User.findOne({ email: email }, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                callback(null, false);
+            } else {
+                callback(null, true);
+            }
+        }
+    ], callback);
 }

@@ -31,24 +31,24 @@ var path = {
         font: 'build/font/'
     },
     src: { //Пути откуда брать исходники
-        index_js: 'public/js/main_index.js',
-        login_js: 'public/js/main_login.js',
-        sign_up_js: 'public/js/main_sign_up.js',
-        index_style: 'public/css/main_index.scss',
-        login_style: 'public/css/main_login.scss',
-        sign_up_style: 'public/css/main_sign_up.scss',
-        img: 'public/img/*.*',
-        font: 'public/font/*.*'
+        index_js: 'client/src/js/main_index.js',
+        login_js: 'client/src/js/main_login.js',
+        sign_up_js: 'client/src/js/main_sign_up.js',
+        index_style: 'client/src/css/main_index.scss',
+        login_style: 'client/src/css/main_login.scss',
+        sign_up_style: 'client/src/css/main_sign_up.scss',
+        img: 'client/src/img/*.*',
+        font: 'client/src/font/*.*'
     },
     watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        index_js: 'public/js/index.js',
-        login_js: 'public/js/login.js',
-        sign_up_js: 'public/js/sign_up.js',
-        index_style: 'public/css/index.css',
-        login_style: 'public/css/login.css',
-        sign_up_style: 'public/css/sign_up.css',
-        img: 'public/image/*.*',
-        font: 'public/font/*.*'
+        index_js: 'client/src/js/index.js',
+        login_js: 'client/src/js/login.js',
+        sign_up_js: 'client/src/js/sign_up.js',
+        index_style: 'client/src/css/index.css',
+        login_style: 'client/src/css/login.css',
+        sign_up_style: 'client/src/css/sign_up.css',
+        img: 'client/src/image/*.*',
+        font: 'client/src/font/*.*'
     },
     clean: './build'
 };
@@ -177,11 +177,11 @@ gulp.task('webserver', function() {
                     extensions: ['html'] // pretty urls
                 },
                 files: [
-                        './public/css/*.css',
-                        './public/js/*.js',
-                        './public/image/*',
-                        './public/lib/*.js',
-                        './public/font/*.ttf'
+                        './client/src/css/*.css',
+                        './client/src/js/*.js',
+                        './client/src/image/*',
+                        './client/src/lib/*.js',
+                        './client/src/font/*.ttf'
                     ]
                     // index: '/views/index.html',
             },

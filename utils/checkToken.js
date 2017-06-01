@@ -9,7 +9,7 @@ var config = require('../config');
 module.exports = function(req, res, next) {
     var token = req.headers['authorization'];
 
-    if (!token) return next(new HttpError(400, 'Предупреждение. Нет токена!'));
+    if (!token) return next(new HttpError(400, 'Нет токена!'));
 
     try {
         var tokenObj = jwt.verify(token, config.get('token-secret'));

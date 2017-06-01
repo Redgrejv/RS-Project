@@ -9,6 +9,20 @@ function getReqData(req) {
     };
 }
 
+exports.service = function (req, res, next){
+    var method = req.method;
+    switch (method) {
+        case 'PATCH': 
+            var ret = patchProject(req.body.id, req.body.new_title);
+            console.log(ret);
+            res.status(ret.status).json('asd');
+            break;
+    
+        default:
+            break;
+    }
+}
+
 exports.insertProject = function(req, res, next) {
     var data = getReqData(req);
 
@@ -29,16 +43,17 @@ exports.insertProject = function(req, res, next) {
     })
 };
 
-exports.patchProject = function(req, res, next) {
-    var data = getReqData(req);
-
-    var new_title = req.body.new_title;
-
-    Project.update({ _id: req.params.id }, { title: new_title, dateLastModification: Date.now() },
+/**
+ * @params id
+ * @params new_title
+ */
+patchProject = function(id, new_title) {
+    var data;
+    Project.update({ _id: id }, { title: new_title, dateLastModification: Date.now() },
         function(err) {
             if (err) return next(err);
 
-            res.status(200).end();
+            data = { status: 200 };
         });
 };
 

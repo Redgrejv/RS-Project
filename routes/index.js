@@ -21,9 +21,13 @@ module.exports = function(app, passport) {
     app.post('/api/users/signup', user_service.signup);
     app.post('/api/users/checkEmail', user_service.checkEmail);
 
-    app.get('/api/projects/:id/user', checkToken, project_service.getUserAllProject);
+    app.get('/api/projects', checkToken, project_service.getUserAllProject);
     app.post('/api/projects', checkToken, project_service.insertProject);
-    app.patch('/api/projects/:id', checkToken, project_service.patchProject);
+    
+    app.patch('/api/projects/:id', checkToken, function(req, res, next){
+
+    });
+
     app.delete('/api/projects/:id', checkToken, project_service.deleteProject);
 
 };

@@ -29,6 +29,10 @@ module.exports = function(app, passport) {
     //     res.render('sign_up.html');
     // });
 
+    app.get('/api/users/logout/:id', checkToken, function(req, res, next) {
+        // заготовка под logout юзера
+    })
+
     app.post('/api/autorize', autorize.autorize);
     app.get('/api/user/:id', checkToken, autorize.getUserById);
 

@@ -21,22 +21,32 @@ var gulp = require('gulp'),
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
         html: 'build/',
-        js: 'build/js/',
-        css: 'build/css/',
+        index_js: 'build/js/index_js/',
+        login_js: 'build/js/login_js/',
+        sign_up_js: 'build/js/sign_up_js/',
+        index_style: 'build/css/index_style/',
+        login_style: 'build/css/login_style/',
+        sign_up_style: 'build/css/sign_up_style/',
         img: 'build/img/',
         font: 'build/font/'
     },
     src: { //Пути откуда брать исходники
-        html: 'views/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
-        js: 'public/js/main.js', //В стилях и скриптах нам понадобятся только main файлы
-        style: 'public/css/main.scss',
-        img: 'public/image/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
+        index_js: 'public/js/main_index.js',
+        login_js: 'public/js/main_login.js',
+        sign_up_js: 'public/js/main_sign_up.js',
+        index_style: 'public/css/main_index.scss',
+        login_style: 'public/css/main_login.scss',
+        sign_up_style: 'public/css/main_sign_up.scss',
+        img: 'public/img/*.*',
         font: 'public/font/*.*'
     },
     watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        html: 'test/*.html',
-        js: 'test/*.js',
-        style: 'public/css/*.css',
+        index_js: 'public/js/index.js',
+        login_js: 'public/js/login.js',
+        sign_up_js: 'public/js/sign_up.js',
+        index_style: 'public/css/index.css',
+        login_style: 'public/css/login.css',
+        sign_up_style: 'public/css/sign_up.css',
         img: 'public/image/*.*',
         font: 'public/font/*.*'
     },
@@ -67,23 +77,49 @@ var config = {
 // });
 
 gulp.task('js:build', function() {
-    gulp.src(path.src.js) //Найдем наш main файл
+    gulp.src(path.src.index_js) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
-        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
+        .pipe(gulp.dest(path.build.index_js)) //Выплюнем готовый файл в build
+    gulp.src(path.src.login_js)
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.login_js))
+    gulp.src(path.src.sign_up_js)
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write()) 
+        .pipe(gulp.dest(path.build.sign_up_js)) 
         .pipe(reload({ stream: true })); //И перезагрузим сервер
 });
 
 gulp.task('style:build', function() {
-    gulp.src(path.src.style) //Выберем наш main.scss
+    gulp.src(path.src.index_style) //Выберем наш main.scss
         .pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(sass()) //Скомпилируем
         .pipe(prefixer()) //Добавим вендорные префиксы
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.css)) //И в build
+        .pipe(gulp.dest(path.build.index_style)) //И в build
+        gulp.src(path.src.login_style)
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(prefixer())
+        .pipe(cssmin())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.login_style))
+        gulp.src(path.src.sign_up_style)
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(prefixer())
+        .pipe(cssmin())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.sign_up_style))
         .pipe(reload({ stream: true }));
 });
 
@@ -105,7 +141,6 @@ gulp.task('font:build', function() {
 });
 
 gulp.task('build', [
-    // 'html:build',
     'js:build',
     'style:build',
     'font:build',

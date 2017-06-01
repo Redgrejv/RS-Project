@@ -9,5 +9,6 @@
 //= create_project.js
 //= getAllUserProject.js
 //= listAdminProject.js
+//= message.js
 //= select_project.js
 //= show_add_project

@@ -88,17 +88,28 @@ module.exports = function(app, passport) {
 
     });
 
+    // Получение всех проектов конкретного пользователя
     app.get('/api/projects/:id/user', checkToken, project_service.getUserAllProject);
+
+    // Создание нового проекта
     app.post('/api/projects', checkToken, project_service.insertProject);
 
+    // Изменение данных проекта
     app.patch('/api/projects/:id', checkToken, function(req, res, next) {
 
     });
 
+    // Удаление проекта
     app.delete('/api/projects/:id', checkToken, project_service.deleteProject);
 
 };
 
+
+/**
+ * @function Фильтрация данных пользователя
+ * @param  {JSON} user {Данные пользователя из БД}
+ * @return {type} {JSON}
+ */
 function choiseUserData(user) {
     var user_data = {
         email: user.email,
@@ -110,6 +121,11 @@ function choiseUserData(user) {
     return user_data;
 }
 
+/**
+ * @function Генерация токена на основе ID пользователя
+ * @param  {ObjectID} userID {ID юзера из БД}
+ * @return {type} {String}
+ */
 function generationToken(userID) {
     var payload = { id: userID };
     var token = jwt.sign(payload, config.get('token-secret'));

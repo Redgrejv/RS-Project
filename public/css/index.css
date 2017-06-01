@@ -151,11 +151,13 @@
     .show_add_project {
         display: inline-block;
         margin: 3%;
+        padding: 0;
         float:right;
     }
     
     .show_add_project img{
         width: 80%;
+        margin: 0;
     }
 
     .show_add_project:hover {

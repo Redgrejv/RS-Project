@@ -87,12 +87,6 @@ module.exports = function(app, passport) {
         })
 
     });
-    app.get('/api/users/logout/:id', checkToken, function(req, res, next) {
-
-        // Заготовка под логаут юзера
-
-    });
-
 
     app.get('/api/projects/:id/user', checkToken, project_service.getUserAllProject);
     app.post('/api/projects', checkToken, project_service.insertProject);

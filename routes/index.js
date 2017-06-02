@@ -15,6 +15,10 @@ var valid = require('../utils/validation');
 
 module.exports = function (app, passport) {
 
+    app.get('/api/users/logout/:id', checkToken, function(req, res, next) {
+        // заготовка под logout юзера
+    })
+
     // Получение данных юзера по ID
     app.get('/api/users/:id', checkToken, function (req, res, next) {
         var id = req.params.id;

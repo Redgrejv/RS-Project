@@ -2,42 +2,38 @@
 <html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Авторизация</title>
-	<link rel="icon" href="../build/img/logo.png"/>
+	<title>Log-in</title>
+	<link rel="icon" href="../src/img/logo.png"/>
 
-	<script src="../build/js/login_js/main_login.js"></script>
-	<link rel="stylesheet" href="../build/css/login_style/main_login.css">
-	
+	<script src="../src/lib/jquery.js"></script>
+	<script src="../src/js/login.js"></script>
+	<!-- <link rel="stylesheet" href="../build/css/login_style/main_login.css"> -->
+	<link rel="stylesheet" href="../src/css/login.css">
+
 	<!--<script src="/socket.io/socket.io.js"></script>
 	<script src="../public/js/main.js"></script> -->
 
 </head>
 <body>
-	
-	<header>
-		<h3>Авторизация</h3>
 
-		<a id="come_back" href="./index.html"><img src="../build/img/back.png" alt=""></a>
-	</header>
+		<div class="login-block">
+			
+			<h1>Log-in</h1>
+			
+			<form action="" method="POST" class="login-block__login-form">
 
-	<div class="main_block">
+				<label class ='login-form__error'></label>
 
+				<input id="login-form__email" class="field" type="email" name="email" placeholder="Email" required>
+				<label for="email" class="login-form__login-email"></label>
 
-		<div class="reg_block">
-			<img src="../build/img/avatar.png" alt="">
-			<form action="" method="POST" class="rf">
-				<label class ='error'></label>
-				<input id="email" class="field" type="email" name="email" placeholder="Email" required>
-				<label for="email" class="lmail"></label>
-				<input id="password" class="field" type="password" name="password" placeholder="Пароль" required>
-				<label for="password" class="lpass"></label>
+				<input id="login-form__password" class="field" type="password" name="password" placeholder="Password" required>
+				<label for="password" class="login-form__login-password"></label>
 				
-				<button id="sign_in" type="submit" class="uppercase disable" >Войти</button>
-				<p>или</p>
-				<button id="sign_up" type="submit" class="uppercase">Регистрация</button>
+				<button id="login-form__button-login" type="submit" class="login-form__button-login_disable" >login</button>
 			</form>
+			<center> <div class="login-block__bottom"><a href="./sign_up.html">Register</a> ♦ <a>Forgot Password</a></div></center>
 		</div>
 
-	</div>
 </body>
 </html>

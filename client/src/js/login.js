@@ -1,6 +1,6 @@
 $(document).ready(function() {
-        var form = $('.rf');
-        var btn = form.find('.login');
+        var form = $('.login-block__login-form');
+        var btn = form.find('.login-form__button-login');
         ButtonDisable();
 
         form.submit(function(event) {
@@ -18,59 +18,50 @@ $(document).ready(function() {
             });
         }
 
-        function EmptyFilds() {
-            form.find('.empty').css({ 'border-bottom': '1px solid red' });
-
-            setTimeout(function() {
-                form.find('.empty').removeAttr('style');
-
-            }, 500);
-        }
-
-        form.find('#email').blur(function() {
+        form.find('#login-form__email').blur(function() {
             var pattern = /^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
             if ($(this).val() != '') {
                 if (pattern.test($(this).val())) {
                     $(this).removeClass('empty');
                     $(this).addClass('ok');
-                    $('.lmail').text('');
+                    $('.login-form__login-email').text('');
                     ButtonDisable();
                 } else {
-                    $('.lmail').text('Почта введена некоректно');
+                    $('.login-form__login-email').text('Почта введена некоректно');
                     $(this).removeClass('ok');
                 }
             } else {
-                $('.lmail').text('Введите почту');
+                $('.login-form__login-email').text('Введите почту');
                 $(this).removeClass('ok');
             }
         });
 
-        form.find('#password').blur(function() {
+        form.find('#login-form__password').blur(function() {
             var regular = /^([a-zA-Z0-9]){2,20}$/;
             if ($(this).val() != '') {
                 if (regular.test($(this).val())) {
                     $(this).removeClass('empty');
                     $(this).addClass('ok');
-                    $('.lpass').text('');
+                    $('.login-form__login-password').text('');
                     ButtonDisable();
                 } else {
-                    $('.lpass').text('Пароль введен некоректно');
+                    $('.login-form__login-password').text('Пароль введен некоректно');
                     $(this).removeClass('ok');
                 }
             } else {
-                $('.lpass').text('Введите пароль');
+                $('.login-form__login-password').text('Введите пароль');
                 $(this).removeClass('ok');
             }
         });
 
         function ButtonDisable() {
-            sizeOk = $('.rf').find('.ok').length;
+            sizeOk = $('.login-block__login-form').find('.ok').length;
             if (sizeOk == 2) {
-                $('#sign_in').prop('disabled', false);
-                $('#sign_in').removeClass('disable');
+                $('#login-form__button-login').prop('disabled', false);
+                $('#login-form__button-login').removeClass('login-form__button-login_disable');
             } else {
-                $('#sign_in').prop('disabled', true);
-                $('#sign_in').addClass('disable');
+                $('#login-form__button-login').prop('disabled', true);
+                $('#login-form__button-login').addClass('login-form__button-login_disable');
             }
         }
 
@@ -79,29 +70,25 @@ $(document).ready(function() {
         }, 500);
 
 
-        $('#sign_in').click(function(evet) {
+        $('#login-form__button-login').click(function(evet) {
             event.preventDefault();
             $.ajax({
                 url: 'http://localhost:3000/api/autorize',
                 type: 'POST',
                 data: {
-                    email: $('#email').val(),
-                    password: $('#password').val()
+                    email: $('#login-form__email').val(),
+                    password: $('#login-form__password').val()
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
-                    window.location.href = '/views/index.html';
+                    window.location.href = 'index.html';
                 },
                 error: function(data) {
-                    $('.error').text(data.responseJSON.message);
+                    $('.login-form__error').text(data.responseJSON.message);
                 }
 
             })
         });
 
-        $('#sign_up').click(function(event) {
-            event.preventDefault();
-            window.location.href = '/views/sign_up.html';
-        });
     })
     //А-ЯёЁ регулярка кирилица

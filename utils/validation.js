@@ -3,8 +3,8 @@ module.exports.email = function(email) {
     return regular.test(email);
 }
 
-module.exports.names = function(names) {
-    var regular = new RegExp('^[a-zA-Zа-яА-ЯёЁ-]{2,20}$');
+module.exports.names = function(names, options = {minLength: 2 ,maxLength: 20}) {
+    var regular = new RegExp('^[a-zA-Zа-яА-ЯёЁ-]{'+options.minLength+','+options.maxLength+'}$');
     return regular.test(names);
 }
 

@@ -2,56 +2,91 @@ var HttpError = require('../error').HttpError;
 var Project = require('../models/projects').Project;
 var async = require('async');
 
-exports.insertProject = function(req, res, next) {
-    var data = getReqData(req);
+/**
+* @function insertProject Добавление нового проекта
+* @param  {String} title    {название проекта}
+* @param  {ObjectId} userID   {ID пользователя}
+* @param  {function} callback {description}
+*/
+module.exports.insertProject = function (title, userID, callback) {
 
-    if (!data.title) {
-        return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
-    }
+    async.waterfall([
+        function (callback) {
+            var new_project = new Project({
+                title: title,
+                createdBy: userID,
+                dateLastModification: Date.now()
+            });
 
-    var new_project = new Project({
-        title: data.title,
-        createdBy: data.id_user,
-        dateLastModification: Date.now()
-    });
+            new_project.save(function (err, project) {
+                callback(err, project);
+            });
+        },
+        function (project, callback) {
+            if (project.errors) callback(project.errors, null);
 
-    new_project.save(function(err, project) {
-        if (project) return next(err);
+            callback(null, project);
+        }
 
-        res.json({ project: project });
-    })
+    ], callback);
 };
 
+/**
+* @function patchProject Изменение данных заголовка
+* @param  {ObjectId} projectID {ID проекта}
+* @param  {String} newTitle  {Новый заголовок проекта}
+* @param  {function} callback {description}
+*/
+module.exports.patchProject = function (projectID, newTitle, callback) {
 
-exports.patchProject = function(id, new_title) {
-    var data;
-    Project.update({ _id: id }, { title: new_title, dateLastModification: Date.now() },
-        function(err) {
-            if (err) return next(err);
+    async.waterfall([
+        function (callback) {
+            Project.update(
+                { _id: projectID },
+                { title: newTitle, dateLastModification: Date.now() },
+                callback);
+        },
+        function (project, callback) {
+            if (!project) callback(project, null);
 
-            data = { status: 200 };
-        });
+            callback(null, project);
+        }
+    ], callback);
 };
 
-exports.deleteProject = function(req, res, next) {
-    var data = getReqData(req);
+/** 
+* @function deleteProject
+* @param  {ObjectId} projectID {ID проекта}
+* @param  {function} callback {description}
+*/
+module.exports.deleteProject = function (projectID, callback) {
 
-    Project.remove({ _id: req.params.id }, function(err, status) {
-        if (err) return next(err);
+    async.waterfall([
+        function (callback) {
+            Project.remove({ _id: projectID }, callback)
+        },
+        function (project, callback) {
+            if (!project) callback(project, null);
 
-        if (status.result.n == 0)
-            res.status(204).json({ message: 'Такого проекта не существует' });
-        else
-            res.status(200).end();
-    })
+            callback(null, project);
+        }
+    ], callback)
 };
 
-exports.getUserAllProject = function(req, res, next) {
-    var data = getReqData(req);
+/**
+* @function getAllProject Получение всех проектов пользователя
+* @param  {ObjectID} userID {ID пользователя}
+* @param  {function} callback {description}
+*/
+module.exports.getAllProjects = function (userID) {
 
-    Project.find({ createdBy: data.id_user }, function(err, projects) {
-        if (err) return next(err);
+    await.waterfall([
+        function (callback) {
+            Project.find({ createdBy: userID }, callback);
+        }, function (user, callback) {
+            if (!user) return callback(err, null);
 
-        res.json(projects);
-    })
+            callback(null, user);
+        }
+    ], callback);
 };

@@ -43,7 +43,7 @@ $(document).ready(function() {
                     '<img src="../../build/img/tooltip-edit.png" alt="rename">' +
                     '</li>' +
                     '<li title="Удалить этот проект" class="delete">' +
-                    '<img src="../../public/image/delete-forever.png" alt="delete">' +
+                    '<img src="../../build/img/delete-forever.png" alt="delete">' +
                     '</li>' +
                     '</ul>' +
                     '</div>' +

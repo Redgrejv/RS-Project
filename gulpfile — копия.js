@@ -21,32 +21,32 @@ var gulp = require('gulp'),
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
         html: 'build/',
-        js: 'build/js/',
-        // login_js: 'build/js/',
-        // sign_up_js: 'build/js/',
-        style: 'build/css/',
-        // login_style: 'build/css/login_style/',
-        // sign_up_style: 'build/css/sign_up_style/',
+        index_js: 'build/js/index_js/',
+        login_js: 'build/js/login_js/',
+        sign_up_js: 'build/js/sign_up_js/',
+        index_style: 'build/css/index_style/',
+        login_style: 'build/css/login_style/',
+        sign_up_style: 'build/css/sign_up_style/',
         img: 'build/img/',
         font: 'build/font/'
     },
     src: { //Пути откуда брать исходники
-        js: 'client/src/js/main/*.js',
-        // login_js: 'client/src/js/main_login.js',
-        // sign_up_js: 'client/src/js/main_sign_up.js',
-        style: 'client/src/css/main/*.scss',
-        // login_style: 'client/src/css/main_login.scss',
-        // sign_up_style: 'client/src/css/main_sign_up.scss',
+        index_js: 'client/src/js/main_index.js',
+        login_js: 'client/src/js/main_login.js',
+        sign_up_js: 'client/src/js/main_sign_up.js',
+        index_style: 'client/src/css/main_index.scss',
+        login_style: 'client/src/css/main_login.scss',
+        sign_up_style: 'client/src/css/main_sign_up.scss',
         img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'
     },
     watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        js: 'client/src/js/*.js',
-        // login_js: 'client/src/js/login.js',
-        // sign_up_js: 'client/src/js/sign_up.js',
-        style: 'client/src/css/*.css',
-        // login_style: 'client/src/css/login.css',
-        // sign_up_style: 'client/src/css/sign_up.css',
+        index_js: 'client/src/js/index.js',
+        login_js: 'client/src/js/login.js',
+        sign_up_js: 'client/src/js/sign_up.js',
+        index_style: 'client/src/css/index.css',
+        login_style: 'client/src/css/login.css',
+        sign_up_style: 'client/src/css/sign_up.css',
         img: 'client/src/image/*.*',
         font: 'client/src/font/*.*'
     },
@@ -77,50 +77,50 @@ var config = {
 // });
 
 gulp.task('js:build', function() {
-    gulp.src([path.src.js]) //Найдем наш main файл
+    gulp.src(path.src.index_js) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
-        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-    // gulp.src(path.src.login_js)
-    //     .pipe(rigger())
-    //     .pipe(sourcemaps.init())
-    //     .pipe(uglify())
-    //     .pipe(sourcemaps.write())
-    //     .pipe(gulp.dest(path.build.login_js))
-    // gulp.src(path.src.sign_up_js)
-    //     .pipe(rigger())
-    //     .pipe(sourcemaps.init())
-    //     .pipe(uglify())
-    //     .pipe(sourcemaps.write()) 
-    //     .pipe(gulp.dest(path.build.sign_up_js)) 
-        // .pipe(reload({ stream: true })); //И перезагрузим сервер
+        .pipe(gulp.dest(path.build.index_js)) //Выплюнем готовый файл в build
+    gulp.src(path.src.login_js)
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.login_js))
+    gulp.src(path.src.sign_up_js)
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write()) 
+        .pipe(gulp.dest(path.build.sign_up_js)) 
+        .pipe(reload({ stream: true })); //И перезагрузим сервер
 });
 
 gulp.task('style:build', function() {
-    gulp.src(path.src.style) //Выберем наш main.scss
+    gulp.src(path.src.index_style) //Выберем наш main.scss
         .pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(sass()) //Скомпилируем
         .pipe(prefixer()) //Добавим вендорные префиксы
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.style)) //И в build
-        // gulp.src(path.src.login_style)
-        // .pipe(sourcemaps.init())
-        // .pipe(sass())
-        // .pipe(prefixer())
-        // .pipe(cssmin())
-        // .pipe(sourcemaps.write())
-        // .pipe(gulp.dest(path.build.login_style))
-        // gulp.src(path.src.sign_up_style)
-        // .pipe(sourcemaps.init())
-        // .pipe(sass())
-        // .pipe(prefixer())
-        // .pipe(cssmin())
-        // .pipe(sourcemaps.write())
-        // .pipe(gulp.dest(path.build.sign_up_style))
-        // .pipe(reload({ stream: true }));
+        .pipe(gulp.dest(path.build.index_style)) //И в build
+        gulp.src(path.src.login_style)
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(prefixer())
+        .pipe(cssmin())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.login_style))
+        gulp.src(path.src.sign_up_style)
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(prefixer())
+        .pipe(cssmin())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.sign_up_style))
+        .pipe(reload({ stream: true }));
 });
 
 gulp.task('image:build', function() {
@@ -132,7 +132,7 @@ gulp.task('image:build', function() {
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img)) //И бросим в build
-        // .pipe(reload({ stream: true }));
+        .pipe(reload({ stream: true }));
 });
 
 gulp.task('font:build', function() {

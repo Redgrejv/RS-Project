@@ -1,6 +1,3 @@
-/**
- * Created by redgr on 12.04.2017.
- */
 "use strict";
 
 var crypto = require('crypto');
@@ -64,31 +61,6 @@ userSchema.virtual('password')
 
 userSchema.methods.checkPassword = function(password) {
     return this.encryptPassword(password) === this.hashedPassword;
-};
-
-userSchema.statics.checkUser = function(email, password, callback) {
-    var User = this;
-
-    if (!email || !password) {
-        return callback(new HttpError(400, "Заполните все поля."));
-    }
-
-    async.waterfall([
-        function(callback) {
-            User.findOne({ email: email }, callback);
-        },
-        function(user, callback) {
-            if (user) {
-                if (user.checkPassword(password)) {
-                    callback(null, user);
-                } else {
-                    callback(new HttpError(400, "Пароль не верен"));
-                }
-            } else {
-                callback(new HttpError(404, "Пользователь не найден"));
-            }
-        }
-    ], callback);
 };
 
 exports.User = mongoose.model('User', userSchema);

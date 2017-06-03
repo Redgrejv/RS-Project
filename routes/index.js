@@ -8,12 +8,20 @@ var HttpError = require('../error').HttpError;
 var mongoose = require('../libs/mongoose');
 var path = require('path');
 var async = require('async');
-
 var autorize = require('./modules/autorization');
 var registration = require('./modules/signup');
 var info = require('./modules/info');
 var checkToken = require('../middleware/checkToken');
 var admin_project = require('./modules/administration_project');
+
+var redis = require('redis');
+
+var redisClient = redis.createClient();
+
+
+redisClient.on('error', function(err) {
+    console.log('Error: ' + err);
+});
 
 module.exports = function(app, passport) {
 

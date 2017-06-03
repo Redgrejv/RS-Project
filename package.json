@@ -2,7 +2,7 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-        "start": "npm i && npm i -g gulp &&  gulp"
+        "start": "nodemon server.js"
     },
     "dependencies": {
         "async": "^2.3.0",
@@ -37,9 +37,14 @@
         "passport-jwt": "^2.2.1",
         "passport-local": "^1.0.0",
         "pkginfo": "^0.4.0",
+        "redis": "^2.7.1",
         "rimraf": "^2.6.1",
         "serve-favicon": "^2.4.2",
         "socket.io": "^2.0.1",
         "winston": "latest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Redgrejv/RS-Project.git"
     }
 }

@@ -83,18 +83,6 @@ gulp.task('js:build', function() {
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-    // gulp.src(path.src.login_js)
-    //     .pipe(rigger())
-    //     .pipe(sourcemaps.init())
-    //     .pipe(uglify())
-    //     .pipe(sourcemaps.write())
-    //     .pipe(gulp.dest(path.build.login_js))
-    // gulp.src(path.src.sign_up_js)
-    //     .pipe(rigger())
-    //     .pipe(sourcemaps.init())
-    //     .pipe(uglify())
-    //     .pipe(sourcemaps.write()) 
-    //     .pipe(gulp.dest(path.build.sign_up_js)) 
         // .pipe(reload({ stream: true })); //И перезагрузим сервер
 });
 
@@ -106,20 +94,6 @@ gulp.task('style:build', function() {
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.style)) //И в build
-        // gulp.src(path.src.login_style)
-        // .pipe(sourcemaps.init())
-        // .pipe(sass())
-        // .pipe(prefixer())
-        // .pipe(cssmin())
-        // .pipe(sourcemaps.write())
-        // .pipe(gulp.dest(path.build.login_style))
-        // gulp.src(path.src.sign_up_style)
-        // .pipe(sourcemaps.init())
-        // .pipe(sass())
-        // .pipe(prefixer())
-        // .pipe(cssmin())
-        // .pipe(sourcemaps.write())
-        // .pipe(gulp.dest(path.build.sign_up_style))
         // .pipe(reload({ stream: true }));
 });
 

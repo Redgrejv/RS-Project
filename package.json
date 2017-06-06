@@ -2,7 +2,10 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-        "start": "npm i && npm i -g gulp &&  gulp"
+        "start": "gulp build &&start npm run server && start gulp webserver &&start gulp watch",
+        "dev": "gulp build && gulp watch",
+        "prod": "gulp watch",
+        "server": "node server.js"
     },
     "dependencies": {
         "async": "^2.3.0",

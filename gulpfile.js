@@ -13,40 +13,27 @@ var gulp = require('gulp'),
     rimraf = require('rimraf'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
-    start = require('./server.js'),
     reload = browserSync.reload;
 
 
 
 var path = {
-    build: { //Тут мы укажем куда складывать готовые после сборки файлы
+    build: {
         html: 'build/',
         js: 'build/js/',
-        // login_js: 'build/js/',
-        // sign_up_js: 'build/js/',
         style: 'build/css/',
-        // login_style: 'build/css/login_style/',
-        // sign_up_style: 'build/css/sign_up_style/',
         img: 'build/img/',
         font: 'build/font/'
     },
-    src: { //Пути откуда брать исходники
+    src: {
         js: 'client/src/js/main/*.js',
-        // login_js: 'client/src/js/main_login.js',
-        // sign_up_js: 'client/src/js/main_sign_up.js',
         style: 'client/src/css/main/*.scss',
-        // login_style: 'client/src/css/main_login.scss',
-        // sign_up_style: 'client/src/css/main_sign_up.scss',
         img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'
     },
-    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        js: 'client/src/js/*.js',
-        // login_js: 'client/src/js/login.js',
-        // sign_up_js: 'client/src/js/sign_up.js',
-        style: 'client/src/css/*.css',
-        // login_style: 'client/src/css/login.css',
-        // sign_up_style: 'client/src/css/sign_up.css',
+    watch: {
+        js: 'client/src/js/*.*',
+        style: 'client/src/css/*.*',
         img: 'client/src/image/*.*',
         font: 'client/src/font/*.*'
     },
@@ -125,18 +112,18 @@ gulp.task('watch', function() {
     // watch([path.watch.html], function(event, cb) {
     //     gulp.start('html:build');
     // });
-    watch([path.watch.style], function(event, cb) {
-        gulp.start('style:build');
+    watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
+        gulp.start('build');
     });
-    watch([path.watch.js], function(event, cb) {
-        gulp.start('js:build');
-    });
+    // watch([path.watch.js], function(event, cb) {
+    //     gulp.start('js:build');
+    // });
     // watch([path.watch.img], function(event, cb) {
     //     gulp.start('image:build');
     // });
-    watch([path.watch.font], function(event, cb) {
-        gulp.start('font:build');
-    });
+    // watch([path.watch.font], function(event, cb) {
+    //     gulp.start('font:build');
+    // });
 });
 
 gulp.task('webserver', function() {

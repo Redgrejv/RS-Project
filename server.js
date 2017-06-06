@@ -23,28 +23,13 @@ var redis = require('redis');
 var RedisStore = require('connect-redis')(expressSession);
 var redisClient = redis.createClient();
 
-// redisClient.on('error', function(err) {
-//     console.log('Error: ' + err);
-// });
-
-// redisClient.on('connect', function() {
-//     console.log('Connect to redis');
-// })
-
-redisClient.on("error", function(err) {
-    console.log("Error " + err);
+redisClient.on('error', function(err) {
+    console.log('Error: ' + err);
 });
 
-redisClient.set("string key", "string val", redis.print);
-redisClient.hset("hash key", "hashtest 1", "some value", redis.print);
-redisClient.hset(["hash key", "hashtest 2", "some other value"], redis.print);
-redisClient.hkeys("hash key", function(err, replies) {
-    console.log(replies.length + " replies:");
-    replies.forEach(function(reply, i) {
-        console.log("    " + i + ": " + reply);
-    });
-    redisClient.quit();
-});
+redisClient.on('connect', function() {
+    console.log('Connect to redis on port 6379');
+})
 
 
 app.use(express.static(path.join(__dirname, '/public')));

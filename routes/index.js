@@ -48,10 +48,10 @@ module.exports = function(app, redisClient) {
                 global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
             }
 
-            redisClient.set(user_data.id, token, function(err, res) {
+            redisClient.set(user_data.id.toString(), token, function(err, res) {
                 console.log(res);
             });
-            redisClient.get(user_data.id, function(err, data) {
+            redisClient.get(user_data.id.toString(), function(err, data) {
                 console.log(data);
             });
             res.json({ token: token, user: user_data });

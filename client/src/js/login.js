@@ -1,31 +1,30 @@
 $(document).ready(function() {
-        var form = $('.login-block__login-form');
+        var form = $('.login-form');
         var btn = form.find('.login-form__button-login');
         ButtonDisable();
 
         form.submit(function(event) {
             event.preventDefault();
         });
-        form.find('.field').addClass('empty');
+        form.find('.field').addClass('login-form_empty');
 
         function checked() {
             form.find('.field').each(function() {
                 if ($(this).val() != '') {
-                    $(this).removeClass('empty');
+                    $(this).removeClass('login-form_empty');
                 } else {
-                    $(this).addClass('empty');
+                    $(this).addClass('login-form_empty');
                 }
             });
         }
 
-        form.find('#login-form__email').blur(function() {
+        form.find('#login-form__email').on('input keyup',function() {
             var pattern = /^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
             if ($(this).val() != '') {
                 if (pattern.test($(this).val())) {
-                    $(this).removeClass('empty');
+                    $(this).removeClass('login-form_empty');
                     $(this).addClass('ok');
                     $('.login-form__login-email').text('');
-                    ButtonDisable();
                 } else {
                     $('.login-form__login-email').text('Почта введена некоректно');
                     $(this).removeClass('ok');
@@ -34,16 +33,16 @@ $(document).ready(function() {
                 $('.login-form__login-email').text('Введите почту');
                 $(this).removeClass('ok');
             }
+                    ButtonDisable();
         });
 
-        form.find('#login-form__password').blur(function() {
+        form.find('#login-form__password').on('input keyup',function() {
             var regular = /^([a-zA-Z0-9]){2,20}$/;
             if ($(this).val() != '') {
                 if (regular.test($(this).val())) {
-                    $(this).removeClass('empty');
+                    $(this).removeClass('login-form_empty');
                     $(this).addClass('ok');
                     $('.login-form__login-password').text('');
-                    ButtonDisable();
                 } else {
                     $('.login-form__login-password').text('Пароль введен некоректно');
                     $(this).removeClass('ok');
@@ -52,16 +51,17 @@ $(document).ready(function() {
                 $('.login-form__login-password').text('Введите пароль');
                 $(this).removeClass('ok');
             }
+                    ButtonDisable();
         });
 
         function ButtonDisable() {
-            sizeOk = $('.login-block__login-form').find('.ok').length;
+            sizeOk = $('.login-form').find('.ok').length;
             if (sizeOk == 2) {
                 $('#login-form__button-login').prop('disabled', false);
-                $('#login-form__button-login').removeClass('login-form__button-login_disable');
+                $('#login-form__button-login').removeClass('disable');
             } else {
                 $('#login-form__button-login').prop('disabled', true);
-                $('#login-form__button-login').addClass('login-form__button-login_disable');
+                $('#login-form__button-login').addClass('disable');
             }
         }
 

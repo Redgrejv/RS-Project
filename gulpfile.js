@@ -44,9 +44,11 @@ var path = {
         index_js: 'client/src/js/index.js',
         login_js: 'client/src/js/login.js',
         sign_up_js: 'client/src/js/sign_up.js',
+        // index_style: 'client/src/css/index.scss',
+        sign_up_style: 'client/src/css/sign_up.scss',
         index_style: 'client/src/css/index.css',
-        login_style: 'client/src/css/login.css',
-        sign_up_style: 'client/src/css/sign_up.css',
+        login_style: 'client/src/css/login.scss',
+        //sign_up_style: 'client/src/css/sign_up.css',
         img: 'client/src/image/*.*',
         font: 'client/src/font/*.*'
     },

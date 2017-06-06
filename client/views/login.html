@@ -3,16 +3,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Log-in</title>
-	<link rel="icon" href="../src/img/logo.png"/>
 
 	<script src="../src/lib/jquery.js"></script>
 	<script src="../src/js/login.js"></script>
-	<!-- <link rel="stylesheet" href="../build/css/login_style/main_login.css"> -->
-	<link rel="stylesheet" href="../src/css/login.css">
 
-	<!--<script src="/socket.io/socket.io.js"></script>
-	<script src="../public/js/main.js"></script> -->
-
+<!-- 	<link rel="icon" href="../../build/img/logo.png"/>
+	<script src="../../build/js/login.js"></script> -->
+	<link rel="stylesheet" href="../../build/css/login_style/main_login.css">
 </head>
 <body>
 
@@ -20,7 +17,7 @@
 			
 			<h1>Log-in</h1>
 			
-			<form action="" method="POST" class="login-block__login-form">
+			<form action="" method="POST" class="login-form">
 
 				<label class ='login-form__error'></label>
 
@@ -30,7 +27,7 @@
 				<input id="login-form__password" class="field" type="password" name="password" placeholder="Password" required>
 				<label for="password" class="login-form__login-password"></label>
 				
-				<button id="login-form__button-login" type="submit" class="login-form__button-login_disable" >login</button>
+				<button id="login-form__button-login" type="submit" class="disable" >login</button>
 			</form>
 			<center> <div class="login-block__bottom"><a href="./sign_up.html">Register</a> ♦ <a>Forgot Password</a></div></center>
 		</div>

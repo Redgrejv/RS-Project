@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
 // app.use(passport.session());
 
 
-app.use(require('./middleware/sendHttpError'));
+app.use(require('./error/sendHttpError'));
 app.use(app.router);
 
 require('./routes')(app);

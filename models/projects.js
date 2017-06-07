@@ -17,6 +17,7 @@ var projectSchema = new Schema({
     createdBy: {
         type: ObjectId,
         require: true,
+        index: true,
         ref: 'User'
     },
     users: [{
@@ -32,6 +33,9 @@ var projectSchema = new Schema({
         type: Date,
         default: Date.now(),
         required: true
+    },
+    description: {
+        type: String
     }
 });
 

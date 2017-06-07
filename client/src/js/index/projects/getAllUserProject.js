@@ -17,10 +17,10 @@ $(document).ready(function() {
                         '<div class="config">' +
                         '<ul class="hide">' +
                         '<li title="Изменить данные проекта" class="patch">' +
-                        '<img src="../public/image/tooltip-edit.png" alt="">' +
+                        '<img src="../../build/img/tooltip-edit.png" alt="">' +
                         '</li>' +
                         '<li title="Удалить этот проект" class="delete">' +
-                        '<img src="../public/image/delete-forever.png" alt="">' +
+                        '<img src="../../build/img/delete-forever.png" alt="">' +
                         '</li>' +
                         '</ul>' +
                         '</div>' +

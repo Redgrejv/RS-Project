@@ -13,32 +13,30 @@ var gulp = require('gulp'),
     rimraf = require('rimraf'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
-    start = require('./server.js'),
     reload = browserSync.reload;
 
 
 
 var path = {
-    build: { //Тут мы укажем куда складывать готовые после сборки файлы
+    build: {
         html: 'build/',
         js: 'build/js/',
-        css: 'build/css/',
+        style: 'build/css/',
         img: 'build/img/',
-        fonts: 'build/fonts/'
+        font: 'build/font/'
     },
-    src: { //Пути откуда брать исходники
-        html: 'views/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
-        js: 'public/js/main.js', //В стилях и скриптах нам понадобятся только main файлы
-        style: 'public/css/main.scss',
-        img: 'public/image/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
-        fonts: 'public/font/*.*'
+    src: {
+        js: 'client/src/js/main/*.js',
+        style: 'client/src/css/main/*.scss',
+        img: 'client/src/img/*.*',
+        font: 'client/src/font/*.*'
     },
-    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        html: 'test/*.html',
-        js: 'test/*.js',
-        style: 'public/css/*.css',
-        img: 'public/image/*.*',
-        fonts: 'public/font/*.*'
+
+    watch: {
+        js: 'client/src/js/*.*',
+        style: 'client/src/css/*.*',
+        img: 'client/src/image/*.*',
+        font: 'client/src/font/*.*'
     },
     clean: './build'
 };
@@ -47,7 +45,7 @@ var config = {
     server: {
         baseDir: "./build",
         directory: true,
-        index: './views/index.html',
+        index: './client/views/index.html',
         serveStaticOptions: {
             extensions: ["html"]
         }
@@ -67,13 +65,13 @@ var config = {
 // });
 
 gulp.task('js:build', function() {
-    gulp.src(path.src.js) //Найдем наш main файл
+    gulp.src([path.src.js]) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-        .pipe(reload({ stream: true })); //И перезагрузим сервер
+        // .pipe(reload({ stream: true })); //И перезагрузим сервер
 });
 
 gulp.task('style:build', function() {
@@ -83,8 +81,8 @@ gulp.task('style:build', function() {
         .pipe(prefixer()) //Добавим вендорные префиксы
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.css)) //И в build
-        .pipe(reload({ stream: true }));
+        .pipe(gulp.dest(path.build.style)) //И в build
+        // .pipe(reload({ stream: true }));
 });
 
 gulp.task('image:build', function() {
@@ -96,19 +94,18 @@ gulp.task('image:build', function() {
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img)) //И бросим в build
-        .pipe(reload({ stream: true }));
+        // .pipe(reload({ stream: true }));
 });
 
-gulp.task('fonts:build', function() {
-    gulp.src(path.src.fonts)
-        .pipe(gulp.dest(path.build.fonts))
+gulp.task('font:build', function() {
+    gulp.src(path.src.font)
+        .pipe(gulp.dest(path.build.font))
 });
 
 gulp.task('build', [
-    // 'html:build',
     'js:build',
     'style:build',
-    'fonts:build',
+    'font:build',
     'image:build'
 ]);
 
@@ -116,18 +113,18 @@ gulp.task('watch', function() {
     // watch([path.watch.html], function(event, cb) {
     //     gulp.start('html:build');
     // });
-    watch([path.watch.style], function(event, cb) {
-        gulp.start('style:build');
+    watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
+        gulp.start('build');
     });
-    watch([path.watch.js], function(event, cb) {
-        gulp.start('js:build');
-    });
+    // watch([path.watch.js], function(event, cb) {
+    //     gulp.start('js:build');
+    // });
     // watch([path.watch.img], function(event, cb) {
     //     gulp.start('image:build');
     // });
-    watch([path.watch.fonts], function(event, cb) {
-        gulp.start('fonts:build');
-    });
+    // watch([path.watch.font], function(event, cb) {
+    //     gulp.start('font:build');
+    // });
 });
 
 gulp.task('webserver', function() {
@@ -136,24 +133,24 @@ gulp.task('webserver', function() {
         .init({
             server: {
                 baseDir: './',
-                index: './views/index.html',
+                index: './client/views/index.html',
                 serveStatic: ['./', './views', './build'],
                 serveStaticOptions: {
                     extensions: ['html'] // pretty urls
                 },
                 files: [
-                        './public/css/*.css',
-                        './public/js/*.js',
-                        './public/image/*',
-                        './public/lib/*.js',
-                        './public/font/*.ttf'
+                        './client/src/css/*.css',
+                        './client/src/js/*.js',
+                        './client/src/image/*',
+                        './client/src/lib/*.js',
+                        './client/src/font/*.ttf'
                     ]
                     // index: '/views/index.html',
             },
             host: 'localhost',
             port: 3333,
             path: './',
-            open: './views/index.html'
+            open: './client/views/index.html'
 
         });
 

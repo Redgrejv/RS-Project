@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Log-in</title>
+
+	<link rel="icon" href="../../build/img/logo.png"/>
+<!-- 	<script src="../../build/js/container_login.js"></script>-->	
+	<script src="../src/lib/jquery.js"></script>
+	<script src="../src/js//login/login.js"></script>
+	<link rel="stylesheet" href="../../build/css/login.css">
+
+</head>
+<body>
+
+		<div class="login-block">
+			
+			<h1>Log-in</h1>
+			
+			<form method="POST" class="login-form">
+
+				<label class ='login-form__error'></label>
+
+				<input id="login-form__email" class="field" type="email" name="email" placeholder="Email" required>
+				<label for="login-form__email" class="login-form__login-email"></label>
+
+
+				<input id="login-form__password" class="field" type="password" name="password" placeholder="Password" required>
+				<label for="login-form__password" class="login-form__login-password"></label>
+				
+				<button id="login-form__button-login" type="submit" class="disable" >login</button>
+			</form>
+			<div class="login-block__bottom"><a href="./sign_up.html">Register</a> ♦ <a>Forgot Password</a></div>
+		</div>
+
+</body>
+</html>

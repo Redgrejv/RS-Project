@@ -1,11 +1,11 @@
 @font-face{
 	font-family: Play-Regular;
-	src:url(../../font/Play-Regular.ttf);
+	src:url(../font/Play-Regular.ttf);
 }
 
 @font-face{
 	font-family: Gotham;
-	src:url(../../font/Gotham.ttf);
+	src:url(../font/Gotham.ttf);
 }
 
 body{
@@ -29,12 +29,17 @@ body{
 	padding: 5% 3%;
 
 	h1{
+		align-items: center;
 		text-align: center;
 		font: normal 50px Gotham;
 		margin: 7%;
 	}
 	&__bottom {
-		a, a:visited{
+		text-align: center;
+		a, a:visited{		 
+			margin-right: -0.25em;	
+			margin-bottom: 0;
+			display: inline-block;
 			color: #383c47;
 			text-decoration: none;
 		}

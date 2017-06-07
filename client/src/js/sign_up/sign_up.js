@@ -4,6 +4,7 @@ $(document).ready(function(){
 	var btn =form.find('#reg-form__button-reg')
 
 	ButtonDisable();
+    check();
 
 	form.submit(function(event){
 		event.preventDefaut();
@@ -21,12 +22,16 @@ $(document).ready(function(){
         });
     }
 
-	function EmptyFields(){
-		form.find('.empty').css({'border':'1px solid red'});
-		setTimeout(function(){
-            form.fing('.empty').removeAttr('style');
-        }, 500);
-	}
+        function ButtonDisable(){
+    sizeOK=$('.reg-form').find('.ok').length;
+    if (sizeOK==5){
+        $('#reg-form__button-reg').prop('disabled',false);
+        $('#reg-form__button-reg').removeClass('disable');
+    }else{
+        $('#reg-form__button-reg').prop('disabled',true);
+        $('#reg-form__button-reg').addClass('disable');
+    }
+}
 
 	form.find('#reg-form__name').on('input keyup',function(){
     var regular=/^([a-zA-ZА-Яа-яёЁ-]){2,20}$/;
@@ -44,6 +49,7 @@ $(document).ready(function(){
         $(this).removeClass('ok');
     }
     ButtonDisable();
+    check();
 });
 
 	form.find('#reg-form__surname').on('input keyup',function(){
@@ -62,6 +68,8 @@ $(document).ready(function(){
         $(this).removeClass('ok');
     }
     ButtonDisable();
+    check();
+
 });
 
 	form.find('#reg-form__email').on('input keyup',function(){
@@ -80,6 +88,7 @@ $(document).ready(function(){
         $(this).removeClass('ok');
     }
     ButtonDisable();
+    check();
 });
 
 	form.find('#reg-form__password').on('input keyup',function(){
@@ -98,6 +107,7 @@ $(document).ready(function(){
         $(this).removeClass('ok');
     }
     ButtonDisable();
+    check();
 });
 
 	form.find('#reg-form__confirm-password').on('input keyup',function(){
@@ -116,6 +126,7 @@ $(document).ready(function(){
         $(this).removeClass('ok');
     }
     ButtonDisable();
+    check();
 });
 
 	function ButtonDisable(){
@@ -128,10 +139,6 @@ $(document).ready(function(){
         $('#reg-form__button-reg').addClass('disable');
     }
 }
-	
-	setInterval(function(){
-    	check();
-	},500);
 
 	$('#reg-form__button-reg').click(function(evet){
      event.preventDefault();

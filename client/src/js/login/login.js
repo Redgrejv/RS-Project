@@ -2,13 +2,26 @@ $(document).ready(function() {
         var form = $('.login-form');
         var btn = form.find('.login-form__button-login');
         ButtonDisable();
+        checked();
 
         form.submit(function(event) {
             event.preventDefault();
         });
         form.find('.field').addClass('login-form_empty');
 
-        function checked() {
+
+        function ButtonDisable() {
+            sizeOk = $('.login-form').find('.ok').length;
+            if (sizeOk == 2) {
+                $('#login-form__button-login').prop('disabled', false);
+                $('#login-form__button-login').removeClass('disable');
+            } else {
+                $('#login-form__button-login').prop('disabled', true);
+                $('#login-form__button-login').addClass('disable');
+            }
+        }
+
+          function checked() {
             form.find('.field').each(function() {
                 if ($(this).val() != '') {
                     $(this).removeClass('login-form_empty');
@@ -18,7 +31,7 @@ $(document).ready(function() {
             });
         }
 
-        form.find('#login-form__email').on('input keyup',function() {
+        form.find('#login-form__email').on('keyup',function() {
             var pattern = /^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
             if ($(this).val() != '') {
                 if (pattern.test($(this).val())) {
@@ -34,9 +47,10 @@ $(document).ready(function() {
                 $(this).removeClass('ok');
             }
                     ButtonDisable();
+                    checked();
         });
 
-        form.find('#login-form__password').on('input keyup',function() {
+        form.find('#login-form__password').on('keyup',function() {
             var regular = /^([a-zA-Z0-9]){2,20}$/;
             if ($(this).val() != '') {
                 if (regular.test($(this).val())) {
@@ -52,22 +66,8 @@ $(document).ready(function() {
                 $(this).removeClass('ok');
             }
                     ButtonDisable();
+                    checked();
         });
-
-        function ButtonDisable() {
-            sizeOk = $('.login-form').find('.ok').length;
-            if (sizeOk == 2) {
-                $('#login-form__button-login').prop('disabled', false);
-                $('#login-form__button-login').removeClass('disable');
-            } else {
-                $('#login-form__button-login').prop('disabled', true);
-                $('#login-form__button-login').addClass('disable');
-            }
-        }
-
-        setInterval(function() {
-            checked();
-        }, 500);
 
 
         $('#login-form__button-login').click(function(evet) {

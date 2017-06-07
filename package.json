@@ -2,7 +2,12 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-        "start": "npm install && npm gulp && nodemon server.js"
+
+        "front": "start mongod --dbpath C:\\data\\db && gulp build  && start gulp webserver &&start gulp watch",
+        "dev": "gulp build && gulp watch",
+        "prod": "gulp watch",
+        "server": "start node server.js"
+
     },
     "dependencies": {
         "async": "^2.3.0",

@@ -14,6 +14,7 @@ var valid = require('../utils/validation');
 
 module.exports = function (app, redisClient) {
 
+    // Завершение сессии пользователя
     app.get('/api/users/logout/:id', checkToken, function (req, res, next) {
 
     })
@@ -49,11 +50,12 @@ module.exports = function (app, redisClient) {
             }
 
             redisClient.set(user_data.id.toString(), token, function (err, res) {
+                if (err) {
+                    return next(err);
+                }
                 console.log(res);
             });
-            redisClient.get(user_data.id.toString(), function (err, data) {
-                console.log(data);
-            });
+
             res.json({ token: token, user: user_data });
         });
     });

@@ -18,3 +18,4 @@ bin/
 build/
 bower_components/
 /*.orig
+/data

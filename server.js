@@ -22,6 +22,8 @@ var app = express();
 var redis = require('redis');
 var RedisStore = require('connect-redis')(expressSession);
 var redisClient = redis.createClient();
+var redisStore = new RedisStore({ client: redisClient, host: 'localhost', port: 6379 });
+var redisSession = require('redis-session');
 
 redisClient.on('error', function(err) {
     console.log('Error: ' + err);
@@ -49,7 +51,7 @@ app.use(express.session({
     secret: config.get('key-session'),
     resave: true,
     saveUninitialized: true,
-    store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379 })
+    store: redisStore
 }));
 
 // var passport = require('./models/passport');

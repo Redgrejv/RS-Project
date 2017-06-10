@@ -12,18 +12,18 @@ var user_service = require('../middleware/user_service');
 var project_service = require('../middleware/project_service');
 var valid = require('../utils/validation');
 
-module.exports = function (app, redisClient) {
+module.exports = function(app, redisClient) {
 
     // Завершение сессии пользователя
-    app.get('/api/users/logout/:id', checkToken, function (req, res, next) {
+    app.get('/api/users/logout/:id', checkToken, function(req, res, next) {
 
     })
 
     // Получение данных юзера по ID
-    app.get('/api/users/:id', checkToken, function (req, res, next) {
+    app.get('/api/users/:id', checkToken, function(req, res, next) {
         var id = req.params.id;
 
-        user_service.getUserById(id, function (err, user) {
+        user_service.getUserById(id, function(err, user) {
             if (!err) return next(err);
 
             res.json(choiseUserData(user));
@@ -31,7 +31,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Авторизация юзера
-    app.post('/api/users/login', function (req, res, next) {
+    app.post('/api/users/login', function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
 
@@ -39,7 +39,7 @@ module.exports = function (app, redisClient) {
             return next(new HttpError(400, 'Email не валидный'));
         }
 
-        user_service.login(email, password, function (err, user) {
+        user_service.login(email, password, function(err, user) {
             if (err) return next(err);
 
             var user_data = choiseUserData(user);
@@ -49,11 +49,11 @@ module.exports = function (app, redisClient) {
                 global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
             }
 
-            redisClient.set(user_data.id.toString(), token, function (err, res) {
-                if (err) {
-                    return next(err);
-                }
-                console.log(res);
+
+            redisClient.set(user_data.id.toString(), token, function(err, res) {
+                if (err) return next(err);
+
+                req.session.user = { userID: user_data.id }
             });
 
             res.json({ token: token, user: user_data });
@@ -61,19 +61,19 @@ module.exports = function (app, redisClient) {
     });
 
     // Регистрация нового пользователя
-    app.post('/api/users/signup', function (req, res, next) {
+    app.post('/api/users/signup', function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
         var first_name = req.body.first_name;
         var last_name = req.body.last_name;
 
         user_service.signup({
-            email: email,
-            password: password,
-            first_name: first_name,
-            last_name: last_name
-        },
-            function (err, user) {
+                email: email,
+                password: password,
+                first_name: first_name,
+                last_name: last_name
+            },
+            function(err, user) {
                 if (err) return next(err);
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
@@ -84,14 +84,14 @@ module.exports = function (app, redisClient) {
     });
 
     // Проверка на существование в БД Email`a
-    app.post('/api/users/checkEmail', function (req, res, next) {
+    app.post('/api/users/checkEmail', function(req, res, next) {
         var email = req.body.email;
 
         if (!valid.email(email)) {
             return next(new HttpError(400, 'Email не валидный'));
         }
 
-        user_service.checkEmail(email, function (err, status) {
+        user_service.checkEmail(email, function(err, status) {
             if (!status) { return res.status(400).json('Email занят.') }
 
             res.status(404).json('Email свободен.');
@@ -100,10 +100,10 @@ module.exports = function (app, redisClient) {
     });
 
     // Получение всех проектов конкретного пользователя
-    app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
+    app.get('/api/projects/:id/user', checkToken, function(req, res, next) {
         var id = req.params.id;
 
-        project_service.getAllProjects(id, function (err, projects) {
+        project_service.getAllProjects(id, function(err, projects) {
             if (err) return next(err);
 
             res.json(projects);
@@ -111,7 +111,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Создание нового проекта
-    app.post('/api/projects', checkToken, function (req, res, next) {
+    app.post('/api/projects', checkToken, function(req, res, next) {
         var title = req.body.title;
         var id = req.tokenObj.userID;
 
@@ -119,13 +119,13 @@ module.exports = function (app, redisClient) {
             return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
         }
 
-        project_service.insertProject(title, id, function (err, project) {
+        project_service.insertProject(title, id, function(err, project) {
             res.json({ project: project });
         })
     });
 
     // Изменение данных проекта
-    app.patch('/api/projects/:id', checkToken, function (req, res, next) {
+    app.patch('/api/projects/:id', checkToken, function(req, res, next) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
 
@@ -133,19 +133,19 @@ module.exports = function (app, redisClient) {
             return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
         }
 
-        project_service.patchProject(projectID, newTitle, function (err, project) {
+        project_service.patchProject(projectID, newTitle, function(err, project) {
             if (err) return next(err);
             res.json(project);
         });
     });
 
     // Удаление проекта
-    app.delete('/api/projects/:id', checkToken, function (req, res, next) {
+    app.delete('/api/projects/:id', checkToken, function(req, res, next) {
 
         var projectID = req.params.id;
 
 
-        project_service.deleteProject(projectID, function (err, project) {
+        project_service.deleteProject(projectID, function(err, project) {
             if (err) return next(err);
 
             res.json(project);

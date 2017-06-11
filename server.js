@@ -3,7 +3,6 @@
  */
 
 "use strict";
-//require('child_process').exec('start mongod');
 
 var express = require('express');
 var expressSession = require('express-session');

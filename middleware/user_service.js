@@ -13,30 +13,48 @@ module.exports = {
     checkEmail
 }
 
-function signup(data = { email, password, first_name, last_name }) {
-    Promise.resolve(function (data) {
-        return User.findOne({ email: data.email });
-    }).then(function(user){
-        console.log(user);
-    }).catch(function (err) {
-        console.log(err);
-    })
-}
+function signup(data = { email, password, first_name, last_name }, callback) {
 
+    async.waterfall([
+        function(callback) {
+            User.findOne({ email: data.email }, callback);
+        },
+        function(user, callback) {
 
+            if (user) return callback(new HttpError(400, "Email уже используется"));
 
-// function signup(data = { email, password, first_name, last_name }, callback) {
+            if (!valid.email(data.email)) {
+                return callback(new HttpError(400, 'Email не валидный'));
+            }
 
-//     async.waterfall([
-//         function(callback) {
-//             User.findOne({ email: data.email }, callback);
-//         },
-//         function(user, callback) {
+            if (!valid.password(data.password)) {
+                return callback(new HttpError(400, 'Пароль не валидный'));
+            }
 
-            
-//         }
-//     ], callback);
-// };
+            if (!valid.names(data.first_name)) {
+                return callback(new HttpError(400, 'Имя не валидно'));
+            }
+
+            if (!valid.names(data.last_name)) {
+                return callback(new HttpError(400, 'Фамилия не валидна'));
+            }
+
+            var new_user = new User({
+                email: data.email,
+                password: data.password,
+                first_name: data.first_name,
+                last_name: data.last_name
+            });
+
+            new_user.save(function(err, user) {
+                if (err) return callback(err, null);
+
+                callback(null, user);
+            });
+        }
+    ], callback);
+};
+
 
 
 function login(email, password, callback) {

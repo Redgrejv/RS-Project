@@ -23,22 +23,6 @@ function signup(data = { email, password, first_name, last_name }, callback) {
 
             if (user) return callback(new HttpError(400, "Email уже используется"));
 
-            if (!valid.email(data.email)) {
-                return callback(new HttpError(400, 'Email не валидный'));
-            }
-
-            if (!valid.password(data.password)) {
-                return callback(new HttpError(400, 'Пароль не валидный'));
-            }
-
-            if (!valid.names(data.first_name)) {
-                return callback(new HttpError(400, 'Имя не валидно'));
-            }
-
-            if (!valid.names(data.last_name)) {
-                return callback(new HttpError(400, 'Фамилия не валидна'));
-            }
-
             var new_user = new User({
                 email: data.email,
                 password: data.password,
@@ -54,8 +38,6 @@ function signup(data = { email, password, first_name, last_name }, callback) {
         }
     ], callback);
 };
-
-
 
 function login(email, password, callback) {
 

@@ -11,6 +11,7 @@ var checkToken = require('../utils/checkToken');
 var user_service = require('../middleware/user_service');
 var project_service = require('../middleware/project_service');
 var valid = require('../utils/validation');
+var Promise = require('bluebird');
 
 module.exports = function(app, redisClient) {
 
@@ -74,21 +75,20 @@ module.exports = function(app, redisClient) {
         if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
         if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
 
-        user_service.signup(data);
+        user_service.signup({
+                email: data.email,
+                password: data.password,
+                first_name: data.first_name,
+                last_name: data.last_name
+            },
+            function(err) {
+                if (err) return next(err);
+                var user_data = choiseUserData(user);
+                var token = generationToken(user._id);
 
-        // user_service.signup({
-        //         email: email,
-        //         password: password,
-        //         first_name: first_name,
-        //         last_name: last_name
-        //     },
-        //     function(err, user) {
-        //         if (err) return next(err);
-        //         var user_data = choiseUserData(user);
-        //         var token = generationToken(user._id);
+                res.json({ token: token, user: user_data });
+            })
 
-        //         res.json({ token: token, user: user_data });
-        //     })
 
     });
 

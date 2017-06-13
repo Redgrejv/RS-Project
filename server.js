@@ -22,7 +22,6 @@ var redis = require('redis');
 var RedisStore = require('connect-redis')(expressSession);
 var redisClient = redis.createClient();
 var redisStore = new RedisStore({ client: redisClient, host: 'localhost', port: 6379 });
-var redisSession = require('redis-session');
 
 redisClient.on('error', function(err) {
     console.log('Error: ' + err);

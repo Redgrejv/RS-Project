@@ -40,7 +40,7 @@ var userSchema = new Schema({
         type: Date,
         default: Date.now()
     },
-    lastSessionTime: {
+    lastActiveTime: {
         type: Date,
         default: Date.now(),
         require: true

@@ -67,19 +67,28 @@ module.exports = function(app, redisClient) {
         var first_name = req.body.first_name;
         var last_name = req.body.last_name;
 
-        user_service.signup({
-                email: email,
-                password: password,
-                first_name: first_name,
-                last_name: last_name
-            },
-            function(err, user) {
-                if (err) return next(err);
-                var user_data = choiseUserData(user);
-                var token = generationToken(user._id);
+        var data = req.body;
 
-                res.json({ token: token, user: user_data });
-            })
+        if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
+        if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
+        if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
+        if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
+
+        user_service.signup(data);
+
+        // user_service.signup({
+        //         email: email,
+        //         password: password,
+        //         first_name: first_name,
+        //         last_name: last_name
+        //     },
+        //     function(err, user) {
+        //         if (err) return next(err);
+        //         var user_data = choiseUserData(user);
+        //         var token = generationToken(user._id);
+
+        //         res.json({ token: token, user: user_data });
+        //     })
 
     });
 

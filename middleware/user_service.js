@@ -4,52 +4,42 @@ var jwt = require('jsonwebtoken');
 var config = require('../config');
 var async = require('async');
 var valid = require('../utils/validation');
+var Promise = require('bluebird');
+
+module.exports = {
+    signup,
+    login,
+    getUserById,
+    checkEmail
+}
+
+function signup(data = { email, password, first_name, last_name }) {
+    Promise.resolve(function (data) {
+        return User.findOne({ email: data.email });
+    }).then(function(user){
+        console.log(user);
+    }).catch(function (err) {
+        console.log(err);
+    })
+}
 
 
-module.exports.signup = function(data = { email, password, first_name, last_name }, callback) {
 
-    async.waterfall([
-        function(callback) {
-            User.findOne({ email: data.email }, callback);
-        },
-        function(user, callback) {
+// function signup(data = { email, password, first_name, last_name }, callback) {
 
-            if (user) return callback(new HttpError(400, "Email уже используется"));
+//     async.waterfall([
+//         function(callback) {
+//             User.findOne({ email: data.email }, callback);
+//         },
+//         function(user, callback) {
 
-            if (!valid.email(data.email)) {
-                return callback(new HttpError(400, 'Email не валидный'));
-            }
-
-            if (!valid.password(data.password)) {
-                return callback(new HttpError(400, 'Пароль не валидный'));
-            }
-
-            if (!valid.names(data.first_name)) {
-                return callback(new HttpError(400, 'Имя не валидно'));
-            }
-
-            if (!valid.names(data.last_name)) {
-                return callback(new HttpError(400, 'Фамилия не валидна'));
-            }
-
-            var new_user = new User({
-                email: data.email,
-                password: data.password,
-                first_name: data.first_name,
-                last_name: data.last_name
-            });
-
-            new_user.save(function(err, user) {
-                if (err) return callback(err, null);
-
-                callback(null, user);
-            });
-        }
-    ], callback);
-};
+            
+//         }
+//     ], callback);
+// };
 
 
-module.exports.login = function(email, password, callback) {
+function login(email, password, callback) {
 
     async.waterfall([
         function(callback) {
@@ -69,7 +59,7 @@ module.exports.login = function(email, password, callback) {
     ], callback);
 };
 
-module.exports.getUserById = function(id_user, callback) {
+function getUserById(id_user, callback) {
     async.waterfall([
         function(callback) {
             User.findById(id_user, function(err, user) {
@@ -90,7 +80,7 @@ module.exports.getUserById = function(id_user, callback) {
 
 };
 
-module.exports.checkEmail = function(email, callback) {
+function checkEmail(email, callback) {
     async.waterfall([
         function(callback) {
             User.findOne({ email: email }, callback);
@@ -104,3 +94,5 @@ module.exports.checkEmail = function(email, callback) {
         }
     ], callback);
 }
+
+

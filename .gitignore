@@ -19,3 +19,4 @@ build/
 bower_components/
 /*.orig
 /data
+/package-lock.json

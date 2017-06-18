@@ -22,7 +22,9 @@ module.exports = function (app, redisClient) {
             if (err) return next(err);
 
             redisClient.set(req.params.id, 'nil');
-        })
+            res.send('Logout');
+        });
+
     })
 
     // Получение данных юзера по ID

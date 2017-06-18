@@ -57,7 +57,7 @@ app.use(express.session({
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-var redisSession = require('../libs/redis-session');
+var redisSession = require('./libs/redis-session');
 
 
 app.use(require('./error/sendHttpError'));

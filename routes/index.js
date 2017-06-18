@@ -58,6 +58,8 @@ module.exports = function (app, redisClient) {
                 req.session.user = { userID: user_data.id }
             });
 
+            console.log(req.session);
+
             res.json({ token: token, user: user_data });
         });
     });
@@ -82,10 +84,14 @@ module.exports = function (app, redisClient) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
 
+                redisClient.set(user_data.id.toString(), token, function (err, res) {
+                    if (err) return next(err);
+                    updateUserLastActive(user_data.id);
+                    req.session.user = { userID: user_data.id }
+                });
+
                 res.json({ token: token, user: user_data });
             })
-
-
     });
 
     // Проверка на существование в БД Email`a

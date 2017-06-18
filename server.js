@@ -23,11 +23,11 @@ var RedisStore = require('connect-redis')(expressSession);
 var redisClient = redis.createClient();
 var redisStore = new RedisStore({ client: redisClient, host: 'localhost', port: 6379 });
 
-redisClient.on('error', function(err) {
+redisClient.on('error', function (err) {
     console.log('Error: ' + err);
 });
 
-redisClient.on('connect', function() {
+redisClient.on('connect', function () {
     console.log('Connect to redis on port 6379');
 })
 
@@ -38,7 +38,7 @@ app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.cookieParser());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
     res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD']);
@@ -57,15 +57,17 @@ app.use(express.session({
 // app.use(passport.initialize());
 // app.use(passport.session());
 
+var redisSession = require('../libs/redis-session');
+
 
 app.use(require('./error/sendHttpError'));
 app.use(app.router);
-
+app.use(redisSession);
 
 
 require('./routes')(app, redisClient);
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     if (typeof err === 'number') {
         err = new HttpError(err);
     }
@@ -86,7 +88,7 @@ app.use(function(err, req, res, next) {
 
 var server = http.createServer(app);
 
-server.listen(config.get('port'), function(req, res) {
+server.listen(config.get('port'), function (req, res) {
     console.log('Express server listening on port ' + config.get('port'));
 });
 

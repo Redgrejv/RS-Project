@@ -18,7 +18,11 @@ module.exports = function (app, redisClient) {
 
     // Завершение сессии пользователя
     app.get('/api/users/logout/:id', checkToken, function (req, res, next) {
+        req.session.destroy(function (err) {
+            if (err) return next(err);
 
+            redisClient.set(req.params.id, 'nil');
+        })
     })
 
     // Получение данных юзера по ID

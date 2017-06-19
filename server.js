@@ -41,7 +41,7 @@ app.use(express.cookieParser());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
-    res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD']);
+    res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD', 'PUT']);
     next();
 });
 
@@ -52,17 +52,10 @@ app.use(express.session({
     store: redisStore
 }));
 
-// var passport = require('./models/passport');
-//
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-var redisSession = require('./libs/redis-session');
-
 
 app.use(require('./error/sendHttpError'));
+app.use(require('./libs/redis-session'));
 app.use(app.router);
-app.use(redisSession);
 
 
 require('./routes')(app, redisClient);
@@ -93,3 +86,7 @@ server.listen(config.get('port'), function (req, res) {
 });
 
 require('./libs/socket')(server);
+
+app.post('/temp', function (req, res, next) {
+    res.json(req.body);
+})

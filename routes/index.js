@@ -43,9 +43,10 @@ module.exports = function (app, redisClient) {
         var email = req.body.email;
         var password = req.body.password;
 
-        if (!valid.email(email)) {
-            return next(new HttpError(400, 'Email не валидный'));
-        }
+        console.log(req.headers['content-type']);
+
+        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
+        if (!password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
 
         user_service.login(email, password, function (err, user) {
             if (err) return next(err);
@@ -57,14 +58,11 @@ module.exports = function (app, redisClient) {
                 global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
             }
 
-
             redisClient.set(user_data.id.toString(), token, function (err, res) {
                 if (err) return next(err);
                 updateUserLastActive(user_data.id);
                 req.session.user = { userID: user_data.id }
             });
-
-            console.log(req.session);
 
             res.json({ token: token, user: user_data });
         });
@@ -113,7 +111,6 @@ module.exports = function (app, redisClient) {
 
             res.status(404).json('Email свободен.');
         })
-
     });
 
     // Получение всех проектов конкретного пользователя
@@ -158,7 +155,6 @@ module.exports = function (app, redisClient) {
 
     // Удаление проекта
     app.delete('/api/projects/:id', checkToken, function (req, res, next) {
-
         var projectID = req.params.id;
 
 
@@ -219,7 +215,7 @@ function updateUserLastActive(userID) {
         { lastActiveTime: Date.now() },
         { new: true },
         function (err, model) {
-            console.log(err || model);
+            if (err) return err;
         }
     );
 }

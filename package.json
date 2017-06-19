@@ -2,12 +2,11 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-
-        "front": "start mongod --dbpath C:\\data\\db && gulp build  && start gulp webserver &&start gulp watch",
+        "front": " gulp build  && start gulp webserver && start gulp watch",
+        "build": "gulp build",
         "dev": "gulp build && gulp watch",
         "prod": "gulp watch",
-        "server": "start node server.js"
-
+        "server": "node os.js"
     },
     "dependencies": {
         "async": "^2.3.0",
@@ -38,6 +37,7 @@
         "mpromise": "^0.5.5",
         "nconf": "latest",
         "nodemon": "^1.11.0",
+        "os-name": "^2.0.1",
         "passport": "^0.3.2",
         "passport-jwt": "^2.2.1",
         "passport-local": "^1.0.0",

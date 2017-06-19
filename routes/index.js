@@ -34,12 +34,10 @@ module.exports = function (app, redisClient) {
 
     // Авторизация юзера
     app.post('/api/users/login', function (req, res, next) {
-        var email = req.body.email;
-        var password = req.body.password;
+        var data = req.body;
+        validUserData(data, next);
 
-        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
-
-        user_service.login(email, password, function (err, user) {
+        user_service.login(data.email, data.password, function (err, user) {
             if (err) return next(err);
 
             var user_data = choiseUserData(user);
@@ -190,6 +188,10 @@ function generationToken(userID) {
     return token;
 }
 
+/**
+ * @function Выделение данных токена из запроса
+ * @param {Object} request - запрос от клиента
+ */
 function getTokenObject(request) {
     var userID = request.tokenObj.userID;
     var userToken = request.tokenObj.roken;
@@ -200,6 +202,10 @@ function getTokenObject(request) {
     }
 }
 
+/**     
+* @function Обновление времени последней активномти пользователя
+* @param  {ObjectId} userID {id пользователя}
+*/
 function updateUserLastActive(userID) {
     User.findByIdAndUpdate(
         userID,

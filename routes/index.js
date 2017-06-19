@@ -37,9 +37,7 @@ module.exports = function (app, redisClient) {
         var email = req.body.email;
         var password = req.body.password;
 
-        if (!valid.email(email)) {
-            return next(new HttpError(400, 'Email не валидный'));
-        }
+        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
 
         user_service.login(email, password, function (err, user) {
             if (err) return next(err);
@@ -51,14 +49,11 @@ module.exports = function (app, redisClient) {
                 global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
             }
 
-
             redisClient.set(user_data.id.toString(), token, function (err, res) {
                 if (err) return next(err);
                 updateUserLastActive(user_data.id);
                 req.session.user = { userID: user_data.id }
             });
-
-            console.log(req.session);
 
             res.json({ token: token, user: user_data });
         });
@@ -68,10 +63,7 @@ module.exports = function (app, redisClient) {
     app.post('/api/users/signup', function (req, res, next) {
         var data = req.body;
 
-        if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
-        if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
-        if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
-        if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
+        validUserData(data, next);
 
         user_service.signup({
             email: data.email,
@@ -81,6 +73,7 @@ module.exports = function (app, redisClient) {
         },
             function (err, user) {
                 if (err) return next(err);
+
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
 
@@ -216,4 +209,11 @@ function updateUserLastActive(userID) {
             console.log(err || model);
         }
     );
+}
+
+function validUserData(data, next) {
+    if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
+    if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
+    if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
+    if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
 }

@@ -31,7 +31,6 @@ redisClient.on('connect', function () {
     console.log('Connect to redis on port 6379');
 })
 
-
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -52,17 +51,10 @@ app.use(express.session({
     store: redisStore
 }));
 
-// var passport = require('./models/passport');
-//
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-var redisSession = require('./libs/redis-session');
-
-
 app.use(require('./error/sendHttpError'));
+app.use(require('./libs/redis-session'));
+
 app.use(app.router);
-app.use(redisSession);
 
 
 require('./routes')(app, redisClient);

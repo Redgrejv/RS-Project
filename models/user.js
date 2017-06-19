@@ -63,15 +63,15 @@ userSchema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-userSchema.static.prototype.updateLastVisit = function () {
-    User.findByIdAndUpdate(
-        userID,
-        { lastActiveTime: Date.now() },
-        { new: true },
-        function (err, model) {
-            console.log(err || model);
-        }
-    );
-}
+// userSchema.static.prototype.updateLastVisit = function () {
+//     User.findByIdAndUpdate(
+//         userID,
+//         { lastActiveTime: Date.now() },
+//         { new: true },
+//         function (err, model) {
+//             console.log(err || model);
+//         }
+//     );
+// }
 
 exports.User = mongoose.model('User', userSchema);

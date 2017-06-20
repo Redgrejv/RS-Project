@@ -15,13 +15,8 @@ module.exports = {
 
 function login(email, password) {
     return new Promise(function (resolve, reject) {
-        User.on('error', function (err) {
-            reject(err);
-        })
-
         User.findOne({ email: email }, function (err, user) {
             if (err) return reject(err);
-
             if (!user) return reject(new HttpError(404, 'Пользователь не найден'));
 
             if (user.checkPassword(password)) resolve(user);

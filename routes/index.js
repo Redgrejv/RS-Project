@@ -44,45 +44,17 @@ module.exports = function (app, redisClient) {
         validUserData(data, next);
 
         user_service.login(data.email, data.password, function (err, user) {
-        if (!password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
+            if (!password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
 
-        user_service.login(email, password, function (err, user) {
-            if (err) return next(err);
-
-            var user_data = choiseUserData(user);
-            var token = generationToken(user._id);
-
-            if (global.socket) {
-                global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
-            }
-
-            redisClient.set(user_data.id.toString(), token, function (err, res) {
-                if (err) return next(err);
-                updateUserLastActive(user_data.id);
-                req.session.user = { userID: user_data.id }
-            });
-
-            res.json({ token: token, user: user_data });
-        });
-    });
-
-    // Регистрация нового пользователя
-    app.post('/api/users/signup', function (req, res, next) {
-        var data = req.body;
-
-        validUserData(data, next);
-
-        user_service.signup({
-            email: data.email,
-            password: data.password,
-            first_name: data.first_name,
-            last_name: data.last_name
-        },
-            function (err, user) {
+            user_service.login(email, password, function (err, user) {
                 if (err) return next(err);
 
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
+
+                if (global.socket) {
+                    global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
+                }
 
                 redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
@@ -91,8 +63,37 @@ module.exports = function (app, redisClient) {
                 });
 
                 res.json({ token: token, user: user_data });
-            })
+            });
+        });
     });
+
+        // Регистрация нового пользователя
+        app.post('/api/users/signup', function (req, res, next) {
+            var data = req.body;
+
+            validUserData(data, next);
+
+            user_service.signup({
+                email: data.email,
+                password: data.password,
+                first_name: data.first_name,
+                last_name: data.last_name
+            },
+                function (err, user) {
+                    if (err) return next(err);
+
+                    var user_data = choiseUserData(user);
+                    var token = generationToken(user._id);
+
+                    redisClient.set(user_data.id.toString(), token, function (err, res) {
+                        if (err) return next(err);
+                        updateUserLastActive(user_data.id);
+                        req.session.user = { userID: user_data.id }
+                    });
+
+                    res.json({ token: token, user: user_data });
+                })
+        });
 
     // Проверка на существование в БД Email`a
     app.post('/api/users/checkEmail', function (req, res, next) {
@@ -162,7 +163,7 @@ module.exports = function (app, redisClient) {
 
     });
 
-};
+}
 
 
 /**

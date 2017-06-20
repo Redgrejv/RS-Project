@@ -13,6 +13,12 @@ module.exports = {
     checkEmail
 }
 
+/**         
+* @function Проверка пользователя в БД по задынным параметрам
+* @param  {String} email    {email} - почта пользователя
+* @param  {String} password {password} - пароль пользователя
+* @return {Promise}
+*/
 function login(email, password) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, function (err, user) {
@@ -23,7 +29,6 @@ function login(email, password) {
             else
                 reject(new HttpError(400, 'Пароль не верен'));
         });
-
     });
 }
 

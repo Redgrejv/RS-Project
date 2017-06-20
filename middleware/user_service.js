@@ -14,7 +14,7 @@ module.exports = {
 }
 
 /**         
-* @function Проверка пользователя в БД по задынным параметрам
+* @function Проверка пользователя в БД по заданным параметрам
 * @param  {String} email    {email} - почта пользователя
 * @param  {String} password {password} - пароль пользователя
 * @return {Promise}

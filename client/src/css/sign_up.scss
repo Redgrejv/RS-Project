@@ -1,11 +1,11 @@
 @font-face{
 	font-family: Play-Regular;
-	src:url(../../font/Play-Regular.ttf);
+	src:url(../font/Play-Regular.ttf);
 }
 
 @font-face{
 	font-family: Gotham;
-	src:url(../../font/Gotham.ttf);
+	src:url(../font/Gotham.ttf);
 }
 
 body{
@@ -24,6 +24,7 @@ body{
 
 .reg-block{
 	align-items: center;
+	min-width: 250px;
 	width: 25%;
 	background: #f7f7f7;
 	padding: 3% 3%;
@@ -77,11 +78,21 @@ body{
 	}
 }
 
-/*@media screen and (max-width: 1440px) {
-	
 
+@media screen and (max-width: 1440px) {
+	.reg-block{
+		width: 30%;
+	}
 }
 
 @media screen and (max-width: 1024px) {
-	
-}*/
+	.reg-block {
+		width: 50%;
+		&__reg-form input{
+			font-size: 17px;
+		}
+		h1{
+			font-size:40px;
+		}
+	}
+}

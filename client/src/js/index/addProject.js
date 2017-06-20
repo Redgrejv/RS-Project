@@ -8,7 +8,7 @@ $(document).ready(function() {
             	data:{title: $('#add-project-form__name').val()},
             	success: function(response){
             		//console.log(response);
-            		$('.menu').append('<div class="menu__project" id="'+response.project._id+'""><div class="menu__project-img"></div><div class="menu__project-name">'+response.project.title+'</div></div>');
+            		$('.menu').append('<div class="menu__project" id="'+response.project._id+'"><div class="menu__project-img"></div><div class="menu__project-name">'+response.project.title+'</div></div>');
 					$('#overlay').fadeOut(400);
 					$('.modal-window').attr('style','');
 					$('#add-project-form__name').val('');

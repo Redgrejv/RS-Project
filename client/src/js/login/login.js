@@ -70,7 +70,7 @@ $(document).ready(function() {
         });
 
 
-        $('#login-form__button-login').click(function(evet) {
+        $('#login-form__button-login').click(function(event) {
             event.preventDefault();
             $.ajax({
                 url: 'http://localhost:3000/api/users/login',
@@ -81,6 +81,8 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('user.id', data.user.id);
+
                     window.location.href = 'index.html';
                 },
                 error: function(data) {

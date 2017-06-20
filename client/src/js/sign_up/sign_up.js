@@ -151,6 +151,7 @@ $(document).ready(function(){
                password: $('#reg-form__password').val()},
         success: function(data){
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('user', data.user);
                 window.location.href='index.html';
         },
         error: function(data){

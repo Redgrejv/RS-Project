@@ -67,33 +67,33 @@ module.exports = function (app, redisClient) {
         });
     });
 
-        // Регистрация нового пользователя
-        app.post('/api/users/signup', function (req, res, next) {
-            var data = req.body;
+    // Регистрация нового пользователя
+    app.post('/api/users/signup', function (req, res, next) {
+        var data = req.body;
 
-            validUserData(data, next);
+        validUserData(data, next);
 
-            user_service.signup({
-                email: data.email,
-                password: data.password,
-                first_name: data.first_name,
-                last_name: data.last_name
-            },
-                function (err, user) {
+        user_service.signup({
+            email: data.email,
+            password: data.password,
+            first_name: data.first_name,
+            last_name: data.last_name
+        },
+            function (err, user) {
+                if (err) return next(err);
+
+                var user_data = choiseUserData(user);
+                var token = generationToken(user._id);
+
+                redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
+                    updateUserLastActive(user_data.id);
+                    req.session.user = { userID: user_data.id }
+                });
 
-                    var user_data = choiseUserData(user);
-                    var token = generationToken(user._id);
-
-                    redisClient.set(user_data.id.toString(), token, function (err, res) {
-                        if (err) return next(err);
-                        updateUserLastActive(user_data.id);
-                        req.session.user = { userID: user_data.id }
-                    });
-
-                    res.json({ token: token, user: user_data });
-                })
-        });
+                res.json({ token: token, user: user_data });
+            })
+    });
 
     // Проверка на существование в БД Email`a
     app.post('/api/users/checkEmail', function (req, res, next) {

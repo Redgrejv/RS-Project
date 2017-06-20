@@ -81,7 +81,7 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
-                    localStorage.setItem('user.id', data.user.id);
+                    localStorage.setItem('user.id', data.user.id.toString());
 
                     window.location.href = 'index.html';
                 },

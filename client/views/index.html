@@ -7,6 +7,7 @@
 	<script src="../src/lib/jquery.js"></script>
 	<script src="../src/js/index/index.js"></script>
 	<script src="../src/js/index/viewProjects.js"></script>
+	<script src="../src/js/index/addProject.js"></script>
 	<!-- <script src="client/src/js/index/users/checkAuthrorization.js"></script>
 	<script src="client/src/js/index/users/message.js"></script> -->
 </head>
@@ -21,19 +22,6 @@
 
 	<div class="menu__add-project">
 		<div class="menu_plus"></div>
-	</div>	
-
-	<div class="menu__project">
-		<div class="menu__project-img"></div>
-		<div class="menu__project-name">Project 1</div>
-	</div>
-	<div class="menu__project">
-		<div class="menu__project-img"></div>
-		<div class="menu__project-name">Project 2</div>
-	</div>
-	<div class="menu__project">
-		<div class="menu__project-img"></div>
-		<div class="menu__project-name">Project 3</div>
 	</div>
 
 	</div>
@@ -43,6 +31,7 @@
 			<div id="exit"></div>
 		</header>
 	Taski
+	<div class="content__porject-option"></div>
 	</div>
 	<!-- Подложка -->
 <div id="overlay"></div>
@@ -50,7 +39,7 @@
 <div class="modal-window">
 	<div id="modal-window__close"></div>
 	<form method="POST" class="add-project-form">
-				<input id="add-project-form__name" class="field" type="text" name="project-name" placeholder="Project name" required>
+				<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name" required>
 				<button id="add-project-form__button" type="submit">Добавить проект</button>
 	</form>
 </div>

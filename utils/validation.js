@@ -4,7 +4,7 @@ module.exports.email = function(email) {
 }
 
 module.exports.names = function(names, options = {minLength: 2 ,maxLength: 20}) {
-    var regular = new RegExp('^[a-zA-Zа-яА-ЯёЁ-]{'+options.minLength+','+options.maxLength+'}$');
+    var regular = new RegExp('^[a-zA-Zа-яА-ЯёЁ0-9-_ ]{'+options.minLength+','+options.maxLength+'}$');
     return regular.test(names);
 }
 

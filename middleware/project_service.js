@@ -78,9 +78,9 @@ module.exports.deleteProject = function (projectID, callback) {
 * @param  {ObjectID} userID {ID пользователя}
 * @param  {function} callback {description}
 */
-module.exports.getAllProjects = function (userID) {
+module.exports.getAllProjects = function (userID, callback) {
 
-    await.waterfall([
+    async.waterfall([
         function (callback) {
             Project.find({ createdBy: userID }, callback);
         }, function (user, callback) {

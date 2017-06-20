@@ -40,12 +40,10 @@ module.exports = function (app, redisClient) {
 
     // Авторизация юзера
     app.post('/api/users/login', function (req, res, next) {
-        var email = req.body.email;
-        var password = req.body.password;
+        var data = req.body;
+        validUserData(data, next);
 
-        console.log(req.headers['content-type']);
-
-        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
+        user_service.login(data.email, data.password, function (err, user) {
         if (!password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
 
         user_service.login(email, password, function (err, user) {
@@ -72,10 +70,7 @@ module.exports = function (app, redisClient) {
     app.post('/api/users/signup', function (req, res, next) {
         var data = req.body;
 
-        if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
-        if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
-        if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
-        if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
+        validUserData(data, next);
 
         user_service.signup({
             email: data.email,
@@ -85,6 +80,7 @@ module.exports = function (app, redisClient) {
         },
             function (err, user) {
                 if (err) return next(err);
+
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
 
@@ -199,6 +195,10 @@ function generationToken(userID) {
     return token;
 }
 
+/**
+ * @function Выделение данных токена из запроса
+ * @param {Object} request - запрос от клиента
+ */
 function getTokenObject(request) {
     var userID = request.tokenObj.userID;
     var userToken = request.tokenObj.roken;
@@ -209,6 +209,10 @@ function getTokenObject(request) {
     }
 }
 
+/**     
+* @function Обновление времени последней активномти пользователя
+* @param  {ObjectId} userID {id пользователя}
+*/
 function updateUserLastActive(userID) {
     User.findByIdAndUpdate(
         userID,
@@ -218,4 +222,11 @@ function updateUserLastActive(userID) {
             if (err) return err;
         }
     );
+}
+
+function validUserData(data, next) {
+    if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
+    if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
+    if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
+    if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
 }

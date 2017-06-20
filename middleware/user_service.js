@@ -13,13 +13,32 @@ module.exports = {
     checkEmail
 }
 
+function login(email, password) {
+    return new Promise(function (resolve, reject) {
+        User.on('error', function (err) {
+            reject(err);
+        })
+
+        User.findOne({ email: email }, function (err, user) {
+            if (err) return reject(err);
+
+            if (!user) return reject(new HttpError(404, 'Пользователь не найден'));
+
+            if (user.checkPassword(password)) resolve(user);
+            else
+                reject(new HttpError(400, 'Пароль не верен'));
+        });
+
+    });
+}
+
 function signup(data = { email, password, first_name, last_name }, callback) {
 
     async.waterfall([
-        function(callback) {
+        function (callback) {
             User.findOne({ email: data.email }, callback);
         },
-        function(user, callback) {
+        function (user, callback) {
 
             if (user) return callback(new HttpError(400, "Email уже используется"));
 
@@ -30,7 +49,7 @@ function signup(data = { email, password, first_name, last_name }, callback) {
                 last_name: data.last_name
             });
 
-            new_user.save(function(err, user) {
+            new_user.save(function (err, user) {
                 if (err) return callback(err, null);
 
                 callback(null, user);
@@ -39,37 +58,17 @@ function signup(data = { email, password, first_name, last_name }, callback) {
     ], callback);
 };
 
-function login(email, password, callback) {
-
-    async.waterfall([
-        function(callback) {
-            User.findOne({ email: email }, callback);
-        },
-        function(user, callback) {
-            if (user) {
-                if (user.checkPassword(password)) {
-                    callback(null, user);
-                } else {
-                    callback(new HttpError(400, "Пароль не верен"));
-                }
-            } else {
-                callback(new HttpError(404, "Пользователь не найден"));
-            }
-        }
-    ], callback);
-};
-
 function getUserById(id_user, callback) {
     async.waterfall([
-        function(callback) {
-            User.findById(id_user, function(err, user) {
+        function (callback) {
+            User.findById(id_user, function (err, user) {
                 if (err) callback(err, null);
 
                 callback(null, user);
 
             });
         },
-        function(user, callback) {
+        function (user, callback) {
             if (!user) {
                 callback(new HttpError(404, 'Пользователь не найден.'), null);
             } else
@@ -82,10 +81,10 @@ function getUserById(id_user, callback) {
 
 function checkEmail(email, callback) {
     async.waterfall([
-        function(callback) {
+        function (callback) {
             User.findOne({ email: email }, callback);
         },
-        function(user, callback) {
+        function (user, callback) {
             if (user) {
                 callback(null, false);
             } else {

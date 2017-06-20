@@ -43,12 +43,10 @@ module.exports = function (app, redisClient) {
         var data = req.body;
         validUserData(data, next);
 
-        user_service.login(data.email, data.password, function (err, user) {
-            if (!password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
+        if (!data.password) return next(new HttpError(400, 'Поле пароля не можт быть пустым'));
 
-            user_service.login(email, password, function (err, user) {
-                if (err) return next(err);
-
+        user_service.login(data.email, data.password)
+            .then(function (user) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
 
@@ -63,8 +61,9 @@ module.exports = function (app, redisClient) {
                 });
 
                 res.json({ token: token, user: user_data });
+            }).catch(function (err) {
+                return next(err);
             });
-        });
     });
 
     // Регистрация нового пользователя

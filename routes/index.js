@@ -29,13 +29,15 @@ module.exports = function (app, redisClient) {
 
     // Получение данных юзера по ID
     app.get('/api/users/:id', checkToken, function (req, res, next) {
-        var id = req.params.id;
+        var userID = req.params.id;
 
-        user_service.getUserById(id, function (err, user) {
-            if (!err) return next(err);
-
-            res.json(choiseUserData(user));
-        });
+        user_service.getUserById(id)
+            .then(function (user) {
+                res.json(choiseUserData(user));
+            })
+            .catch(function (err) {
+                return next(err);
+            })
     });
 
     // Авторизация юзера

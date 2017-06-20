@@ -58,25 +58,14 @@ function signup(data = { email, password, first_name, last_name }, callback) {
     ], callback);
 };
 
-function getUserById(id_user, callback) {
-    async.waterfall([
-        function (callback) {
-            User.findById(id_user, function (err, user) {
-                if (err) callback(err, null);
+function getUserById(userID) {
+    return new Promise(function (reject, resolve) {
+        User.findById(userID, function (err, user) {
+            if (err) return reject(new HttpError(404, 'Пользователь не найден' || err));
 
-                callback(null, user);
-
-            });
-        },
-        function (user, callback) {
-            if (!user) {
-                callback(new HttpError(404, 'Пользователь не найден.'), null);
-            } else
-                callback(null, user);
-        }
-    ], callback);
-
-
+            resolve(user);
+        })
+    })
 };
 
 function checkEmail(email, callback) {

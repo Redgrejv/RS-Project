@@ -123,15 +123,17 @@ module.exports = function (app, redisClient) {
     // Создание нового проекта
     app.post('/api/projects', checkToken, function (req, res, next) {
         var title = req.body.title;
-        var id = req.tokenObj.userID;
 
-        if (!valid.names(title, { minLength: 1, maxLength: 26 })) {
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
-        }
+        if (!valid.names(title, { minLength: 1, maxLength: 16 }))
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать 16 символов.'));
 
-        project_service.insertProject(title, id, function (err, project) {
-            res.json({ project: project });
-        })
+        project_service.insertProject(title, req.tokenObj.userID)
+            .then(function (project) {
+                res.json({ project: project });
+            })
+            .catch(function (err) {
+                return next(err);
+            })
     });
 
     // Изменение данных проекта
@@ -153,12 +155,13 @@ module.exports = function (app, redisClient) {
     app.delete('/api/projects/:id', checkToken, function (req, res, next) {
         var projectID = req.params.id;
 
-
-        project_service.deleteProject(projectID, function (err, project) {
-            if (err) return next(err);
-
-            res.json(project);
-        })
+        project_service.deleteProject(projectID)
+            .then(function (project) {
+                res.json(project);
+            })
+            .catch(function (err) {
+                next(err);
+            })
 
     });
 

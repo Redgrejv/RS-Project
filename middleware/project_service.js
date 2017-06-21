@@ -2,13 +2,19 @@ var HttpError = require('../error').HttpError;
 var Project = require('../models/projects').Project;
 var async = require('async');
 
+module.exports = {
+    insertProject,
+    patchProject,
+    deleteProject,
+    getAllProjects
+}
+
 /**
-* @function insertProject Добавление нового проекта
+* Добавление нового проекта
 * @param  {String} title    {название проекта}
 * @param  {ObjectId} userID   {ID пользователя}
-* @param  {function} callback {description}
 */
-module.exports.insertProject = function (title, userID, callback) {
+function insertProject(title, userID, callback) {
 
     async.waterfall([
         function (callback) {
@@ -37,7 +43,7 @@ module.exports.insertProject = function (title, userID, callback) {
 * @param  {String} newTitle  {Новый заголовок проекта}
 * @param  {function} callback {description}
 */
-module.exports.patchProject = function (projectID, newTitle, callback) {
+function patchProject(projectID, newTitle, callback) {
 
     async.waterfall([
         function (callback) {
@@ -55,28 +61,22 @@ module.exports.patchProject = function (projectID, newTitle, callback) {
 };
 
 /** 
-* @function deleteProject
-* @param  {ObjectId} projectID {ID проекта}
-* @param  {function} callback {description}
+* Удаление проекта
+* @param  {ObjectId} projectID - ID проекта
 */
-module.exports.deleteProject = function (projectID, callback) {
+function deleteProject(projectID) {
 
-    async.waterfall([
-        function (callback) {
-            Project.remove({ _id: projectID }, callback)
-        },
-        function (project, callback) {
-            if (!project) callback(project, null);
-
-            callback(null, project);
-        }
-    ], callback)
+    return new Promise(function (resolve, reject) {
+        Project.remove({ _id: projectID }, function (err, project) {
+            if (err) reject(err);
+            resolve(project);
+        })
+    })
 };
 
 /**
-* @function getAllProject Получение всех проектов пользователя
+* Получение всех проектов пользователя
 * @param  {ObjectID} userID {ID пользователя}
-* @param  {function} callback {description}
 */
 module.exports.getAllProjects = function (userID, callback) {
 

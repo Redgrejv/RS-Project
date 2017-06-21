@@ -123,9 +123,10 @@ module.exports = function (app, redisClient) {
     // Создание нового проекта
     app.post('/api/projects', checkToken, function (req, res, next) {
         var title = req.body.title;
+        var maxLength = 16;
 
-        if (!valid.names(title, { minLength: 1, maxLength: 16 }))
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать 16 символов.'));
+        if (!valid.names(title, { minLength: 1, maxLength: maxLength }))
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать ' + maxLength + ' символов.'));
 
         project_service.insertProject(title, req.tokenObj.userID)
             .then(function (project) {
@@ -141,8 +142,8 @@ module.exports = function (app, redisClient) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
 
-        if (!valid.names(newTitle, { minLength: 1, maxLength: 26 })) {
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
+        if (!valid.names(newTitle, { minLength: 1, maxLength: 16 })) {
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или быть больше 16 символов'));
         }
 
         project_service.patchProject(projectID, newTitle, function (err, project) {
@@ -213,8 +214,8 @@ function getTokenObject(request) {
 }
 
 /**     
-* @function Обновление времени последней активномти пользователя
-* @param  {ObjectId} userID {id пользователя}
+* Обновление времени последней активномти пользователя
+* @param  {ObjectId} userID - ID пользователя
 */
 function updateUserLastActive(userID) {
     User.findByIdAndUpdate(

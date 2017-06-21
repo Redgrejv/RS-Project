@@ -15,49 +15,32 @@ module.exports = {
 * @param  {ObjectId} userID   {ID пользователя}
 */
 function insertProject(title, userID, callback) {
+    return new Promise(function (resolve, reject) {
+        var new_project = new Project({
+            title: title,
+            createdBy: userID,
+            dateLastModification: Date.now()
+        });
 
-    async.waterfall([
-        function (callback) {
-            var new_project = new Project({
-                title: title,
-                createdBy: userID,
-                dateLastModification: Date.now()
-            });
-
-            new_project.save(function (err, project) {
-                callback(err, project);
-            });
-        },
-        function (project, callback) {
-            if (project.errors) callback(project.errors, null);
-
-            callback(null, project);
-        }
-
-    ], callback);
+        new_project.save(function (err, project) {
+            if (err) return reject(err);
+            resolve(project);
+        });
+    });
 };
 
 /**
-* @function patchProject Изменение данных заголовка
+* Изменение данных проекта
 * @param  {ObjectId} projectID {ID проекта}
 * @param  {String} newTitle  {Новый заголовок проекта}
-* @param  {function} callback {description}
 */
-function patchProject(projectID, newTitle, callback) {
-
-    async.waterfall([
-        function (callback) {
-            Project.update(
-                { _id: projectID },
-                { title: newTitle, dateLastModification: Date.now() },
-                callback);
-        },
-        function (project, callback) {
-            if (!project) callback(project, null);
-
-            callback(null, project);
-        }
-    ], callback);
+function patchProject(projectID, newTitle) {
+    return new Promise(function (resolve, reject) {
+        Project.update(
+            { _id: projectID },
+            { title: newTitle, dateLastModification: Date.now() },
+            resolve);
+    })
 };
 
 /** 
@@ -78,7 +61,7 @@ function deleteProject(projectID) {
 * Получение всех проектов пользователя
 * @param  {ObjectID} userID {ID пользователя}
 */
-module.exports.getAllProjects = function (userID, callback) {
+function getAllProjects(userID, callback) {
 
     async.waterfall([
         function (callback) {

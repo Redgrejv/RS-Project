@@ -98,15 +98,15 @@ module.exports = function (app, redisClient) {
     app.post('/api/users/checkEmail', function (req, res, next) {
         var email = req.body.email;
 
-        if (!valid.email(email)) {
-            return next(new HttpError(400, 'Email не валидный'));
-        }
+        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
 
-        user_service.checkEmail(email, function (err, status) {
-            if (!status) { return res.status(400).json('Email занят.') }
-
-            res.status(404).json('Email свободен.');
-        })
+        user_service.checkEmail(email)
+            .then(function () {
+                res.status(404).json('Email свободен.');
+            })
+            .catch(function (err) {
+                return res.status(400).json('Email занят.');
+            })
     });
 
     // Получение всех проектов конкретного пользователя

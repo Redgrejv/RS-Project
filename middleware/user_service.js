@@ -14,10 +14,9 @@ module.exports = {
 }
 
 /**         
-* @function Проверка пользователя в БД по задынным параметрам
+* Авторизация пользователя в БД по задынным параметрам
 * @param  {String} email    {email} - почта пользователя
 * @param  {String} password {password} - пароль пользователя
-* @return {Promise}
 */
 function login(email, password) {
     return new Promise(function (resolve, reject) {
@@ -32,6 +31,13 @@ function login(email, password) {
     });
 }
 
+/**
+ * Регистрация пользователя
+ * @param {String} email - почта пользователя
+ * @param {String} password - пароль пользователя
+ * @param {String} first_name - имя пользователя
+ * @param {String} last_name - фамилия пользователя
+ */
 function signup(email, password, first_name, last_name) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, function (err, user) {
@@ -52,6 +58,10 @@ function signup(email, password, first_name, last_name) {
     })
 };
 
+/**
+ * Получение данных пользователя по ID
+ * @param {ObjectId} userID - id пользователя 
+ */
 function getUserById(userID) {
     return new Promise(function (reject, resolve) {
         User.findById(userID, function (err, user) {
@@ -62,19 +72,19 @@ function getUserById(userID) {
     })
 };
 
-function checkEmail(email, callback) {
-    async.waterfall([
-        function (callback) {
-            User.findOne({ email: email }, callback);
-        },
-        function (user, callback) {
-            if (user) {
-                callback(null, false);
-            } else {
-                callback(null, true);
-            }
-        }
-    ], callback);
+/**
+ * Проверка email в БД
+ * @param {String} email - почта пользователя 
+ */
+function checkEmail(email) {
+
+    return new Promise(function (resolve, reject) {
+        User.findOne({ email: email }, function (err, user) {
+            if (user) reject(user);
+
+            resolve(err);
+        })
+    })
 }
 
 

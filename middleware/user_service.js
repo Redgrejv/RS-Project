@@ -32,30 +32,24 @@ function login(email, password) {
     });
 }
 
-function signup(data = { email, password, first_name, last_name }, callback) {
-
-    async.waterfall([
-        function (callback) {
-            User.findOne({ email: data.email }, callback);
-        },
-        function (user, callback) {
-
-            if (user) return callback(new HttpError(400, "Email уже используется"));
+function signup(email, password, first_name, last_name) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ email: email }, function (err, user) {
+            if (user) return reject(new HttpError(400, 'Такой email уже используется'));
 
             var new_user = new User({
-                email: data.email,
-                password: data.password,
-                first_name: data.first_name,
-                last_name: data.last_name
+                email: email,
+                password: password,
+                first_name: first_name,
+                last_name: last_name
             });
 
             new_user.save(function (err, user) {
-                if (err) return callback(err, null);
-
-                callback(null, user);
+                if (err) reject(err);
+                resolve(user);
             });
-        }
-    ], callback);
+        })
+    })
 };
 
 function getUserById(userID) {

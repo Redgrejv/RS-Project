@@ -56,7 +56,6 @@ app.use(require('./libs/redis-session'));
 
 app.use(app.router);
 
-
 require('./routes')(app, redisClient);
 
 app.use(function (err, req, res, next) {

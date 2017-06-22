@@ -192,7 +192,7 @@ function choiseUserData(user) {
 }
 
 /**
- * @function Генерация токена на основе ID пользователя
+ * Генерация токена на основе ID пользователя
  * @param  {ObjectID} userID {ID юзера из БД}
  * @return {type} {String}
  */
@@ -204,7 +204,7 @@ function generationToken(userID) {
 }
 
 /**
- * @function Выделение данных токена из запроса
+ * Выделение данных токена из запроса
  * @param {Object} request - запрос от клиента
  */
 function getTokenObject(request) {

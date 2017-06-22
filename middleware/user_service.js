@@ -14,10 +14,9 @@ module.exports = {
 }
 
 /**         
-* @function Проверка пользователя в БД по заданным параметрам
+* Авторизация пользователя в БД по задынным параметрам
 * @param  {String} email    {email} - почта пользователя
 * @param  {String} password {password} - пароль пользователя
-* @return {Promise}
 */
 function login(email, password) {
     return new Promise(function (resolve, reject) {
@@ -32,32 +31,37 @@ function login(email, password) {
     });
 }
 
-function signup(data = { email, password, first_name, last_name }, callback) {
-
-    async.waterfall([
-        function (callback) {
-            User.findOne({ email: data.email }, callback);
-        },
-        function (user, callback) {
-
-            if (user) return callback(new HttpError(400, "Email уже используется"));
+/**
+ * Регистрация пользователя
+ * @param {String} email - почта пользователя
+ * @param {String} password - пароль пользователя
+ * @param {String} first_name - имя пользователя
+ * @param {String} last_name - фамилия пользователя
+ */
+function signup(email, password, first_name, last_name) {
+    return new Promise(function (resolve, reject) {
+        User.findOne({ email: email }, function (err, user) {
+            if (user) return reject(new HttpError(400, 'Такой email уже используется'));
 
             var new_user = new User({
-                email: data.email,
-                password: data.password,
-                first_name: data.first_name,
-                last_name: data.last_name
+                email: email,
+                password: password,
+                first_name: first_name,
+                last_name: last_name
             });
 
             new_user.save(function (err, user) {
-                if (err) return callback(err, null);
-
-                callback(null, user);
+                if (err) reject(err);
+                resolve(user);
             });
-        }
-    ], callback);
+        })
+    })
 };
 
+/**
+ * Получение данных пользователя по ID
+ * @param {ObjectId} userID - id пользователя 
+ */
 function getUserById(userID) {
     return new Promise(function (reject, resolve) {
         User.findById(userID, function (err, user) {
@@ -68,19 +72,19 @@ function getUserById(userID) {
     })
 };
 
-function checkEmail(email, callback) {
-    async.waterfall([
-        function (callback) {
-            User.findOne({ email: email }, callback);
-        },
-        function (user, callback) {
-            if (user) {
-                callback(null, false);
-            } else {
-                callback(null, true);
-            }
-        }
-    ], callback);
+/**
+ * Проверка email в БД
+ * @param {String} email - почта пользователя 
+ */
+function checkEmail(email) {
+
+    return new Promise(function (resolve, reject) {
+        User.findOne({ email: email }, function (err, user) {
+            if (user) reject(user);
+
+            resolve(err);
+        })
+    })
 }
 
 

@@ -5,8 +5,7 @@
         "front": "start mongod --dbpath \"data/db\" && gulp build  && start gulp webserver &&start gulp watch",
         "dev": "gulp build && gulp watch",
         "prod": "gulp watch",
-        "server": "start mongod --dbpath ~/data/db && start mongod --dbpath c:/data/db && start node server.js",
-        "mongo": "mkdir ~/\"data/db\" || mkdir C:/data/db & mongod --dbpath ~/data/db || mongod --dbpath C:/data/db"
+        "server": "redis-server | mkdir -p ~/data/db/ || mkdir C:/data/db & mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | node server"
     },
     "dependencies": {
         "async": "^2.3.0",

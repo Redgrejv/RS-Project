@@ -2,83 +2,66 @@ var HttpError = require('../error').HttpError;
 var Project = require('../models/projects').Project;
 var async = require('async');
 
+module.exports = {
+    insertProject,
+    patchProject,
+    deleteProject,
+    getAllProjects
+}
+
 /**
-* @function insertProject Добавление нового проекта
+* Добавление нового проекта
 * @param  {String} title    {название проекта}
 * @param  {ObjectId} userID   {ID пользователя}
-* @param  {function} callback {description}
 */
-module.exports.insertProject = function (title, userID, callback) {
+function insertProject(title, userID, callback) {
+    return new Promise(function (resolve, reject) {
+        var new_project = new Project({
+            title: title,
+            createdBy: userID,
+            dateLastModification: Date.now()
+        });
 
-    async.waterfall([
-        function (callback) {
-            var new_project = new Project({
-                title: title,
-                createdBy: userID,
-                dateLastModification: Date.now()
-            });
-
-            new_project.save(function (err, project) {
-                callback(err, project);
-            });
-        },
-        function (project, callback) {
-            if (project.errors) callback(project.errors, null);
-
-            callback(null, project);
-        }
-
-    ], callback);
+        new_project.save(function (err, project) {
+            if (err) return reject(err);
+            resolve(project);
+        });
+    });
 };
 
 /**
-* @function patchProject Изменение данных заголовка
+* Изменение данных проекта
 * @param  {ObjectId} projectID {ID проекта}
 * @param  {String} newTitle  {Новый заголовок проекта}
-* @param  {function} callback {description}
 */
-module.exports.patchProject = function (projectID, newTitle, callback) {
-
-    async.waterfall([
-        function (callback) {
-            Project.update(
-                { _id: projectID },
-                { title: newTitle, dateLastModification: Date.now() },
-                callback);
-        },
-        function (project, callback) {
-            if (!project) callback(project, null);
-
-            callback(null, project);
-        }
-    ], callback);
+function patchProject(projectID, newTitle) {
+    return new Promise(function (resolve, reject) {
+        Project.update(
+            { _id: projectID },
+            { title: newTitle, dateLastModification: Date.now() },
+            resolve);
+    })
 };
 
 /** 
-* @function deleteProject
-* @param  {ObjectId} projectID {ID проекта}
-* @param  {function} callback {description}
+* Удаление проекта
+* @param  {ObjectId} projectID - ID проекта
 */
-module.exports.deleteProject = function (projectID, callback) {
+function deleteProject(projectID) {
 
-    async.waterfall([
-        function (callback) {
-            Project.remove({ _id: projectID }, callback)
-        },
-        function (project, callback) {
-            if (!project) callback(project, null);
-
-            callback(null, project);
-        }
-    ], callback)
+    return new Promise(function (resolve, reject) {
+        Project.remove({ _id: projectID }, function (err, project) {
+            if (err) reject(err);
+            resolve(project);
+        })
+    })
 };
 
 /**
-* @function getAllProject Получение всех проектов пользователя
+* Получение всех проектов пользователя
 * @param  {ObjectID} userID {ID пользователя}
-* @param  {function} callback {description}
 */
-module.exports.getAllProjects = function (userID, callback) {
+function getAllProjects(userID, callback) {
 
     async.waterfall([
         function (callback) {

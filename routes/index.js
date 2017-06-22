@@ -76,15 +76,8 @@ module.exports = function (app, redisClient) {
         if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
         if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
 
-        user_service.signup({
-            email: data.email,
-            password: data.password,
-            first_name: data.first_name,
-            last_name: data.last_name
-        },
-            function (err, user) {
-                if (err) return next(err);
-
+        user_service.signup(data.email, data.password, data.first_name, data.last_name)
+            .then(function (user) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user._id);
 
@@ -96,21 +89,24 @@ module.exports = function (app, redisClient) {
 
                 res.json({ token: token, user: user_data });
             })
+            .catch(function (err) {
+                return next(err);
+            });
     });
 
     // Проверка на существование в БД Email`a
     app.post('/api/users/checkEmail', function (req, res, next) {
         var email = req.body.email;
 
-        if (!valid.email(email)) {
-            return next(new HttpError(400, 'Email не валидный'));
-        }
+        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
 
-        user_service.checkEmail(email, function (err, status) {
-            if (!status) { return res.status(400).json('Email занят.') }
-
-            res.status(404).json('Email свободен.');
-        })
+        user_service.checkEmail(email)
+            .then(function () {
+                res.status(404).json('Email свободен.');
+            })
+            .catch(function (err) {
+                return res.status(400).json('Email занят.');
+            })
     });
 
     // Получение всех проектов конкретного пользователя
@@ -127,15 +123,18 @@ module.exports = function (app, redisClient) {
     // Создание нового проекта
     app.post('/api/projects', checkToken, function (req, res, next) {
         var title = req.body.title;
-        var id = req.tokenObj.userID;
+        var maxLength = 16;
 
-        if (!valid.names(title, { minLength: 1, maxLength: 26 })) {
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
-        }
+        if (!valid.names(title, { minLength: 1, maxLength: maxLength }))
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать ' + maxLength + ' символов.'));
 
-        project_service.insertProject(title, id, function (err, project) {
-            res.json({ project: project });
-        })
+        project_service.insertProject(title, req.tokenObj.userID)
+            .then(function (project) {
+                res.json({ project: project });
+            })
+            .catch(function (err) {
+                return next(err);
+            })
     });
 
     // Изменение данных проекта
@@ -143,8 +142,8 @@ module.exports = function (app, redisClient) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
 
-        if (!valid.names(newTitle, { minLength: 1, maxLength: 26 })) {
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым.'));
+        if (!valid.names(newTitle, { minLength: 1, maxLength: 16 })) {
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или быть больше 16 символов'));
         }
 
         project_service.patchProject(projectID, newTitle, function (err, project) {
@@ -157,16 +156,17 @@ module.exports = function (app, redisClient) {
     app.delete('/api/projects/:id', checkToken, function (req, res, next) {
         var projectID = req.params.id;
 
-
-        project_service.deleteProject(projectID, function (err, project) {
-            if (err) return next(err);
-
-            res.json(project);
-        })
+        project_service.deleteProject(projectID)
+            .then(function (project) {
+                res.json(project);
+            })
+            .catch(function (err) {
+                next(err);
+            })
 
     });
 
-}
+};
 
 
 /**
@@ -214,8 +214,8 @@ function getTokenObject(request) {
 }
 
 /**     
-* @function Обновление времени последней активномти пользователя
-* @param  {ObjectId} userID {id пользователя}
+* Обновление времени последней активномти пользователя
+* @param  {ObjectId} userID - ID пользователя
 */
 function updateUserLastActive(userID) {
     User.findByIdAndUpdate(
@@ -224,14 +224,5 @@ function updateUserLastActive(userID) {
         { new: true },
         function (err, model) {
             if (err) return err;
-        }
-    );
-}
-
-
-function validUserData(data, next) {
-    if (!valid.email(data.email)) return next(new HttpError(400, 'Email не валидный'));
-    if (!valid.password(data.password)) return next(new HttpError(400, 'Пароль не валидный'));
-    if (!valid.names(data.first_name)) return next(new HttpError(400, 'Имя не валидно'));
-    if (!valid.names(data.last_name)) return next(new HttpError(400, 'Фамилия не валидна'));
+        });
 }

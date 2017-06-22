@@ -14,9 +14,9 @@ module.exports = {
 }
 
 /**         
-* Авторизация пользователя в БД по задынным параметрам
-* @param  {String} email    {email} - почта пользователя
-* @param  {String} password {password} - пароль пользователя
+* Авторизация пользователя в БД по заданным параметрам
+* @param  {String} email - почта пользователя
+* @param  {String} password - пароль пользователя
 */
 function login(email, password) {
     return new Promise(function (resolve, reject) {
@@ -77,7 +77,6 @@ function getUserById(userID) {
  * @param {String} email - почта пользователя 
  */
 function checkEmail(email) {
-
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, function (err, user) {
             if (user) reject(user);

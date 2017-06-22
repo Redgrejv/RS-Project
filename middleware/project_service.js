@@ -39,7 +39,10 @@ function patchProject(projectID, newTitle) {
         Project.update(
             { _id: projectID },
             { title: newTitle, dateLastModification: Date.now() },
-            resolve);
+            function (err, project) {
+                if (err) return reject(err);
+                resolve(project);
+            });
     })
 };
 
@@ -48,7 +51,6 @@ function patchProject(projectID, newTitle) {
 * @param  {ObjectId} projectID - ID проекта
 */
 function deleteProject(projectID) {
-
     return new Promise(function (resolve, reject) {
         Project.remove({ _id: projectID }, function (err, project) {
             if (err) reject(err);
@@ -62,7 +64,6 @@ function deleteProject(projectID) {
 * @param  {ObjectID} userID {ID пользователя}
 */
 function getAllProjects(userID, callback) {
-
     async.waterfall([
         function (callback) {
             Project.find({ createdBy: userID }, callback);

@@ -21,3 +21,4 @@ bower_components/
 /data
 /package-lock.json
 /.vscode
+dump.rdb

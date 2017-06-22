@@ -142,14 +142,16 @@ module.exports = function (app, redisClient) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
 
-        if (!valid.names(newTitle, { minLength: 1, maxLength: 16 })) {
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым или быть больше 16 символов'));
-        }
+        if (!valid.names(newTitle, { minLength: 1, maxLength: 16 }))
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или превышать 16 символов'));
 
-        project_service.patchProject(projectID, newTitle, function (err, project) {
-            if (err) return next(err);
-            res.json(project);
-        });
+
+        project_service.patchProject(projectID, newTitle)
+            .then(function (project) {
+                res.json("Проект успешно переименован");;
+            }).catch(function (err) {
+                return next(err);
+            });
     });
 
     // Удаление проекта
@@ -170,7 +172,7 @@ module.exports = function (app, redisClient) {
 
 
 /**
- * @function Фильтрация данных пользователя
+ * Фильтрация данных пользователя
  * @param  {JSON} user {Данные пользователя из БД}
  * @return {type} {JSON}
  */

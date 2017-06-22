@@ -17,3 +17,6 @@ bin/
 /build
 build/
 bower_components/
+dump.rdb
+mongod
+package-lock.json

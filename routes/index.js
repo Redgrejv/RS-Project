@@ -111,13 +111,15 @@ module.exports = function (app, redisClient) {
 
     // Получение всех проектов конкретного пользователя
     app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
-        var id = req.params.id;
+        var userID = req.params.id;
 
-        project_service.getAllProjects(id, function (err, projects) {
-            if (err) return next(err);
-
-            res.json(projects);
-        })
+        project_service.getAllProjects(userID)
+            .then(function (projects) {
+                res.json(projects);
+            })
+            .catch(function (err) {
+                return next(err);
+            })
     });
 
     // Создание нового проекта

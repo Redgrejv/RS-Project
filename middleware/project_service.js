@@ -63,14 +63,12 @@ function deleteProject(projectID) {
 * Получение всех проектов пользователя
 * @param  {ObjectID} userID {ID пользователя}
 */
-function getAllProjects(userID, callback) {
-    async.waterfall([
-        function (callback) {
-            Project.find({ createdBy: userID }, callback);
-        }, function (user, callback) {
-            if (!user) return callback(err, null);
+function getAllProjects(userID) {
 
-            callback(null, user);
-        }
-    ], callback);
+    return new Promise(function (resolve, reject) {
+        Project.find({ createdBy: userID }, function (err, projects) {
+            if (err) return reject(err);
+            resolve(projects);
+        })
+    })
 };

@@ -3,12 +3,13 @@
     "version": "0.0.6",
     "scripts": {
         "front": " gulp build  && start gulp webserver && start gulp watch",
-        "front_linux": "gulp build & gulp webserver ",
+        "front_linux": "gulp build && gulp webserver & gulp watch",
         "webserver": "npm gulp webserver",
         "build": "gulp build",
         "dev": "gulp build && gulp watch",
         "prod": "gulp watch",
-        "server": "node os.js"
+        "server":"redis-server | mkdir -p ~/data/db/ || mkdir C:/data/db & mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | node server",
+        "server1": "node os.js"
     },
     "dependencies": {
         "async": "^2.3.0",

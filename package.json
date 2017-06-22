@@ -2,14 +2,9 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-        "front": " gulp build  && start gulp webserver && start gulp watch",
-        "front_linux": "gulp build && gulp webserver & gulp watch",
-        "webserver": "npm gulp webserver",
-        "build": "gulp build",
-        "dev": "gulp build && gulp watch",
-        "prod": "gulp watch",
-        "server":"redis-server | mkdir -p ~/data/db/ || mkdir C:/data/db & mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | node server",
-        "server1": "node os.js"
+        "gulp":"node_modules/gulp/bin/gulp.js",
+        "front": "npm run gulp build && npm run gulp webserver & npm run gulp watch",
+        "server": "redis-server | mkdir -p ~/data/db/ || mkdir C:/data/db & mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | node server"
     },
     "dependencies": {
         "async": "^2.3.0",
@@ -49,5 +44,8 @@
         "serve-favicon": "^2.4.2",
         "socket.io": "^2.0.1",
         "winston": "latest"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1"
     }
 }

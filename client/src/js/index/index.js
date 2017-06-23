@@ -45,8 +45,8 @@ $(document).ready(function() {
 
 	$('.menu').on('click','.menu__project', function(){
 		var project_name=$(this).find('.menu__project-name').text();
-		//var id=$(this).attr('id');
-		//localStorage.setItem('project.id',id)
+		var id=$(this).attr('id');
+		localStorage.setItem('project.id',id)
 		$('.content__project-name').text(project_name);
 
 	});

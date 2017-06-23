@@ -2,13 +2,12 @@ $(document).ready(function() {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/api/projects",
+        url: "http://localhost:3000/api/projects/",
         headers: {
             'Authorization': localStorage.getItem('token'),
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         success: function(response) {
-            if (response.length > 0) {
                 $(response).each(function(index) {
                     $('.projects').append('<div class="added_project" id="' + this._id + '">' +
                         '<div class="project_name">' +
@@ -26,7 +25,6 @@ $(document).ready(function() {
                         '</div>' +
                         '</div>');
                 })
-            }
         },
         error: function(response) {
             console.log(response);

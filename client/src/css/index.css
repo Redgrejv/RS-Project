@@ -1,377 +1,201 @@
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    
-    body {
-        margin-top: -23px;
-        height: 100%;
-    }
-    
-    .wrapper {
-        height: 100%;
-        width: 100%;
-    }
-    
-    .main_block {
-        width: 100%;
-        margin-right: 0;
-        margin-left: 0;
-        padding: 0;
-        height: 100%;
-    }
-    
-    header {
-        height: 66px;
-        line-height: 45px;
-        color: #ffffff;
-        background-position: 25px;
-        vertical-align: middle;
-        font: 20px Arial;
-    }
-    
-    .menu-projects {
-        height: 100%;
-        width: 252px;
-        float: left;
-    }
-    
-    .menu-projects-list {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .to_do {
-        height: 66px;
-        background: #383c47 no-repeat left;
-        width: 252px;
-        float: left;
-        box-shadow: -5px 5px 4px 0px #292d38;
-    }
-    
-    .to_do h3 {
-        margin-left: 15px;
-    }
-    
-    .task_panel {
-        text-align: center;
-        height: 66px;
-        line-height: 66px;
-        width: auto;
-        color: black;
-        box-shadow: 0px 5px 4px 0px #d9dce3;
-    }
-    
-    .task_panel h3 {
-        height: 33px;
-    }
-    
-    .menu-tasks {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .projects {
-        vertical-align: middle;
-        text-align: center;
-        color: white;
-        height: 100%;
-        width: 252px;
-        background-color: #2e323e;
-        float: left;
-    }
-    
-    .new_project {
-        width: auto;
-        position: absolute;
-        left: 252px;
-        top: 66px;
-        background-color: #383c47;
-        padding: 4px 16px;
-    }
-    
-    .new_project span {
-        float: left;
-        margin-right: 10px;
-    }
-    
-    .new_project input {
-        width: 125px;
-        padding-left: 5px;
-    }
-    
-    .new_project button {
-        margin-left: 115px;
-        width: 134px;
-    }
-    
-    .added_project {
-        display: inline-block;
-        vertical-align: middle;
-        text-align: left;
-        height: 49px;
-        background-color: #2e323e;
-        width: 100%;
-        color: white;
-    }
-    
-    .added_project:hover {
-        background-color: #292d38;
-        cursor: pointer;
-    }
-    
-    .show_add_project {
-        height: 49px;
-    }
-    
-    .show_add_project:hover {
-        background-color: #292d38;
-    }
-    
-    .project_name p {
-        width: 200px;
-        position: center;
-        text-align: left;
-        padding-left: 27px;
-        float: left;
-    }
-    
-    .created_project {
-        width: 227px;
-        position: center;
-        text-align: center;
-        float: left;
-    }
-    
-    .flip-horizontal {
-        -moz-transform: scale(-1, 1);
-        -webkit-transform: scale(-1, 1);
-        -o-transform: scale(-1, 1);
-        transform: scale(-1, 1);
-        filter: FlipH;
-        -ms-filter: "FlipH";
-    }
-    
-    .config {
-        background: url('../image/arrow.png') no-repeat center;
-        height: 100%;
-        display: inline-block;
-        color: black;
-        width: 25px;
-        text-align: center;
-    }
-    
-    .config:hover {
-        background: url('../image/arrow-48.png') no-repeat center;
-    }
-    
-    .config>ul {
-        width: 200px;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
-    
-    .config>ul>li {
-        margin: 0;
-        float: left;
-        width: 50px;
-        height: 50px;
-        background-color: transparent;
-    }
-    
-    .config>ul li:nth-child(1) {
-        margin-right: 0;
-        margin-left: 25px;
-    }
-    
-    .config>ul>li>img {
-        height: 24px;
-        margin-top: 13px;
-    }
-    
-    .config>ul>li:hover>img {
-        height: 36px;
-        margin-top: 7px;
-    }
-    
-    .config>ul>li:hover {
-        background-color: #383c47;
-    }
-    
-    .tasks {
-        text-align: center;
-        float: right;
-        width: 1668px;
-        background-color: #f2f5fa;
-        min-height: 1035px;
-        height: 100%;
-    }
-    
-    .block-menu {
-        width: 60px;
-        height: 60px;
-        top: 90%;
-        right: 50px;
-        border-radius: 50%;
-        border: 1px inset #292d38;
-        position: absolute;
-        position: fixed;
-    }
-    
-    .block-menu-list {
-        position: inherit;
-        right: 75px;
-        top: 75%;
-        list-style: none;
-    }
-    
-    .block-menu-list li {
-        border: 2px outset lightslategray;
-        padding: 15px 25px 15px 50px;
-        font-weight: 600;
-        color: honeydew;
-    }
-    
-    .block-menu-list li:nth-child(1) {
-        background: gray url('../image/shape-polygon-plus.png') no-repeat left;
-    }
-    
-    .block-menu-list li:nth-child(1):hover {
-        background: darkgray url('../image/shape-polygon-plus.png') no-repeat left;
-    }
-    
-    .block-menu-list li:nth-child(2) {
-        background: gray url('../image/auto-fix.png') no-repeat left;
-    }
-    
-    .block-menu-list li:nth-child(2):hover {
-        background: darkgray url('../image/auto-fix.png') no-repeat left;
-    }
-    
-    .block-menu-list li:nth-child(3) {
-        background: gray url('../image/exit-to-app.png') no-repeat left;
-    }
-    
-    .block-menu-list li:nth-child(3):hover {
-        background: darkgray url('../image/exit-to-app.png') no-repeat left;
-    }
-    
-    .block-menu-list li:hover {
-        cursor: pointer;
-        color: #322C2C;
-        text-shadow: 1px 1px 2px black, 0 0 1em white;
-    }
-    
-    .center-text-align {
-        text-align: center;
-        line-height: initial;
-        vertical-align: middle;
-    }
-    
-    .disable-selection {
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-touch-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-    }
-    
-    .hide {
-        display: none;
-    }
-    
-    .gradient {
-        background-color: #484f54;
-        /* IE9, iOS 3.2+ */
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxyYWRpYWxHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+PHN0b3Agc3RvcC1jb2xvcj0iIzI5MmQzOCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNGE1MTU0IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM2MjZiNmYiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzRhNTE1NCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNSIvPjxzdG9wIHN0b3AtY29sb3I9IiMyOTJkMzgiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIxIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
-        /* Android 2.3- hack (needed for the actual radial gradient) */
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxyYWRpYWxHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+PHN0b3Agc3RvcC1jb2xvcj0iIzI5MmQzOCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNGE1MTU0IiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM2MjZiNmYiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzRhNTE1NCIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNSIvPjxzdG9wIHN0b3AtY29sb3I9IiMyOTJkMzgiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIxIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+), -webkit-gradient(radial, center center, 0, center center, 408, color-stop(0, rgb(41, 45, 56)), color-stop(0, rgb(74, 81, 84)), color-stop(0, rgb(98, 107, 111)), color-stop(0.5, rgb(74, 81, 84)), color-stop(1, rgb(41, 45, 56)));
-        /* Android 2.3 */
-        background-image: -webkit-radial-gradient(center center, ellipse farthest-side, rgb(41, 45, 56) 0%, rgb(74, 81, 84) 0%, rgb(98, 107, 111) 0%, rgb(74, 81, 84) 50%, rgb(41, 45, 56) 100%);
-        /* IE10+ */
-        background-image: radial-gradient(ellipse farthest-side at center center, rgb(41, 45, 56) 0%, rgb(74, 81, 84) 0%, rgb(98, 107, 111) 0%, rgb(74, 81, 84) 50%, rgb(41, 45, 56) 100%);
-        background-image: -ms-radial-gradient(center center, ellipse farthest-side, rgb(41, 45, 56) 0%, rgb(74, 81, 84) 0%, rgb(98, 107, 111) 0%, rgb(74, 81, 84) 50%, rgb(41, 45, 56) 100%);
-    }
-    
-    .shadow {
-        position: fixed;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        z-index: 10;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        vertical-align: middle;
-    }
-    
-    .windowProject {
-        width: 200px;
-        height: 125px;
-        padding: 5px 45px;
-        background-color: aliceblue;
-        display: inline-block;
-        position: relative;
-        top: 50%;
-        margin-top: -65px;
-    }
-    
-    .windowProject p {
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px #292d38, 0 0 1em white;
-        margin-bottom: 8px;
-    }
-    
-    .windowProject input {
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px outset #484f54;
-        padding-left: 4px;
-        height: 24px;
-        width: 100%;
-        margin-bottom: 8px;
-    }
-    
-    .windowProject button {
-        border-radius: 6px;
-        height: 25px;
-        width: 100%;
-        background: rgb(46, 51, 59);
-        color: antiquewhite;
-    }
-    /* IE8- CSS hack */
-    
-    @media \0screen\,
-    screen\9 {
-        .gradient {
-            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff292d38", endColorstr="#ff292d38", GradientType=0);
-        }
-    }
-    
-    .gradient:hover {
-        background-color: #4d5655;
-        /* IE9, iOS 3.2+ */
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxyYWRpYWxHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+PHN0b3Agc3RvcC1jb2xvcj0iIzMxMzU0MiIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNGE1NDRhIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM2Zjc5N2QiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzRhNTQ0YSIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNSIvPjxzdG9wIHN0b3AtY29sb3I9IiMzMTM1NDIiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIxIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
-        /* Android 2.3- hack (needed for the actual radial gradient) */
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxyYWRpYWxHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+PHN0b3Agc3RvcC1jb2xvcj0iIzMxMzU0MiIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNGE1NDRhIiBzdG9wLW9wYWNpdHk9IjEiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiM2Zjc5N2QiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzRhNTQ0YSIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjAuNSIvPjxzdG9wIHN0b3AtY29sb3I9IiMzMTM1NDIiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIxIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+), -webkit-gradient(radial, center center, 0, center center, 408, color-stop(0, rgb(49, 53, 66)), color-stop(0, rgb(74, 84, 74)), color-stop(0, rgb(111, 121, 125)), color-stop(0.5, rgb(74, 84, 74)), color-stop(1, rgb(49, 53, 66)));
-        /* Android 2.3 */
-        background-image: -webkit-radial-gradient(center center, ellipse farthest-side, rgb(49, 53, 66) 0%, rgb(74, 84, 74) 0%, rgb(111, 121, 125) 0%, rgb(74, 84, 74) 50%, rgb(49, 53, 66) 100%);
-        /* IE10+ */
-        background-image: radial-gradient(ellipse farthest-side at center center, rgb(49, 53, 66) 0%, rgb(74, 84, 74) 0%, rgb(111, 121, 125) 0%, rgb(74, 84, 74) 50%, rgb(49, 53, 66) 100%);
-        background-image: -ms-radial-gradient(center center, ellipse farthest-side, rgb(49, 53, 66) 0%, rgb(74, 84, 74) 0%, rgb(111, 121, 125) 0%, rgb(74, 84, 74) 50%, rgb(49, 53, 66) 100%);
-    }
-    /* IE8- CSS hack */
-    
-    @media \0screen\,
-    screen\9 {
-        .gradient:hover {
-            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff313542", endColorstr="#ff313542", GradientType=0);
-        }
-    }
+@font-face{
+	font-family: Play-Regular;
+	src:url(../font/Play-Regular.ttf);
+}
+@font-face{
+	font-family: Gotham;
+	src:url(../font/Gotham.ttf);
+}
+
+html, body{
+	width: 100%;
+	height: 100%;
+	margin:0;
+	background: #f2f5fa;
+	align-items: center;
+	justify-content:  center;
+	overflow: auto;
+}
+header{
+	height: 18px;
+	box-shadow: 0 0 10px rgba(50,50,50,0.5);
+	padding: 24px;
+}
+i{
+	color: white;
+	font-size: 27px;
+}
+/* левое меню */
+.menu{
+	width: 300px;
+	height: 100%;
+	float: left;
+	background: #2e323e;
+}
+.menu__header{
+	background: #383c47;
+}
+.menu__header-text{
+	display: inline-block;
+	margin:0;
+	font: bold 18px Gotham;
+	color: white;
+}
+.menu_hide{
+	display: inline-block;
+	float: right;
+}
+.menu_show{
+	display: none;
+	float: right;
+}
+.icon-backburger{
+	font-size: 20px;
+}
+.menu__add-project{
+	width: 100%;
+	height: 47px;
+	display: flex;
+	align-items: center;
+	justify-content:  center;
+	overflow: auto;
+}
+.menu__add-project:hover{
+	background-color: #292d38;
+}
+.icon-plus{
+	display: inline-block;
+	align-items: center;
+	color: #2e323e;
+	font-size: 27px;
+}
+.menu__project{
+	height: 47px;
+	display: flex;
+	align-items: center;
+	justify-content:  left;
+	overflow: auto;
+	color: #afb0b5;
+}
+.menu__project:hover{
+	background-color: #292d38;
+}
+.icon-project{
+	margin-left: 26px;
+	display: inline-block;
+	padding: 0;
+	font-size: 20px;
+	color: #afb0b4;
+}
+.menu__project-name{
+	display: inline-block;
+	height: 15px;
+	font: bold 15px Gotham;
+	margin-left: 24px;
+}
+
+/* правая контекстная часть */
+.content{
+	min-width: 1188px;
+	width: auto;
+	height: 100%;
+}
+.content__header{
+	background: white;
+}
+.content__project-name{
+	display: inline-block;
+	margin-left: 25px;
+	font: bold 18px Gotham;
+	color: black;
+}
+.icon-plus-circle{
+	position: absolute;
+	color: #2e323e;
+	font-size: 50px;
+	top: 90%;
+	left: 93%;
+}
+#exit{
+	display: inline-block;
+	margin-right: 25px;
+	background: url(../img/exit.png) no-repeat;
+	background-size: cover;
+	width: 18px;
+	height: 18px;
+	float: right;
+}
+
+/*Модальное окно*/
+.modal-window{
+	position: fixed;
+	align-items: center;
+    justify-content: center; 
+    overflow: none; 
+	background-color: #fff;
+ 	width: 300px;
+ 	height: auto;
+ 	display: none;
+ 	position: absolute;
+ 	z-index: 5; 
+	opacity:0; 
+ 	top: 50%;
+ 	left: 50%;
+ 	margin-left: -150px;
+ 	padding: 15px;
+ 	border-radius: 3px;
+ 	box-shadow: 0px 9px 29px 3px rgba(0, 0, 0, 0.31);
+}
+#modal-window__close{
+ 	z-index: 8; 
+	background: url(../img/close.png) no-repeat;
+	background-size: cover;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: -12px;
+	right: -12px;
+	float: right;
+	cursor: pointer;
+	display: block;
+	overflow: none;
+}
+#overlay{
+	background-color: gray;
+	z-index:3; 
+	position:fixed;
+	opacity:0.8; 
+	filter:alpha(opacity=80);
+	width:100%; 
+	height:100%; 
+	top:0; 
+	left:0;
+	cursor:pointer;
+	display:none; 
+}
+.add-project-form{
+	align-items: center;
+	padding: 10px;
+}
+.add-project-form input{
+	margin-top: 5px;
+	border: 1px solid lightgray;
+ 	padding: 2%;
+ 	height: 20px;
+ 	width: 96%;
+ 	font: 17px Gotham;
+}
+.add-project-form label{
+	font: 17px Gotham;
+}
+.add-project-form button{
+	display: inline-block;
+	margin-top: 10px;
+	padding: 5px;
+	height: 30px;
+	width: 100%;
+	border: none;
+	color: white;
+	font: 18px Gotham;
+	background-color: #383c47;
+}

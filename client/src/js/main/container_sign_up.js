@@ -1,6 +1,5 @@
 /*Library*/
-//= ../../lib/jquery.js
-//= ../../lib/jquery-ui.min.js
+//= ../../lib/jquery.min.js
 
 /*Script for sign_up.html page*/
 //= ../sign_up/sign_up.js

@@ -3,6 +3,7 @@
     "version": "0.0.6",
     "scripts": {
         "front": "start mongod --dbpath \"data/db\" && gulp build  && start gulp webserver &&start gulp watch",
+        "build": "gulp build",
         "dev": "gulp build && gulp watch",
         "prod": "gulp watch",
         "server": "redis-server | mkdir -p ~/data/db/ | mkdir C:/data/db | mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | nodemon server.js"
@@ -38,6 +39,7 @@
         "mpromise": "^0.5.5",
         "nconf": "latest",
         "nodemon": "^1.11.0",
+        "os-name": "^2.0.1",
         "passport": "^0.3.2",
         "passport-jwt": "^2.2.1",
         "passport-local": "^1.0.0",

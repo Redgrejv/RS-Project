@@ -115,16 +115,8 @@ gulp.task('watch', function() {
     // });
     watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
         gulp.start('build');
-    });
-    // watch([path.watch.js], function(event, cb) {
-    //     gulp.start('js:build');
-    // });
-    // watch([path.watch.img], function(event, cb) {
-    //     gulp.start('image:build');
-    // });
-    // watch([path.watch.font], function(event, cb) {
-    //     gulp.start('font:build');
-    // });
+    })
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('webserver', function() {

@@ -3,6 +3,7 @@
     "version": "0.0.6",
     "scripts": {
         "front": " gulp build  && start gulp webserver && start gulp watch",
+        "front_linux": "gulp build && gulp webserver",
         "build": "gulp build",
         "dev": "gulp build && gulp watch",
         "prod": "gulp watch",

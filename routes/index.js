@@ -93,7 +93,7 @@ module.exports = function (app, passport) {
     });
 
     // Получение всех проектов конкретного пользователя
-    app.get('/api/projects/:id', checkToken, function (req, res, next) {
+    app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
         var id = req.params.id;
 
         project_service.getAllProjects(id, function (err, projects) {

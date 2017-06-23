@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="../src/css/index.css">
-	<link rel="stylesheet" href="../src/custom-icons/css/rs-project.css">
-	<script src="../src/lib/jquery.js"></script>
+	<link rel="stylesheet" href="../../build/css/index.css">
+    <script src="../../build/js/container_index.js"></script>
+	<!--<link rel="stylesheet" href="../../build/css/rs-project.css">-->
+	<!--<script src="../src/lib/jquery.js"></script>
 	<script src="../src/js/index/index.js"></script>
 	<script src="../src/js/index/viewProjects.js"></script>
-	<script src="../src/js/index/addProject.js"></script>
+	<script src="../src/js/index/addProject.js"></script>-->
 	<!-- <script src="client/src/js/index/users/checkAuthrorization.js"></script>
 	<script src="client/src/js/index/users/message.js"></script> -->
 </head>
@@ -17,8 +18,8 @@
 
 		<header class="menu__header">
 		<h1 class="menu__header-text">To Do</h1>
-		<div class="menu_hide"><i class="icon-backburger"></i></div>
-		<div class="menu_show"><i class="icon-backburger"></i></div>
+		<i class="icon-backburger menu_hide"></i>
+		<i class="icon-backburger menu_show"></i>
 		</header>
 
 	<div class="menu__add-project">
@@ -34,13 +35,23 @@
 	<div class="content">
 		<header class="content__header">
 			<div class="content__project-name"></div>
-			<div id="exit"></div>
+                <i class="icon-exit"></i>
 		</header>
 	Taski
-	<!-- <div class="content__porject-option"> --><i class="icon-plus-circle"></i><!-- </div> -->
+    <!--Кнопка действий над проектом-->
+    <div class="options"><i class="icon-plus-circle"></i>
+    <!--Блок опций для проекта-->
+    <ul class="project-options">
+        <li class="project-option__add-project"><i class="icon-project"></i>Добавить</li>
+        <li class="project-option__edit-project"><i class="icon-project"></i>Редактировать</li>
+        <li class="project-option__delete-project"><i class="icon-project"></i>Удалить</li>
+    </ul>
+    </div>
 	</div>
+
 	<!-- Подложка -->
 <div id="overlay"></div>
+<div id="options-overlay"></div>
 	<!-- Модальное окно -->
 <div class="modal-window">
 	<div id="modal-window__close"></div>

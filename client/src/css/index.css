@@ -63,10 +63,6 @@ i{
 .menu__add-project:hover{
 	background-color: #292d38;
 }
-.menu_plus{
-	display: inline-block;
-	align-items: center;
-}
 .icon-plus{
 	display: inline-block;
 	align-items: center;
@@ -203,7 +199,3 @@ i{
 	font: 18px Gotham;
 	background-color: #383c47;
 }
-.add-project-form__button-add{
-	float: left;
-}
-

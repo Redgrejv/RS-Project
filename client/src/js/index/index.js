@@ -14,7 +14,7 @@ $(document).ready(function() {
 		$('.menu_show').css('display','inline-block');
 		$(".menu__header-text").css('display','none');
 		$('.menu__project-name').css('display','none');
-		$('.menu__project-img').css('margin-left','0');
+		$('.icon-project').css('margin-left','0');
 		$('.menu__project').css('justify-content','center');
 	})
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
 		$('.menu_hide').css('display','inline-block');
 		$(".menu__header-text").attr('style','');
 		$('.menu__project-name').attr('style','');
-		$('.menu__project-img').attr('style','');
+		$('.icon-project').attr('style','');
 		$('.menu__project').attr('style','');
 	})
 
@@ -43,17 +43,29 @@ $(document).ready(function() {
 			$('#add-project-form__name').val('');
 		});
 
-
 	$('.menu').on('click','.menu__project', function(){
 		var project_name=$(this).find('.menu__project-name').text();
+		//var id=$(this).attr('id');
+		//localStorage.setItem('project.id',id)
 		$('.content__project-name').text(project_name);
 
 	});
 
 		
 	//выход
-	$('#exit').on('click', function(){ 
+	$('.icon-exit').on('click', function(){ 
 		localStorage.setItem('token', '');
         window.location.href = '/client/views/login.html';
 	});
+	//список
+	$('#options-overlay').click(function(){
+		$('#options-overlay').fadeOut(400);
+		$('.project-options').attr('style','');
+	})
+	$('.icon-plus-circle').on('click',function(){
+		$('#options-overlay').fadeIn(400, function(){
+				$('.project-options').css('display','block');
+
+		});
+	})
 	})

@@ -6,3 +6,4 @@
 //= ../index/addProject.js
 //= ../index/projects/viewProjects.js
 //= ../index/deleteProject.js
+//= ../index/editProject.js

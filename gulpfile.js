@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     rigger = require('gulp-rigger'),
-    cssmin = require('gulp-minify-css'),
+    cssmin = require('gulp-clean-css'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
@@ -35,7 +35,7 @@ var path = {
     watch: {
         js: 'client/src/js/*.*',
         style: 'client/src/css/*.*',
-        img: 'client/src/image/*.*',
+        img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'
     },
     clean: './build'
@@ -85,16 +85,16 @@ gulp.task('style:build', function() {
         // .pipe(reload({ stream: true }));
 });
 
-gulp.task('image:build', function() {
+gulp.task('image:build', function () {
     gulp.src(path.src.img) //Выберем наши картинки
         .pipe(imagemin({ //Сожмем их
             progressive: true,
-            svgoPlugins: [{ removeViewBox: false }],
+            svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()],
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img)) //И бросим в build
-        // .pipe(reload({ stream: true }));
+        
 });
 
 gulp.task('font:build', function() {
@@ -113,8 +113,20 @@ gulp.task('watch', function() {
     // watch([path.watch.html], function(event, cb) {
     //     gulp.start('html:build');
     // });
-    watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
-        gulp.start('build');
+    // watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
+    //     gulp.start('build');
+    // })
+    watch([path.watch.style], function(event, cb) {
+        gulp.start('style:build');
+    });
+    watch([path.watch.js], function(event, cb) {
+        gulp.start('js:build');
+    });
+    watch([path.watch.img], function(event, cb) {
+        gulp.start('image:build');
+    });
+    watch([path.watch.font], function(event, cb) {
+        gulp.start('font:build');
     })
     .pipe(reload({stream: true}));
 });
@@ -133,7 +145,7 @@ gulp.task('webserver', function() {
                 files: [
                         './client/src/css/*.css',
                         './client/src/js/*.js',
-                        './client/src/image/*',
+                        './client/src/img/*',
                         './client/src/lib/*.js',
                         './client/src/font/*.ttf'
                     ]

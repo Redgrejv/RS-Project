@@ -5,3 +5,4 @@
 //= ../index/index.js
 //= ../index/addProject.js
 //= ../index/projects/viewProjects.js
+//= ../index/deleteProject.js

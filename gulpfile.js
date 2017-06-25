@@ -33,7 +33,7 @@ var path = {
     },
 
     watch: {
-        js: 'client/src/js/*.*',
+        js: 'client/src/js/**/**/*.*',
         style: 'client/src/css/*.*',
         img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'

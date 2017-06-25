@@ -8,7 +8,7 @@ $(document).ready(function() {
             	data:{title: $('#add-project-form__name').val()},
             	success: function(response){
             		console.log(response);
-            		$('.menu').append('<div class="menu__project" id="'+
+            		$('.menu__projects').append('<div class="menu__project" id="'+
 					response.project._id+'"><i class="icon-project"></i><div class="menu__project-name">'+
 					response.project.title+'</div></div>');
 					$('#overlay').fadeOut(400);

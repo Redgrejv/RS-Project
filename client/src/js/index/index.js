@@ -7,6 +7,10 @@ $(document).ready(function() {
         }, 500);
     }
 
+	var projects_height=$('.menu__projects').height();
+	projects_height=projects_height-113;
+	$('.menu__projects').css('height',projects_height);
+
 	//show-hide-menu
 	$('.menu_hide').click(function(){
 		$('.menu').css('width','54px');
@@ -58,14 +62,22 @@ $(document).ready(function() {
         window.location.href = '/client/views/login.html';
 	});
 	//список
-	$('#options-overlay').click(function(){
-		$('#options-overlay').fadeOut(400);
-		$('.project-options').attr('style','');
-	})
-	$('.icon-plus-circle').on('click',function(){
-		$('#options-overlay').fadeIn(400, function(){
-				$('.project-options').css('display','block');
+	// $('.options').mouseup(function(){
+	// 	$('#options-overlay').fadeOut(400);
+	// 	$('.project-options').attr('style','');
+	// })
 
-		});
+	$('.icon-plus-circle').on('click',function(){
+		if ($('.project-options').css('display','none')){
+				$('.project-options').css('display','block');
+		}else {
+			$('.project-options').removeAttr('style'); 
+		}
+	})
+
+	$('.project-options').on('click', function(e){
+		if ($(this).has(e.target.length===0) && $(this).css('display','block')) {
+			$(this).css('display','none');
+		}
 	})
 	})

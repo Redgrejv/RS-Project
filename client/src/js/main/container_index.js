@@ -7,3 +7,4 @@
 //= ../index/projects/viewProjects.js
 //= ../index/deleteProject.js
 //= ../index/editProject.js
+//= ../index/viewProjectOprions.js

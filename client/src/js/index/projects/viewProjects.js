@@ -9,9 +9,9 @@ $(document).ready(function() {
         },
         success: function(response) {
                 $(response).each(function(index) {
-                	$('.menu').append('<div class="menu__project" id="'
+                	$('.menu__projects').append('<div class="menu__project" id="'
                     +this._id+'"><i class="icon-project"></i><div class="menu__project-name">'
-                    +this.title+'</div></div>');
+                    +this.title+'</div><i class="icon-options"></i></div>');
                 });
         },
         error: function(response){

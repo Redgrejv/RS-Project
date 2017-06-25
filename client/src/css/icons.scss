@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'rs-project';
-  src: url('../font/rs-project.eot?30323019');
-  src: url('../font/rs-project.eot?30323019#iefix') format('embedded-opentype'),
-       url('../font/rs-project.woff2?30323019') format('woff2'),
-       url('../font/rs-project.woff?30323019') format('woff'),
-       url('../font/rs-project.ttf?30323019') format('truetype'),
-       url('../font/rs-project.svg?30323019#rs-project') format('svg');
+  font-family: 'icons';
+  src: url('../font/icons.eot?23755062');
+  src: url('../font/icons.eot?23755062#iefix') format('embedded-opentype'),
+       url('../font/icons.woff2?23755062') format('woff2'),
+       url('../font/icons.woff?23755062') format('woff'),
+       url('../font/icons.ttf?23755062') format('truetype'),
+       url('../font/icons.svg?23755062#icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,14 +14,14 @@
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: 'rs-project';
-    src: url('../font/rs-project.svg?30323019#rs-project') format('svg');
+    font-family: 'icons';
+    src: url('../font/icons.svg?23755062#icons') format('svg');
   }
 }
 */
  
  [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "rs-project";
+  font-family: "icons";
   font-style: normal;
   font-weight: normal;
   speak: none;
@@ -42,7 +42,7 @@
  
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  margin-left: 0;
  
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
@@ -55,9 +55,13 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-close:before { content: '\e800'; } /* '' */
-.icon-exit:before { content: '\e801'; } /* '' */
-.icon-plus:before { content: '\e802'; } /* '' */
-.icon-plus-circle:before { content: '\e803'; } /* '' */
-.icon-project:before { content: '\e804'; } /* '' */
-.icon-backburger:before { content: '\e805'; } /* '' */
+.icon-back:before { content: '\e800'; } /* '' */
+.icon-backburger:before { content: '\e801'; } /* '' */
+.icon-close:before { content: '\e802'; } /* '' */
+.icon-delete:before { content: '\e803'; } /* '' */
+.icon-edit:before { content: '\e804'; } /* '' */
+.icon-exit:before { content: '\e805'; } /* '' */
+.icon-options:before { content: '\e806'; } /* '' */
+.icon-plus:before { content: '\e807'; } /* '' */
+.icon-plus-circle:before { content: '\e808'; } /* '' */
+.icon-project:before { content: '\e809'; } /* '' */

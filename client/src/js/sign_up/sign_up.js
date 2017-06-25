@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 	function check(){
         form.find('.field').each(function(){
-            if ($(this).val()!=''){
+            if ($(this).val()!=''){ 
                 $(this).removeClass('empty');
             }else{
                 $(this).addClass('empty');
@@ -152,6 +152,7 @@ $(document).ready(function(){
         success: function(data){
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', data.user);
+                localStorage.setItem('user.id', data.user.id.toString());
                 window.location.href='index.html';
         },
         error: function(data){

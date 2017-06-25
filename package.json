@@ -3,7 +3,7 @@
     "version": "0.0.6",
     "scripts": {
         "gulp": "node node_modules/gulp/bin/gulp.js",
-        "front": "npm run gulp build && npm run gulp webserver & npm run gulp watch",
+        "front": "npm run gulp build && npm run gulp webserver | npm run gulp watch",
         "app": "node server.js",
         "server": "redis-server | mkdir -p ~/data/db/ | mkdir C:/data/db | mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | npm run app"
     },

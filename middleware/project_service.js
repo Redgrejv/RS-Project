@@ -64,7 +64,6 @@ function deleteProject(projectID) {
 * @param  {ObjectID} userID {ID пользователя}
 */
 function getAllProjects(userID) {
-
     return new Promise(function (resolve, reject) {
         Project.find({ createdBy: userID }, function (err, projects) {
             if (err) return reject(err);

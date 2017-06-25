@@ -18,6 +18,7 @@ $(document).ready(function() {
 		$('.menu_show').css('display','inline-block');
 		$(".menu__header-text").css('display','none');
 		$('.menu__project-name').css('display','none');
+		$('.icon-options').css('display','none');
 		$('.icon-project').css('margin-left','0');
 		$('.menu__project').css('justify-content','center');
 	})

@@ -11,7 +11,7 @@ $(document).ready(function() {
                 $(response).each(function(index) {
                 	$('.menu__projects').append('<div class="menu__project" id="'
                     +this._id+'"><i class="icon-project"></i><div class="menu__project-name">'
-                    +this.title+'</div><i class="icon-options"></i></div>');
+                    +this.title+'</div><i class="icon-options"></i><i class="icon-edit none"></i><i class="icon-delete none"></i><i class="icon-back none"></i></i></div>');
                 });
         },
         error: function(response){

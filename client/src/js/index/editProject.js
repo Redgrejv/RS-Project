@@ -1,5 +1,5 @@
   $(document).ready(function() {
-      $('.project-option__edit-project').on('click', function(){
+      $('.menu__projects').on('click', '.icon-edit', function(){
         event.preventDefault();
         var prname = prompt("Enter new project name", "Project");
         $.ajax({

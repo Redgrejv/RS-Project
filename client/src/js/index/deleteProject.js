@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.project-option__delete-project').on('click', function(){
+    $('.menu__projects').on('click', '.icon-delete', function(){
 
         event.preventDefault();
             $.ajax({

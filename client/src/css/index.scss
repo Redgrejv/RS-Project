@@ -55,6 +55,7 @@ header{
     &_show{
 	    display: none;
 		float: right;
+		transform: scaleX(-1); 
     }
 
     .icon-backburger{
@@ -83,7 +84,7 @@ header{
     }
 	&__projects{
 		width: 100%;
-		overflow-y: scroll;
+		overflow-y: auto;
 		position: absolute;
 		height: 100%;
 	}
@@ -94,7 +95,7 @@ header{
 }
 ::-webkit-scrollbar-thumb{
     border-width:1px 1px 1px 2px; 
-    border-color: none;
+    border-color: none; 
     background-color: #aaa;
 }
 ::-webkit-scrollbar-thumb:hover{
@@ -104,7 +105,7 @@ header{
 }
 ::-webkit-scrollbar-track{
     border-width:0;
-}
+} 
 ::-webkit-scrollbar-track:hover{
     background-color: none;
 }
@@ -117,7 +118,6 @@ header{
 	    display: flex;
 	    align-items: center;
 		justify-content: space-between;
-	    //overflow: auto;
 	    color: #afb0b5;
 		cursor: pointer;
     }
@@ -127,6 +127,7 @@ header{
     }
 
     .icon-project{
+		display: inline-block;
 	    margin-left: 26px;
 	    float: left;
 	    padding: 0;
@@ -135,8 +136,7 @@ header{
     }
 
     &__project-name{
-		// display: flex;
-		// justify-content: left;
+		display: inline-block;
 		flex-grow: 8;
 	    height: 15px;
 	    font: bold 15px Gotham;
@@ -144,6 +144,7 @@ header{
     }
 
 	.icon-options{
+		display: inline-block; 
 		padding: 0;
 		margin-right: 15px;
 	    font-size: 20px;
@@ -156,8 +157,22 @@ header{
 		opacity: 1;
 	}
 
-	.icon-edit, .icon-delete, .icon-back{
-		display: none;  
+	.none{
+		display: none; 
+	}  
+	.icon-edit{
+		margin-left: 26px; 
+		opacity: 0.5;
+	}
+	.icon-back{
+		margin-right: 15px;
+		opacity: 0.5;
+	}
+	.icon-delete{
+		opacity: 0.5;
+	}
+	.icon-edit:hover, .icon-delete:hover ,.icon-back:hover{  
+		opacity: 1;
 	}
 }
 

@@ -31,7 +31,7 @@ $(document).ready(function() {
             });
         }
 
-        form.find('#login-form__email').on('keyup',function() {
+        form.find('#login-form__email').on('blur',function() {
             var pattern = /^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
             if ($(this).val() != '') {
                 if (pattern.test($(this).val())) {
@@ -50,7 +50,7 @@ $(document).ready(function() {
                     checked();
         });
 
-        form.find('#login-form__password').on('keyup',function() {
+        form.find('#login-form__password').on('blur',function() {
             var regular = /^([a-zA-Z0-9]){2,20}$/;
             if ($(this).val() != '') {
                 if (regular.test($(this).val())) {
@@ -70,10 +70,10 @@ $(document).ready(function() {
         });
 
 
-        $('#login-form__button-login').click(function(evet) {
+        $('#login-form__button-login').click(function(event) {
             event.preventDefault();
             $.ajax({
-                url: 'http://localhost:3000/api/autorize',
+                url: 'http://localhost:3000/api/users/login',
                 type: 'POST',
                 data: {
                     email: $('#login-form__email').val(),
@@ -81,6 +81,8 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('user.id', data.user.id.toString());
+
                     window.location.href = 'index.html';
                 },
                 error: function(data) {

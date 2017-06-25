@@ -17,3 +17,9 @@ bin/
 /build
 build/
 bower_components/
+/*.orig
+/data
+/package-lock.json
+/.vscode
+dump.rdb
+*.orig

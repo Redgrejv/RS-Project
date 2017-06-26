@@ -14,10 +14,12 @@ var valid = require('../utils/validation');
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
+var checkSession = require('../utils/redis-session');
+
 module.exports = function (app, redisClient) {
 
     // Завершение сессии пользователя
-    app.get('/api/users/logout/:id', checkToken, function (req, res, next) {
+    app.get('/api/users/logout/:id', checkToken, checkSession, function (req, res, next) {
         req.session.destroy(function (err) {
             if (err) return next(err);
 
@@ -59,7 +61,8 @@ module.exports = function (app, redisClient) {
                 redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
                     updateUserLastActive(user_data.id);
-                    req.session.user = { userID: user_data.id }
+                    req.session.user = { key: token }
+                    console.log(req.session.user);
                 });
 
                 res.json({ token: token, user: user_data });
@@ -110,7 +113,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Получение всех проектов конкретного пользователя
-    app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
+    app.get('/api/projects/:id/user', checkToken, checkSession, function (req, res, next) {
         var userID = req.params.id;
 
         project_service.getAllProjects(userID)

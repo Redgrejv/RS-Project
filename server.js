@@ -6,7 +6,7 @@
 
 var express = require('express');
 var expressSession = require('express-session');
-var https = require('https');
+var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -51,7 +51,6 @@ app.use(express.session({
 }));
 
 app.use(require('./error/sendHttpError'));
-app.use(require('./libs/redis-session'));
 
 app.use(app.router);
 
@@ -76,7 +75,7 @@ app.use(function (err, req, res, next) {
     }
 });
 
-var server = https.createServer(app);
+var server = http.createServer(app);
 
 server.listen(config.get('port'), function (req, res) {
     console.log('Express server listening on port ' + config.get('port'));

@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 	function check(){
         form.find('.field').each(function(){
-            if ($(this).val()!=''){
+            if ($(this).val()!=''){ 
                 $(this).removeClass('empty');
             }else{
                 $(this).addClass('empty');
@@ -33,7 +33,7 @@ $(document).ready(function(){
     }
 }
 
-	form.find('#reg-form__name').on('input keyup',function(){
+	form.find('#reg-form__name').on('blur',function(){
     var regular=/^([a-zA-ZА-Яа-яёЁ-]){2,20}$/;
     if($(this).val()!=''){
         if(regular.test($(this).val())){
@@ -52,7 +52,7 @@ $(document).ready(function(){
     check();
 });
 
-	form.find('#reg-form__surname').on('input keyup',function(){
+	form.find('#reg-form__surname').on('blur',function(){
     var regular=/^([a-zA-ZА-Яа-яёЁ-]){2,20}$/;
     if($(this).val()!=''){
         if(regular.test($(this).val())){
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
 });
 
-	form.find('#reg-form__email').on('input keyup',function(){
+	form.find('#reg-form__email').on('blur',function(){
     var regular=/^([a-zA-Z0-9_\.-]{2,20})+@[a-z0-9-]+\.([a-z],{2,4}\.)?[a-z]{2,4}$/i;
     if ($(this).val()!=''){
         if(regular.test($(this).val())){
@@ -91,7 +91,7 @@ $(document).ready(function(){
     check();
 });
 
-	form.find('#reg-form__password').on('input keyup',function(){
+	form.find('#reg-form__password').on('blur',function(){
     var regular=/^([a-zA-Z0-9]){2,20}$/;
     if ($(this).val()!=''){
         if (regular.test($(this).val())){
@@ -110,7 +110,7 @@ $(document).ready(function(){
     check();
 });
 
-	form.find('#reg-form__confirm-password').on('input keyup',function(){
+	form.find('#reg-form__confirm-password').on('blur',function(){
     var regular=/^([a-zA-Z0-9]){2,20}$/;
     if ($(this).val()!='' && $(this).val()===form.find('#reg-form__password').val()){
         if(regular.test($(this).val())){
@@ -143,7 +143,7 @@ $(document).ready(function(){
 	$('#reg-form__button-reg').click(function(evet){
      event.preventDefault();
     $.ajax({
-        url: 'http://localhost:3000/api/sign-up',
+        url: 'http://localhost:3000/api/users/signup',
         type: 'POST',
         data: {first_name: $('#reg-form__name').val(),
                last_name: $('#reg-form__surname').val(),
@@ -151,6 +151,8 @@ $(document).ready(function(){
                password: $('#reg-form__password').val()},
         success: function(data){
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('user', data.user);
+                localStorage.setItem('user.id', data.user.id.toString());
                 window.location.href='index.html';
         },
         error: function(data){

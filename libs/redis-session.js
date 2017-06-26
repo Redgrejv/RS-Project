@@ -5,6 +5,7 @@ module.exports = function (err, req, res, next) {
         res.status(401).json('Вы не авторизованы');
         return next(401);
     }
+    // if(req.session.key.)
 
     next();
 }

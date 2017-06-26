@@ -6,7 +6,7 @@
 
 var express = require('express');
 var expressSession = require('express-session');
-var http = require('http');
+var https = require('https');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -76,7 +76,7 @@ app.use(function (err, req, res, next) {
     }
 });
 
-var server = http.createServer(app);
+var server = https.createServer(app);
 
 server.listen(config.get('port'), function (req, res) {
     console.log('Express server listening on port ' + config.get('port'));

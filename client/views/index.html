@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-    <link rel="icon" href="../../build/img/logo.png"/>
+	<link rel="icon" href="../../build/img/logo.png" />
 	<link rel="stylesheet" href="../../build/css/index.css">
-    <script src="../../build/js/container_index.js"></script>
+	<script src="../../build/js/container_index.js"></script>
 	<!--<link rel="stylesheet" href="../../build/css/rs-project.css">-->
 	<!--<script src="../src/lib/jquery.js"></script>
 	<script src="../src/js/index/index.js"></script>
@@ -14,22 +15,23 @@
 	<!-- <script src="client/src/js/index/users/checkAuthrorization.js"></script>
 	<script src="client/src/js/index/users/message.js"></script> -->
 </head>
+
 <body>
 	<div class="menu">
 
 		<header class="menu__header">
-		<h1 class="menu__header-text">To Do</h1>
-		<i class="icon-backburger menu_hide"></i>
-		<i class="icon-backburger menu_show"></i>
+			<h1 class="menu__header-text">To Do</h1>
+			<i class="icon-backburger menu_hide"></i>
+			<!--menu_show-->
 		</header>
 
-	<div class="menu__add-project">
-		<i class="icon-plus"></i>
-	</div>
+		<div class="menu__add-project">
+			<i class="icon-plus"></i>
+		</div>
 
-	<div class="menu__projects">
+		<div class="menu__projects">
 
-	<!--<div class="menu__project" id="idishnik">
+			<!--<div class="menu__project" id="idishnik">
 	<i class="icon-project"></i>
 	<div class="menu__project-name">Project 1</div>
 	<i class="icon-options"></i>
@@ -39,30 +41,41 @@
 	</div>
 	-->
 
-	</div>
+		</div>
 	</div>
 
 	<div class="content">
 		<header class="content__header">
 			<div class="content__project-name"></div>
-                <i class="icon-exit"></i>
+			<i class="icon-exit"></i>
 		</header>
-	Taski
-	
-    
+		Taski
+
+
 	</div>
 
 	<!-- Подложка -->
-<div id="overlay"></div>
-<div id="options-overlay"></div>
-	<!-- Модальное окно -->
-<div class="modal-window">
-	<div id="modal-window__close"></div>
-	<form method="POST" class="add-project-form">
-				<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name" required>
-				<button id="add-project-form__button" type="submit">Добавить проект</button>
-	</form>
-</div>
+	<div id="overlay"></div>
+	<div id="options-overlay"></div>
+	<!-- Модальное окно добавления проекта-->
+	<div class="modal-window-add">
+		<i class="icon-close"></i>
+		<form method="POST" class="add-project-form">
+			<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
+			 required>
+			<button id="add-project-form__button" type="submit">Добавить проект</button>
+		</form>
+	</div>
 
+	<!--Модальное окно редактирования проекта-->
+	<div class="modal-window-edit">
+		<i class="icon-close"></i>
+		<form method="POST" class="edit-project-form">
+			<input id="edit-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
+			 required>
+			<button id="edit-project-form__button" type="submit">Переименовать проект</button>
+		</form>
+	</div>
 </body>
+
 </html>

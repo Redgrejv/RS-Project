@@ -12,11 +12,11 @@ module.exports = function(req, res, next) {
     if (!token) return next(new HttpError(400, 'Нет токена!'));
 
     try {
-        var tokenObj = jwt.verify(token, config.get('token-secret'));
+        var verifyToken = jwt.verify(token, config.get('token-secret'));
     } catch (e) {
         return next(new HttpError(401, 'Токен не валидный!'));
     }
 
-    req.tokenObj = tokenObj;
+    req.tokenObj = { token: token, userID: verifyToken.id };
     next();
 };

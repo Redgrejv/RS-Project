@@ -3,7 +3,6 @@
  */
 
 "use strict";
-//require('child_process').exec('start mongod');
 
 var express = require('express');
 var expressSession = require('express-session');
@@ -19,38 +18,46 @@ var mongoose = require('./libs/mongoose');
 
 var app = express();
 
-app.use(express.static(path.join(__dirname, '/public')));
+var redis = require('redis');
+var RedisStore = require('connect-redis')(expressSession);
+var redisClient = redis.createClient();
+var redisStore = new RedisStore({ client: redisClient, host: 'localhost', port: 6379 });
+
+redisClient.on('error', function (err) {
+    console.log('Error: ' + err);
+});
+
+redisClient.on('connect', function () {
+    console.log('Connect to redis on port 6379');
+})
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.cookieParser());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
-    res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD']);
+    res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD', 'PUT']);
     next();
 });
 
-// app.use(express.session({
-//     secret: process.env.SESSION_SECRET || 'express_secret_key_session',
-//     resave: true,
-//     saveUninitialized: true,
-//     store: new MongoStore({mongooseConnection: mongoose.connection})
-// }));
-
-// var passport = require('./models/passport');
-//
-// app.use(passport.initialize());
-// app.use(passport.session());
-
+app.use(express.session({
+    secret: config.get('key-session'),
+    resave: true,
+    saveUninitialized: true,
+    store: redisStore
+}));
 
 app.use(require('./error/sendHttpError'));
+app.use(require('./libs/redis-session'));
+
 app.use(app.router);
 
-require('./routes')(app);
+require('./routes')(app, redisClient);
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     if (typeof err === 'number') {
         err = new HttpError(err);
     }
@@ -71,8 +78,12 @@ app.use(function(err, req, res, next) {
 
 var server = http.createServer(app);
 
-server.listen(config.get('port'), function(req, res) {
+server.listen(config.get('port'), function (req, res) {
     console.log('Express server listening on port ' + config.get('port'));
 });
 
 require('./libs/socket')(server);
+
+app.post('/temp', function (req, res, next) {
+    res.json(req.body);
+})

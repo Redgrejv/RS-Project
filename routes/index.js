@@ -30,7 +30,7 @@ module.exports = function (app, redisClient) {
     // Получение данных юзера по ID
     app.get('/api/users/:id', checkToken, function (req, res, next) {
         var userID = req.params.id;
-
+        if(!userID) return next(new HttpError(400, 'Нет ID пользователя'));
         user_service.getUserById(id)
             .then(function (user) {
                 res.json(choiseUserData(user));

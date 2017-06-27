@@ -2,6 +2,7 @@
 var os = require('os');
 var osName = require('os-name');
 
+//test commit
 
 var value = os.type();
 // if (value = 'Windows_NT') {
@@ -11,7 +12,9 @@ var value = os.type();
 //    console.log('Linux');
 // }
 
-var exec = require('child_process').exec;
+// import exec from 'executive';
+
+var cp = require('child_process');
 console.log('OS - ' + value.toString());
 // break;
 
@@ -24,38 +27,26 @@ switch(value) {
    break;
    case 'Linux':
    console.log('Hey, Torwald');
-   executive('mkdir ~/data/db & mongod --dbpath ~/data/db' );
-   executive('node server.js');
+   cp.fork({cwd: 'mkdir ~/data/db'});
+   cp.fork({cwd: 'mongod --dbpath ~/data/db' });
+   // cp.spawn('mongod', ['--dbpath ~/data/db']);
+   // cp.spawn('node', ['server.js'])
+   // exec(['echo 123','echo stop']);
+   // exec(['mkdir ~/data/db & mongod --dbpath ~/data/db','node server.js',]);
+   // exec('gnome-terminal -e "echo 1234321 "');
+   // exec('gnome-terminal --command="mkdir ~/data/db & mongod --dbpath ~/data/db"');
+   // exec('gnome-terminal -e "mongod --dbpath ~/data/db " & getch(); ');
+   // exec('gnome-terminal ('mkdir ~/data/db') & mongod --dbpath ~/data/db' );
+   // console.log('123');
+   // executive('node server.js');
    break;
 }
-
+//important
 function executive(strings) {
    exec(strings);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//
+//water
 // function os() {
 //    var os = 0;
 // if (navigator.userAgent.indexOf ('Windows') != -1) os = 1;

@@ -7,13 +7,14 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     rigger = require('gulp-rigger'),
-    cssmin = require('gulp-minify-css'),
+    cssmin = require('gulp-clean-css'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
     reload = browserSync.reload;
+    
 
 
 
@@ -26,16 +27,20 @@ var path = {
         font: 'build/font/'
     },
     src: {
-        js: 'client/src/js/main/*.js',
+        js_index: 'client/src/js/main/container_index.js',
+        js_login: 'client/src/js/main/container_login.js',
+        js_sign_up: 'client/src/js/main/container_sign_up.js',
         style: 'client/src/css/main/*.scss',
         img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'
     },
 
     watch: {
-        js: 'client/src/js/*.*',
+        js_index: 'client/src/js/index/**/*.*',
+        js_login: 'client/src/js/login/*.*',
+        js_sign_up: 'client/src/js/sign_up/*.*',
         style: 'client/src/css/*.*',
-        img: 'client/src/image/*.*',
+        img: 'client/src/img/*.*',
         font: 'client/src/font/*.*'
     },
     clean: './build'
@@ -64,17 +69,37 @@ var config = {
 //         .pipe(reload({stream: true})); //И перезагрузим наш сервер для обновлений
 // });
 
-gulp.task('js:build', function() {
-    gulp.src([path.src.js]) //Найдем наш main файл
+gulp.task('js_index:build', function () {
+    gulp.src([path.src.js_index]) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-        // .pipe(reload({ stream: true })); //И перезагрузим сервер
+        console.log('Index.js build ready');
 });
 
-gulp.task('style:build', function() {
+gulp.task('js_login:build', function () {
+    gulp.src([path.src.js_login])
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.js))
+        console.log('Login.js build ready');
+});
+
+gulp.task('js_sign_up:build', function () {
+    gulp.src([path.src.js_sign_up])
+        .pipe(rigger())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(path.build.js))
+        console.log('Sign_up.js build ready');
+});
+
+gulp.task('style:build', function () {
     gulp.src(path.src.style) //Выберем наш main.scss
         .pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(sass()) //Скомпилируем
@@ -82,10 +107,12 @@ gulp.task('style:build', function() {
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.style)) //И в build
-        // .pipe(reload({ stream: true }));
+        console.log('CSS build ready');
+    // .pipe(reload({ stream: true }));
+    
 });
 
-gulp.task('image:build', function() {
+gulp.task('image:build', function () {
     gulp.src(path.src.img) //Выберем наши картинки
         .pipe(imagemin({ //Сожмем их
             progressive: true,
@@ -94,32 +121,48 @@ gulp.task('image:build', function() {
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img)) //И бросим в build
-        // .pipe(reload({ stream: true }));
+        console.log('Image build ready');
+
 });
 
-gulp.task('font:build', function() {
+gulp.task('font:build', function () {
     gulp.src(path.src.font)
         .pipe(gulp.dest(path.build.font))
+         console.log('Font build ready');
 });
 
 gulp.task('build', [
-    'js:build',
+    'js_index:build',
+    'js_login:build',
+    'js_sign_up:build',
     'style:build',
     'font:build',
     'image:build'
 ]);
 
-gulp.task('watch', function() {
-    // watch([path.watch.html], function(event, cb) {
-    //     gulp.start('html:build');
-    // });
-    watch([path.watch.js,path.watch.style,path.watch.img,path.watch.font], function(event, cb) {
-        gulp.start('build');
+gulp.task('watch', function () {
+    watch([path.watch.style], function (event, cb) {
+        gulp.start('style:build');
+    });
+    watch([path.watch.js_index], function (event, cb) {
+        gulp.start('js_index:build');
+    });
+    watch([path.watch.js_login], function (event, cb) {
+        gulp.start('js_login:build');
+    });
+    watch([path.watch.js_sign_up], function (event, cb) {
+        gulp.start('js_sign_up:build');
+    });
+    watch([path.watch.img], function (event, cb) {
+        gulp.start('image:build');
+    });
+    watch([path.watch.font], function (event, cb) {
+        gulp.start('font:build');
     })
-    .pipe(reload({stream: true}));
+        .pipe(reload({ stream: true }));
 });
 
-gulp.task('webserver', function() {
+gulp.task('webserver', function () {
     browserSync
         .create()
         .init({
@@ -131,13 +174,13 @@ gulp.task('webserver', function() {
                     extensions: ['html'] // pretty urls
                 },
                 files: [
-                        './client/src/css/*.css',
-                        './client/src/js/*.js',
-                        './client/src/image/*',
-                        './client/src/lib/*.js',
-                        './client/src/font/*.ttf'
-                    ]
-                    // index: '/views/index.html',
+                    './client/src/css/*.css',
+                    './client/src/js/*.js',
+                    './client/src/img/*',
+                    './client/src/lib/*.js',
+                    './client/src/font/*.ttf'
+                ]
+                // index: '/views/index.html',
             },
             host: 'localhost',
             port: 3333,
@@ -145,18 +188,9 @@ gulp.task('webserver', function() {
             open: './client/views/index.html'
 
         });
-
-    // gulp.src('views')
-    //     .pipe(webserver({
-    //         path: '/build',
-    //         port: 3333,
-    //         livereload: true,
-    //         directoryListing: true,
-    //         open: '/build/index.html'
-    //     }))
 });
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
     rimraf(path.clean, cb);
 });
 

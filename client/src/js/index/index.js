@@ -11,28 +11,29 @@ $(document).ready(function () {
 	projects_height = projects_height - 113;
 	$('.menu__projects').css('height', projects_height);
 
+
 	//show-hide-menu
-	$('.menu_hide').click(function () {
-
-		// $('.icon-backburger').
-		// $('.menu').css('justify-content','center');
-		// $('.menu').css('width','54px');
-
-		// $(this).css('display','none');
-		// //$('.menu_show').css('display','inline-block');
-		// $(".menu__header-text").css('display','none');
-		// $('.menu__project-name').css('display','none');
-		// $('.icon-options').css('display','none');
-		// $('.icon-project').css('margin-left','0');
-		// $('.menu').css('justify-content','center');
+	$('.menu__header').on('click', '.hide-menu', function () {
+		$(".menu__header-text").css('display', 'none');
+		$('.menu__project-name').css('display', 'none');
+		$('.menu__project').css('justify-content', 'center');
+		$('.icon-options').css('display', 'none');
+		$('.icon-project').css('margin-left', '0');
+		$('.menu').removeClass('menu__hide');
+		$('.menu').addClass('menu__show');
+		$('.icon-backburger').removeClass('hide-menu');
+		$('.icon-backburger').addClass('show-menu');
 
 	})
 
-	$('.menu_show').click(function () {
-		var parrent = $(this).parrent();
-		$(parent_block).children().each(function () {
-			$(this).attr('style', '');
+	$('.menu__header').on('click', '.show-menu', function () {
+		$('.menu').children().each(function () {
+			$(this).removeAttr('style');
 		})
+		$('.menu').removeClass('menu__show');
+		$('.menu').addClass('menu__hide');
+		$('.icon-backburger').removeClass('show-menu');
+		$('.icon-backburger').addClass('hide-menu');
 	})
 
 

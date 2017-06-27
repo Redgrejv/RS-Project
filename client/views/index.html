@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Projects</title>
 	<link rel="icon" href="../../build/img/logo.png" />
 	<link rel="stylesheet" href="../../build/css/index.css">
 	<script src="../../build/js/container_index.js"></script>
@@ -17,19 +17,18 @@
 </head>
 
 <body>
-	<div class="menu">
+	<div class="menu menu__hide">
 
 		<header class="menu__header">
 			<h1 class="menu__header-text">To Do</h1>
-			<i class="icon-backburger menu_hide"></i>
-			<!--menu_show-->
+			<i class="icon-backburger hide-menu"></i>
 		</header>
 
 		<div class="menu__add-project">
-			<i class="icon-plus"></i>
+			<i class="icon-plus hide-menu"></i>
 		</div>
 
-		<div class="menu__projects">
+		<div class="menu__projects hide">
 
 			<!--<div class="menu__project" id="idishnik">
 	<i class="icon-project"></i>
@@ -62,7 +61,7 @@
 		<i class="icon-close"></i>
 		<form method="POST" class="add-project-form">
 			<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
-			 required>
+			 required autofocus>
 			<button id="add-project-form__button" type="submit">Добавить проект</button>
 		</form>
 	</div>
@@ -72,7 +71,7 @@
 		<i class="icon-close"></i>
 		<form method="POST" class="edit-project-form">
 			<input id="edit-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
-			 required>
+			 required autofocus>
 			<button id="edit-project-form__button" type="submit">Переименовать проект</button>
 		</form>
 	</div>

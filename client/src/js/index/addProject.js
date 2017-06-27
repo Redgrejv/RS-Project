@@ -9,7 +9,7 @@ $(document).ready(function () {
 	});
 
 	$('#add-project-form__button').on('click', function (event) {
-		$('#add-project-form__name').focus;
+		// $('#add-project-form__name').focus();
 		event.preventDefault();
 		$.ajax({
 			method: "POST",

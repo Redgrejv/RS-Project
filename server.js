@@ -21,7 +21,6 @@ var app = express();
 var redis = require('redis');
 var RedisStore = require('connect-redis')(expressSession);
 var redisClient = redis.createClient();
-var redisStore = new RedisStore({ client: redisClient, host: 'localhost', port: 6379 });
 
 redisClient.on('error', function (err) {
     console.log('Error: ' + err);
@@ -45,9 +44,9 @@ app.use(function (req, res, next) {
 
 app.use(express.session({
     secret: config.get('key-session'),
-    resave: true,
-    saveUninitialized: true,
-    store: redisStore
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379 })
 }));
 
 app.use(require('./error/sendHttpError'));

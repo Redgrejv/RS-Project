@@ -99,6 +99,27 @@ gulp.task('js_sign_up:build', function () {
         console.log('Sign_up.js build ready');
 });
 
+//dev
+gulp.task('dev_js_index:build', function () {
+    gulp.src([path.src.js_index])
+        .pipe(rigger()) 
+        .pipe(gulp.dest(path.build.js))
+        console.log('Index.js build ready');
+});
+gulp.task('dev_js_login:build', function () {
+    gulp.src([path.src.js_login])
+        .pipe(rigger()) 
+        .pipe(gulp.dest(path.build.js))
+        console.log('Login.js build ready');
+});
+gulp.task('dev_js_sign_up:build', function () {
+    gulp.src([path.src.js_sign_up])
+        .pipe(rigger()) 
+        .pipe(gulp.dest(path.build.js))
+        console.log('Sign_up.js build ready');
+});
+//
+
 gulp.task('style:build', function () {
     gulp.src(path.src.style) //Выберем наш main.scss
         .pipe(sourcemaps.init()) //То же самое что и с js
@@ -109,7 +130,6 @@ gulp.task('style:build', function () {
         .pipe(gulp.dest(path.build.style)) //И в build
         console.log('CSS build ready');
     // .pipe(reload({ stream: true }));
-    
 });
 
 gulp.task('image:build', function () {
@@ -135,6 +155,15 @@ gulp.task('build', [
     'js_index:build',
     'js_login:build',
     'js_sign_up:build',
+    'style:build',
+    'font:build',
+    'image:build'
+]);
+
+gulp.task('build_dev', [
+    'dev_js_index:build',
+    'dev_js_login:build',
+    'dev_js_sign_up:build',
     'style:build',
     'font:build',
     'image:build'
@@ -194,4 +223,4 @@ gulp.task('clean', function (cb) {
     rimraf(path.clean, cb);
 });
 
-gulp.task('default', ['build', 'webserver', 'watch']);
+gulp.task('default', ['build_dev']);

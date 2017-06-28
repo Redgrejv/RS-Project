@@ -5,7 +5,6 @@ var redisClient = require('redis').createClient();
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
-module.exports.updateSession = updateSession;
 
 module.exports = function (req, res, next) {
     if (!req.session) {
@@ -62,3 +61,5 @@ function updateSession(token, session) {
         });
     })
 }
+
+module.exports.updateSession = updateSession;

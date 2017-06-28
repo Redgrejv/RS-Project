@@ -44,7 +44,7 @@ function userActiveTime(token) {
     });
 }
 
-module.exports = function updateSession(token, session) {
+function updateSession(token, session) {
     return new Promise(function (resolve, reject) {
         redisClient.set(token.toString(), session.lastActiveTime, function (err, data) {
             if (err) return reject(err);
@@ -52,3 +52,5 @@ module.exports = function updateSession(token, session) {
         });
     })
 }
+
+module.exports.updateSession = updateSession;

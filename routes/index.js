@@ -14,12 +14,14 @@ var valid = require('../utils/validation');
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
-var checkSession = require('../utils/redis-session');
+var session = require('../utils/redis-session');
+var Promise = require('bluebird');
 
-module.exports = function (app, redisClient) {
+
+module.exports = function (app) {
 
     // Завершение сессии пользователя
-    app.get('/api/users/logout/:id', checkToken, checkSession, function (req, res, next) {
+    app.get('/api/users/logout/:id', checkToken, session, function (req, res, next) {
         req.session.destroy(function (err) {
             if (err) return next(err);
 
@@ -30,7 +32,7 @@ module.exports = function (app, redisClient) {
     })
 
     // Получение данных юзера по ID
-    app.get('/api/users/:id', checkToken, function (req, res, next) {
+    app.get('/api/users/:id', checkToken, session, function (req, res, next) {
         var userID = req.params.id;
 
         user_service.getUserById(id)
@@ -58,14 +60,9 @@ module.exports = function (app, redisClient) {
                     global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
                 }
 
-                redisClient.set(user_data.id.toString(), token, function (err, res) {
-                    if (err) return next(err);
-                    updateUserLastActive(user_data.id);
-                    console.log(req.session);
-                });
+                req.session.lastActiveTime = Date.now();
+                session.updateSession(token, req.session);
 
-                req.session.user = { key: token };
-                console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
                 return next(err);
@@ -90,7 +87,8 @@ module.exports = function (app, redisClient) {
                     updateUserLastActive(user_data.id);
                 });
 
-                req.session.user = { key: token };
+                req.session.lastActiveTime = Date.now();
+                session.updateSession(token, req.session);
                 res.json({ token: token, user: user_data });
             })
             .catch(function (err) {
@@ -99,7 +97,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Проверка на существование в БД Email`a
-    app.post('/api/users/checkEmail', function (req, res, next) {
+    app.post('/api/users/checkEmail', session, function (req, res, next) {
         var email = req.body.email;
 
         if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
@@ -114,11 +112,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Получение всех проектов конкретного пользователя
-    app.get('/api/projects/:id/user', checkToken, checkSession, function (req, res, next) {
-
-
-        // if (req.session.user.key !== req.tokenObj.token)
-        //     return next(new HttpError(400, 'Токен устарел, авторизуйтесь заново'));
+    app.get('/api/projects/:id/user', checkToken, session, function (req, res, next) {
 
         var userID = req.params.id;
 
@@ -132,9 +126,11 @@ module.exports = function (app, redisClient) {
     });
 
     // Создание нового проекта
-    app.post('/api/projects', checkToken, function (req, res, next) {
+    app.post('/api/projects', checkToken, session, function (req, res, next) {
         var title = req.body.title;
         var maxLength = 16;
+
+        console.log(req.session);
 
         if (!valid.names(title, { minLength: 1, maxLength: maxLength }))
             return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать ' + maxLength + ' символов.'));
@@ -149,7 +145,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Изменение данных проекта
-    app.patch('/api/projects/:id', checkToken, function (req, res, next) {
+    app.patch('/api/projects/:id', checkToken, session, function (req, res, next) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
 
@@ -166,7 +162,7 @@ module.exports = function (app, redisClient) {
     });
 
     // Удаление проекта
-    app.delete('/api/projects/:id', checkToken, function (req, res, next) {
+    app.delete('/api/projects/:id', checkToken, session, function (req, res, next) {
         var projectID = req.params.id;
 
         project_service.deleteProject(projectID)
@@ -178,7 +174,6 @@ module.exports = function (app, redisClient) {
             })
 
     });
-
 };
 
 
@@ -226,16 +221,16 @@ function getTokenObject(request) {
     }
 }
 
-/**     
-* Обновление времени последней активномти пользователя
-* @param  {ObjectId} userID - ID пользователя
-*/
-function updateUserLastActive(userID) {
-    User.findByIdAndUpdate(
-        userID,
-        { lastActiveTime: Date.now() },
-        { new: true },
-        function (err, model) {
-            if (err) return err;
-        });
-}
+// /**     
+// * Обновление времени последней активномти пользователя
+// * @param  {ObjectId} userID - ID пользователя
+// */
+// function updateUserLastActive(userID) {
+//     User.findByIdAndUpdate(
+//         userID,
+//         { lastActiveTime: Date.now() },
+//         { new: true },
+//         function (err, model) {
+//             if (err) return err;
+//         });
+// }

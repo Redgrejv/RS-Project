@@ -13,7 +13,6 @@ var cookieParser = require('cookie-parser');
 var config = require('./config');
 var log = require('./libs/log')(module);
 var HttpError = require('./error').HttpError;
-var MongoStore = require('connect-mongo')(expressSession);
 var mongoose = require('./libs/mongoose');
 
 var app = express();
@@ -30,11 +29,6 @@ redisClient.on('connect', function () {
     console.log('Connect to redis on port 6379');
 })
 
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.cookieParser());
-
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
@@ -42,15 +36,20 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.cookieParser());
 app.use(express.session({
     secret: config.get('key-session'),
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379 })
 }));
 
-app.use(require('./error/sendHttpError'));
 
+
+app.use(require('./error/sendHttpError'));
 app.use(app.router);
 
 require('./routes')(app, redisClient);
@@ -83,5 +82,6 @@ server.listen(config.get('port'), function (req, res) {
 require('./libs/socket')(server);
 
 app.post('/temp', function (req, res, next) {
+
     res.json(req.body);
 })

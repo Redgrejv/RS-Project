@@ -5,6 +5,7 @@ var redisClient = require('redis').createClient();
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
+module.exports.updateSession = updateSession;
 
 module.exports = function (req, res, next) {
     if (!req.session) {
@@ -35,6 +36,10 @@ module.exports = function (req, res, next) {
     next();
 }
 
+/**
+ * Получение данных сессии из редиса по токену
+ * @param {ObjectId} токен пользователя
+ */
 function userActiveTime(token) {
     return new Promise(function (resolve, reject) {
         redisClient.get(token.toString(), function (err, data) {
@@ -44,6 +49,11 @@ function userActiveTime(token) {
     });
 }
 
+/**
+ * Обновление данных сессии в редис
+ * @param {ObjectId} токен пользователя 
+ * @param {Session} сессия пользователя 
+ */
 function updateSession(token, session) {
     return new Promise(function (resolve, reject) {
         redisClient.set(token.toString(), session.lastActiveTime, function (err, data) {
@@ -52,5 +62,3 @@ function updateSession(token, session) {
         });
     })
 }
-
-module.exports.updateSession = updateSession;

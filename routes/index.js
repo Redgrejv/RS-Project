@@ -18,7 +18,7 @@ var session = require('../utils/redis-session');
 var Promise = require('bluebird');
 
 
-module.exports = function (app) {
+module.exports = function (app, redisClient) {
 
     // Завершение сессии пользователя
     app.get('/api/users/logout/:id', checkToken, session, function (req, res, next) {

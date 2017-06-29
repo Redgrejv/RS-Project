@@ -25,10 +25,12 @@ module.exports = function (app, redisClient) {
         req.session.destroy(function (err) {
             if (err) return next(err);
 
-            redisClient.set(req.params.id, 'nil');
-            res.send('Logout');
-        });
+            redisClient.del(req.tokenObj.token, function (err) {
+                if (err) return next(err);
 
+                res.json('Logout');
+            });
+        })
     })
 
     // Получение данных юзера по ID

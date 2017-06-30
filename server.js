@@ -5,29 +5,41 @@
 "use strict";
 
 var express = require('express');
-var expressSession = require('express-session');
+var session = require('express-session');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var config = require('./config');
-var log = require('./libs/log')(module);
 var HttpError = require('./error').HttpError;
-var mongoose = require('./libs/mongoose');
 
-var app = express();
 
 var redis = require('redis');
-var RedisStore = require('connect-redis')(expressSession);
-var redisClient = redis.createClient();
+var RedisStore = require('connect-redis')(session);
+var client = redis.createClient();
+var app = express();
 
-redisClient.on('error', function (err) {
+client.on('error', function (err) {
     console.log('Error: ' + err);
 });
 
-redisClient.on('connect', function () {
+client.on('connect', function () {
     console.log('Connect to redis on port 6379');
 })
+
+
+
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.cookieParser());
+
+app.use(session({
+    secret: config.get('key-session'),
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({ client: client, host: 'localhost', port: 6379, ttl: 1800 })
+}));
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,23 +48,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.cookieParser());
-app.use(express.session({
-    secret: config.get('key-session'),
-    resave: true,
-    saveUninitialized: false,
-    store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379, ttl: 1800 })
-}));
-
-
-
 app.use(require('./error/sendHttpError'));
 app.use(app.router);
 
-require('./routes')(app, redisClient);
+require('./routes')(app, client);
 
 app.use(function (err, req, res, next) {
     if (typeof err === 'number') {

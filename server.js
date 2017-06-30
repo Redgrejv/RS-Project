@@ -44,7 +44,7 @@ app.use(express.session({
     secret: config.get('key-session'),
     resave: true,
     saveUninitialized: false,
-    store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379 })
+    store: new RedisStore({ client: redisClient, host: 'localhost', port: 6379, ttl: 1800 })
 }));
 
 

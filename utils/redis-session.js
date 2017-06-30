@@ -5,34 +5,37 @@ var redisClient = require('redis').createClient();
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
+module.exports = {
+    checkSession,
+    updateSession
+}
 
-module.exports = function (req, res, next) {
-    if (!req.session) {
-        userActiveTime(token)
-            .then(function (data) {
-                var date = new Date(+data);
-                User.findByIdAndUpdate(req.tokenObj.id, { lastActiveTime: date }, function (err, status) {
-                    if (err) return next(err);
+function checkSession(token, session, userID) {
+    return new Promise(function (resolve, reject) {
+        if (!session) {
+            userActiveTime(token)
+                .then(function (data) {
+                    var date = new Date(+data);
+                    User.findByIdAndUpdate(userID, { lastActiveTime: date }, function (err, status) {
+                        if (err) return next(err);
+                    })
+                    resolve({ userLastActive: date.toLocaleDateString() });
                 })
+                .catch(function (err) {
+                    reject(err);
+                })
+            reject(new HttpError(401, 'Сессия не активна'));
+        }
 
-                res.status(401).json({ userLastActive: date.toLocaleDateString(), message: 'Вы не авторизованы' });
+        session.lastActiveTime = Date.now();
+        updateSession(token, session)
+            .then(function (data) {
+
             })
             .catch(function (err) {
-                return next(err);
+                reject(err);
             })
-    }
-
-    req.session.lastActiveTime = Date.now();
-
-    updateSession(req.tokenObj.token, req.session)
-        .then(function (data) {
-
-        })
-        .catch(function (err) {
-            return next(err);
-        })
-
-    next();
+    })
 }
 
 /**
@@ -61,5 +64,3 @@ function updateSession(token, session) {
         });
     })
 }
-
-module.exports.updateSession = updateSession;

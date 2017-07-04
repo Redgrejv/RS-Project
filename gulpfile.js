@@ -72,9 +72,9 @@ var config = {
 gulp.task('js_index:build', function () {
     gulp.src([path.src.js_index]) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
-        .pipe(sourcemaps.init()) //Инициализируем sourcemap
+        // .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(uglify()) //Сожмем наш js
-        .pipe(sourcemaps.write()) //Пропишем карты
+        // .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
         console.log('Index.js build ready');
 });
@@ -82,9 +82,9 @@ gulp.task('js_index:build', function () {
 gulp.task('js_login:build', function () {
     gulp.src([path.src.js_login])
         .pipe(rigger())
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(uglify())
-        .pipe(sourcemaps.write())
+        // .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.js))
         console.log('Login.js build ready');
 });
@@ -92,9 +92,9 @@ gulp.task('js_login:build', function () {
 gulp.task('js_sign_up:build', function () {
     gulp.src([path.src.js_sign_up])
         .pipe(rigger())
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(uglify())
-        .pipe(sourcemaps.write())
+        // .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.js))
         console.log('Sign_up.js build ready');
 });
@@ -120,7 +120,7 @@ gulp.task('dev_js_sign_up:build', function () {
 });
 //
 
-gulp.task('style:build', function () {
+gulp.task('dev_style:build', function () {
     gulp.src(path.src.style) //Выберем наш main.scss
         .pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(sass()) //Скомпилируем
@@ -130,6 +130,13 @@ gulp.task('style:build', function () {
         .pipe(gulp.dest(path.build.style)) //И в build
         console.log('CSS build ready');
     // .pipe(reload({ stream: true }));
+});
+
+gulp.task('style:build', function(){
+    gulp.src(path.src.style)
+        .pipe(sass({outputStyle: 'compressed'}))
+        .pipe(gulp.dest(path.build.style))
+        console.log('CSS build ready');
 });
 
 gulp.task('image:build', function () {
@@ -164,7 +171,7 @@ gulp.task('build_dev', [
     'dev_js_index:build',
     'dev_js_login:build',
     'dev_js_sign_up:build',
-    'style:build',
+    'dev_style:build',
     'font:build',
     'image:build'
 ]);

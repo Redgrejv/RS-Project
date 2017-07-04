@@ -4,11 +4,11 @@
     "scripts": {
         "gulp": "node node_modules/gulp/bin/gulp.js",
         "front": "npm run gulp build && npm run gulp webserver | npm run gulp watch",
-        "front_dev":"npm run gulp build_dev && npm run gulp webserver | npm run gulp watch_dev",
+        "front_dev": "npm run gulp build_dev && npm run gulp webserver | npm run gulp watch_dev",
         "app": "node server.js",
         "server": "redis-server | mkdir -p ~/data/db/ | mkdir C:/data/db | mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | npm run app",
-        "dev":"npm run server | npm run front_dev",
-        "prod":"npm ren server | npm run front"
+        "dev": "npm run server | npm run front_dev",
+        "prod": "npm ren server | npm run front"
     },
     "dependencies": {
         "async": "^2.3.0",
@@ -23,6 +23,7 @@
         "express-session": "*",
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^4.0.0",
+        "gulp-clean": "^0.3.2",
         "gulp-clean-css": "^3.4.0",
         "gulp-imagemin": "^3.2.0",
         "gulp-minify-css": "^1.2.4",
@@ -48,7 +49,6 @@
         "pkginfo": "^0.4.0",
         "redis": "^2.7.1",
         "redis-session": "^0.1.0",
-        "rimraf": "^2.6.1",
         "serve-favicon": "^2.4.2",
         "socket.io": "^2.0.1",
         "supervisor": "^0.12.0",

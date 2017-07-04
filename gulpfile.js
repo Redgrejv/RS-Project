@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     cssmin = require('gulp-clean-css'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
-    rimraf = require('rimraf'),
+    clean = require('gulp-clean'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
     reload = browserSync.reload;
@@ -68,6 +68,11 @@ var config = {
 //         .pipe(gulp.dest(path.build.html)) //Выплюнем их в папку build
 //         .pipe(reload({stream: true})); //И перезагрузим наш сервер для обновлений
 // });
+
+gulp.task('clean', function() {
+    return gulp.src(path.clean, {read: false})
+        .pipe(clean());
+});
 
 gulp.task('js_index:build', function () {
     gulp.src([path.src.js_index]) //Найдем наш main файл
@@ -159,6 +164,7 @@ gulp.task('font:build', function () {
 });
 
 gulp.task('build', [
+    'clean',
     'js_index:build',
     'js_login:build',
     'js_sign_up:build',
@@ -168,6 +174,7 @@ gulp.task('build', [
 ]);
 
 gulp.task('build_dev', [
+    'clean',
     'dev_js_index:build',
     'dev_js_login:build',
     'dev_js_sign_up:build',
@@ -247,10 +254,6 @@ gulp.task('webserver', function () {
             open: './client/views/index.html'
 
         });
-});
-
-gulp.task('clean', function (cb) {
-    rimraf(path.clean, cb);
 });
 
 gulp.task('default', ['build_dev']);

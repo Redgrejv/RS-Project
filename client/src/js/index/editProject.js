@@ -4,8 +4,8 @@ $(document).ready(function () {
         event.preventDefault();
         $('#overlay').fadeIn(400, function () {
             $('.modal-window-edit').css({ 'display': 'block', 'opacity': '1', 'top': '35%' });
+            $('#edit-project-form__name').focus()
         });
-        $('#edit-project-form__name').val('');
     });
 
 

@@ -19,15 +19,17 @@ module.exports = function (req, res, next) {
         return next(new HttpError(401, 'Токен не валидный!'));
     }
 
-    session.checkSession(token, req.session, verifyToken.id)
-        .then(function (data) {
-            if (data) {
-                return next(new HttpError(401, 'Время последней активности пользователя ' + data));
-            }
-        })
-        .catch(function (err) {
-            return next(err);
-        })
+    console.log(req.session);
+
+    // session.checkSession(token, req.session, verifyToken.id)
+    //     .then(function (data) {
+    //         if (data) {
+    //             return next(new HttpError(401, 'Время последней активности пользователя ' + data));
+    //         }
+    //     })
+    //     .catch(function (err) {
+    //         return next(err);
+    //     })
 
     req.tokenObj = { token: token, userID: verifyToken.id };
     next();

@@ -55,13 +55,19 @@
 
 	<!-- Подложка -->
 	<div id="overlay"></div>
-	<div id="options-overlay"></div>
+
+	<!--Модальное окно прдеупреждения о том что пользователь не авторизирован-->
+	<div class="modal-window-attention">
+		<i class="icon-close"></i>
+		<p>Вы не авторизированы. </p>
+	</div>
+
 	<!-- Модальное окно добавления проекта-->
 	<div class="modal-window-add">
 		<i class="icon-close"></i>
 		<form method="POST" class="add-project-form">
 			<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
-			 required autofocus>
+			 required>
 			<button id="add-project-form__button" type="submit">Добавить проект</button>
 		</form>
 	</div>
@@ -71,8 +77,18 @@
 		<i class="icon-close"></i>
 		<form method="POST" class="edit-project-form">
 			<input id="edit-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
-			 required autofocus>
+			 required>
 			<button id="edit-project-form__button" type="submit">Переименовать проект</button>
+		</form>
+	</div>
+
+	<!--Модальное окно подтверждения удаления проекта-->
+	<div class="modal-window-delete">
+		<i class="icon-close"></i>
+		<form method="POST" class="delete-project-form">
+			<label id="modal-window-delete__question"></label>
+			<button id="delete-project-form__yes" type="submit">Да</button>
+			<button id="delete-project-form__no" type="submit">Нет</button>
 		</form>
 	</div>
 </body>

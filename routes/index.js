@@ -63,8 +63,8 @@ module.exports = function (app, redisClient) {
                 }
 
                 req.session.lastActiveTime = Date.now();
-                session.updateSession(token, req.session);
-
+                // session.updateSession(token, req.session);
+                console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
                 return next(err);
@@ -90,7 +90,7 @@ module.exports = function (app, redisClient) {
                 });
 
                 req.session.lastActiveTime = Date.now();
-                session.updateSession(token, req.session);
+
                 res.json({ token: token, user: user_data });
             })
             .catch(function (err) {

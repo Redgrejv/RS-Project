@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Registration</title>
 
-	<link rel="icon" href="../../build/img/logo.png"/>
-	
+	<link rel="icon" href="../../build/img/logo.png" />
+
 	<script src="../../build/js/container_sign_up.js"></script>
 	<!-- <script src="../src/lib/jquery.js"></script>
 	<script src="../src/js/sign_up/sign_up.js"></script> -->
-	
+
 	<link rel="stylesheet" href="../../build/css/sign_up.css">
 
 </head>
+
 <body>
 	<div class="reg-block">
 
 
-	<h1>Regisrtation</h1>
+		<h1>Regisrtation</h1>
 
-	<form method="POST" class="reg-form">
-		
-		<label class="reg-form__error"></label>
+		<form method="POST" class="reg-form">
 
-		<input type="text" id="reg-form__name" class="field" name="name" placeholder="Name" required>
-		<label for="reg-form__name" class="reg-form__reg-name"></label>
+			<label class="reg-form__error"></label>
 
-		<input type="text" id="reg-form__surname" class="field" name="surname" placeholder="Surname" required>
-		<label for="reg-form__surname" class="reg-form__reg-surname"></label>
+			<input type="text" id="reg-form__name" class="field" name="name" placeholder="Name" required autofocus>
+			<label for="reg-form__name" class="reg-form__reg-name"></label>
 
-		<input type="email" id="reg-form__email" class="field" name="email" placeholder="Email" required>
-		<label for="reg-form__email" class="reg-form__reg-email"></label>
+			<input type="text" id="reg-form__surname" class="field" name="surname" placeholder="Surname" required>
+			<label for="reg-form__surname" class="reg-form__reg-surname"></label>
 
-		<input type="password" id="reg-form__password" class="field" name="password" placeholder="Password" required>
-		<label for="reg-form__password" class="reg-form__reg-password"></label>
+			<input type="email" id="reg-form__email" class="field" name="email" placeholder="Email" required>
+			<label for="reg-form__email" class="reg-form__reg-email"></label>
 
-		<input type="password" id="reg-form__confirm-password" class="field" name="confirm=password" placeholder="Confirm password" required>
-		<label for="reg-form__confirm-password" class="reg-form__reg-confirm-pass"></label>
+			<input type="password" id="reg-form__password" class="field" name="password" placeholder="Password" required>
+			<label for="reg-form__password" class="reg-form__reg-password"></label>
 
-		<button id="reg-form__button-reg" class="dissable" type="submit">register</button>
+			<input type="password" id="reg-form__confirm-password" class="field" name="confirm=password" placeholder="Confirm password"
+			 required>
+			<label for="reg-form__confirm-password" class="reg-form__reg-confirm-pass"></label>
 
-	</form>
+			<button id="reg-form__button-reg" class="dissable" type="submit">register</button>
+
+		</form>
 
 	</div>
 </body>
+
 </html>

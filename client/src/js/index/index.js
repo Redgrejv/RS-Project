@@ -3,8 +3,11 @@ $(document).ready(function () {
 	var token = localStorage.getItem('token');
 	if (!token) {
 		setTimeout(function () {
+			$('#overlay').fadeIn(400, function () {
+				$('.modal-window-attention').css({ 'display': 'block', 'opacity': '1', 'top': '35%' });
+			});
 			window.location.href = '/client/views/login.html';
-		}, 500);
+		}, 10000);
 	}
 
 	var projects_height = $('.menu__projects').height();
@@ -15,6 +18,8 @@ $(document).ready(function () {
 	//show-hide-menu
 	$('.menu__header').on('click', '.hide-menu', function () {
 		$(".menu__header-text").css('display', 'none');
+		$('.menu__header').css('padding', '24px 0');
+		$('.menu__header').css('justify-content', 'center');
 		$('.menu__project-name').css('display', 'none');
 		$('.menu__project').css('justify-content', 'center');
 		$('.icon-options').css('display', 'none');
@@ -27,9 +32,14 @@ $(document).ready(function () {
 	})
 
 	$('.menu__header').on('click', '.show-menu', function () {
-		$('.menu').children().each(function () {
+		$('.menu__header').removeAttr('style');
+		$('.menu__header').children().each(function () {
 			$(this).removeAttr('style');
 		})
+		$('.menu__project').children().each(function () {
+			$(this).removeAttr('style');
+		})
+
 		$('.menu').removeClass('menu__show');
 		$('.menu').addClass('menu__hide');
 		$('.icon-backburger').removeClass('show-menu');
@@ -48,6 +58,8 @@ $(document).ready(function () {
 	$('#overlay').on('click', function () {
 		$('#overlay').fadeOut(400);
 		$('.modal-window-add').removeAttr('style');
+		$('.modal-window-edit').removeAttr('style');
+		$('.modal-window-delete').removeAttr('style');
 		$('#add-project-form__name').val('');
 
 	})

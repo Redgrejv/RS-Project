@@ -27,8 +27,6 @@ client.on('connect', function () {
     console.log('Connect to redis on port 6379');
 })
 
-
-
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,7 +40,8 @@ app.use(session({
 }));
 
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Methods, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control');
     res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'OPTIONS', 'HEAD', 'PUT']);
     next();

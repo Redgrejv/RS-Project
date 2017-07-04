@@ -14,7 +14,7 @@ var gulp = require('gulp'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
     reload = browserSync.reload;
-    
+
 
 
 
@@ -76,7 +76,7 @@ gulp.task('js_index:build', function () {
         .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-        console.log('Index.js build ready');
+    console.log('Index.js build ready');
 });
 
 gulp.task('js_login:build', function () {
@@ -86,7 +86,7 @@ gulp.task('js_login:build', function () {
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.js))
-        console.log('Login.js build ready');
+    console.log('Login.js build ready');
 });
 
 gulp.task('js_sign_up:build', function () {
@@ -96,27 +96,27 @@ gulp.task('js_sign_up:build', function () {
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.js))
-        console.log('Sign_up.js build ready');
+    console.log('Sign_up.js build ready');
 });
 
 //dev
 gulp.task('dev_js_index:build', function () {
     gulp.src([path.src.js_index])
-        .pipe(rigger()) 
+        .pipe(rigger())
         .pipe(gulp.dest(path.build.js))
-        console.log('Index.js build ready');
+    console.log('Index.js build ready');
 });
 gulp.task('dev_js_login:build', function () {
     gulp.src([path.src.js_login])
-        .pipe(rigger()) 
+        .pipe(rigger())
         .pipe(gulp.dest(path.build.js))
-        console.log('Login.js build ready');
+    console.log('Login.js build ready');
 });
 gulp.task('dev_js_sign_up:build', function () {
     gulp.src([path.src.js_sign_up])
-        .pipe(rigger()) 
+        .pipe(rigger())
         .pipe(gulp.dest(path.build.js))
-        console.log('Sign_up.js build ready');
+    console.log('Sign_up.js build ready');
 });
 //
 
@@ -128,7 +128,7 @@ gulp.task('style:build', function () {
         .pipe(cssmin()) //Сожмем
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.style)) //И в build
-        console.log('CSS build ready');
+    console.log('CSS build ready');
     // .pipe(reload({ stream: true }));
 });
 
@@ -141,14 +141,14 @@ gulp.task('image:build', function () {
             interlaced: true
         }))
         .pipe(gulp.dest(path.build.img)) //И бросим в build
-        console.log('Image build ready');
+    console.log('Image build ready');
 
 });
 
 gulp.task('font:build', function () {
     gulp.src(path.src.font)
         .pipe(gulp.dest(path.build.font))
-         console.log('Font build ready');
+    console.log('Font build ready');
 });
 
 gulp.task('build', [

@@ -2,122 +2,95 @@
 <html lang="ru">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Projects</title>
-    <link rel="icon" href="../build/img/logo.png" />
-    
-    <link rel="stylesheet" href="../../build/css/index.css">
-    <script src="../../build/js/container_index.js"></script>
-
+	<meta charset="UTF-8">
+	<title>Projects</title>
+	<link rel="icon" href="../../build/img/logo.png" />
+	<link rel="stylesheet" href="../../build/css/index.css">
+	<script src="../../build/js/container_index.js"></script>
+	<!--<link rel="stylesheet" href="../../build/css/rs-project.css">-->
+	<!--<script src="../src/lib/jquery.js"></script>
+	<script src="../src/js/index/index.js"></script>
+	<script src="../src/js/index/viewProjects.js"></script>
+	<script src="../src/js/index/addProject.js"></script>-->
+	<!-- <script src="client/src/js/index/users/checkAuthrorization.js"></script>
+	<script src="client/src/js/index/users/message.js"></script> -->
 </head>
 
 <body>
-    <header>
-        <div class="to_do">
-            <h3>Проекты</h3>
-        </div>
-        <div class="task_panel">
-            <h3 class="project_name">Панель тасков</h3>
-        </div>
-    </header>
+	<div class="menu menu__hide">
 
-    <div class="menu-projects">
-        <div class="projects">
-            <div class="show_add_project">
-                <img src="../../build/img/plus.png" alt="1">
-            </div>
-            <div class="new_project hide">
-                <div class="created_name">
-                    <span>Создать проект</span>
-                    <input type="text" id="project_name" placeholder="Название проекта">
-                </div>
-                <button class="create_project" id="create_project">Создать</button>
-            </div>
-        </div>
+		<header class="menu__header">
+			<h1 class="menu__header-text">To Do</h1>
+			<i class="icon-backburger hide-menu"></i>
+		</header>
 
-    </div>
+		<div class="menu__add-project">
+			<i class="icon-plus hide-menu"></i>
+		</div>
 
-    <div class="menu-tasks">
-        <div>
-            <span>Таски</span>
-        </div>
-    </div>
+		<div class="menu__projects hide">
 
-    <!--<body>
-    <div class="main_block">
-        <header>
-            <div class="to_do">
-                <h3>Проекты</h3>
-            </div>
-            <div class="task_panel">
-                <h3 class="project_name">Панель тасков</h3>
-            </div>
-        </header>
+			<!--<div class="menu__project" id="idishnik">
+	<i class="icon-project"></i>
+	<div class="menu__project-name">Project 1</div>
+	<i class="icon-options"></i>
+	<i class="icon-edit none"></i>
+	<i class="icon-delete none"></i>
+	<i class="icon-back none"></i> 
+	</div>
+	-->
 
-        <div class="wrapper">
-            <div class="projects">
-                <div class="show_add_project">
-                    <img src="../build/img/plus.png" alt="1">
-                </div>
+		</div>
+	</div>
 
-                <div class="new_project hide">
-                    <div class="created_name">
-                        <span>Создать проект</span>
-                        <input type="text" id="project_name" placeholder="Название проекта">
-                    </div>
-                    <button class="create_project" id="create_project">Создать</button>
-                </div>
-
-                <div class="added_project">
-                <div class="project_name">
-                    <p>QWERTY</p>
-                </div>
-                <div class="config">
-                    <ul class="hide">
-                        <li class='patch'>
-                            <img src="../build/img/tooltip-edit.png" alt="">
-                        </li>
-                        <li class='delete'>
-                            <img src="../build/img/delete-forever.png" alt="">
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            </div>
-
-            <div class="tasks">Таски</div>
-
-        </div>
-
-        
-    </div>
+	<div class="content">
+		<header class="content__header">
+			<div class="content__project-name"></div>
+			<i class="icon-exit"></i>
+		</header>
+		Taski
 
 
-    <div class="shadow">
-        <div class="windowProject">
-            <p>Укажите название проекта</p>
-            <input type="text" name='title' placeholder="Название проекта">
-            <button>Создать проект</button>
-        </div>
-    </div>-->
+	</div>
 
+	<!-- Подложка -->
+	<div id="overlay"></div>
 
-    <div class="block-menu gradient center-text-align disable-selection">
-        <img src="../../build/img/account-settings-variant.png" alt="+">
-        <ul class="block-menu-list hide" id="block-menu-list">
-            <li id="projectInsert">Добавить новый проект</li>
-            <li id="projectPatch">Изменить проект</li>
-            <li id="exit">Выход</li>
-        </ul>
-    </div>
-    <!-- <script src="../public/js/create_project.js"></script>
-    <script src="../public/js/show_add_project.js"></script>
-    <script src="../public/js/select_project.js"></script>
-    <script src="../public/js/checkAuthrorization.js"></script>
-    <script src="../public/js/listAdminProject.js"></script>
-    <script src="../public/js/getAllUserProject.js"></script>
-    <script src="../public/js/config_project.js"></script>
-    <script src="../public/js/index.js"></script> -->
+	<!--Модальное окно прдеупреждения о том что пользователь не авторизирован-->
+	<div class="modal-window-attention">
+		<i class="icon-close"></i>
+		<p>Вы не авторизированы. </p>
+	</div>
+
+	<!-- Модальное окно добавления проекта-->
+	<div class="modal-window-add">
+		<i class="icon-close"></i>
+		<form method="POST" class="add-project-form">
+			<input id="add-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
+			 required>
+			<button id="add-project-form__button" type="submit">Добавить проект</button>
+		</form>
+	</div>
+
+	<!--Модальное окно редактирования проекта-->
+	<div class="modal-window-edit">
+		<i class="icon-close"></i>
+		<form method="POST" class="edit-project-form">
+			<input id="edit-project-form__name" class="field" type="text" maxlength=15 name="project-name" placeholder="Project name"
+			 required>
+			<button id="edit-project-form__button" type="submit">Переименовать проект</button>
+		</form>
+	</div>
+
+	<!--Модальное окно подтверждения удаления проекта-->
+	<div class="modal-window-delete">
+		<i class="icon-close"></i>
+		<form method="POST" class="delete-project-form">
+			<label id="modal-window-delete__question"></label>
+			<button id="delete-project-form__yes" type="submit">Да</button>
+			<button id="delete-project-form__no" type="submit">Нет</button>
+		</form>
+	</div>
 </body>
 
 </html>

@@ -15,6 +15,10 @@ var Promise = require('bluebird');
 var User = require('../models/user').User;
 var mailer = require('../middleware/mailer');
 
+var session = require('../utils/redis-session');
+var Promise = require('bluebird');
+
+
 module.exports = function (app, redisClient) {
 
     // Завершение сессии пользователя
@@ -22,10 +26,12 @@ module.exports = function (app, redisClient) {
         req.session.destroy(function (err) {
             if (err) return next(err);
 
-            redisClient.set(req.params.id, 'nil');
-            res.send('Logout');
-        });
+            redisClient.del(req.tokenObj.token, function (err) {
+                if (err) return next(err);
 
+                res.json('Logout');
+            });
+        })
     })
 
     // Получение данных юзера по ID
@@ -57,12 +63,9 @@ module.exports = function (app, redisClient) {
                     global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
                 }
 
-                redisClient.set(user_data.id.toString(), token, function (err, res) {
-                    if (err) return next(err);
-                    updateUserLastActive(user_data.id);
-                    req.session.user = { userID: user_data.id }
-                });
-
+                req.session.lastActiveTime = Date.now();
+                // session.updateSession(token, req.session);
+                console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
                 return next(err);
@@ -85,8 +88,9 @@ module.exports = function (app, redisClient) {
                 redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
                     updateUserLastActive(user_data.id);
-                    req.session.user = { userID: user_data.id }
                 });
+
+                req.session.lastActiveTime = Date.now();
 
                 res.json({ token: token, user: user_data });
             })
@@ -112,6 +116,7 @@ module.exports = function (app, redisClient) {
 
     // Получение всех проектов конкретного пользователя
     app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
+
         var userID = req.params.id;
 
         project_service.getAllProjects(userID)
@@ -171,6 +176,7 @@ module.exports = function (app, redisClient) {
             })
 
     });
+<<<<<<< HEAD
 
     app.post('/api/projects/:projectID/users/', function (req, res, next) {
         var projectID = req.params.projectID;
@@ -194,6 +200,8 @@ module.exports = function (app, redisClient) {
 
     })
 
+=======
+>>>>>>> origin/34-
 };
 
 
@@ -241,16 +249,16 @@ function getTokenObject(request) {
     }
 }
 
-/**     
-* Обновление времени последней активномти пользователя
-* @param  {ObjectId} userID - ID пользователя
-*/
-function updateUserLastActive(userID) {
-    User.findByIdAndUpdate(
-        userID,
-        { lastActiveTime: Date.now() },
-        { new: true },
-        function (err, model) {
-            if (err) return err;
-        });
-}
+// /**     
+// * Обновление времени последней активномти пользователя
+// * @param  {ObjectId} userID - ID пользователя
+// */
+// function updateUserLastActive(userID) {
+//     User.findByIdAndUpdate(
+//         userID,
+//         { lastActiveTime: Date.now() },
+//         { new: true },
+//         function (err, model) {
+//             if (err) return err;
+//         });
+// }

@@ -2,10 +2,13 @@
     "name": "server",
     "version": "0.0.6",
     "scripts": {
-        "front": "start mongod --dbpath \"data/db\" && gulp build  && start gulp webserver &&start gulp watch",
-        "dev": "gulp build && gulp watch",
-        "prod": "gulp watch",
-        "server": "redis-server | mkdir -p ~/data/db/ | mkdir C:/data/db | mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | nodemon server.js"
+        "gulp": "node node_modules/gulp/bin/gulp.js",
+        "front": "npm run gulp build && npm run gulp webserver | npm run gulp watch",
+        "front_dev":"npm run gulp build_dev && npm run gulp webserver | npm run gulp watch_dev",
+        "app": "node server.js",
+        "server": "redis-server | mkdir -p ~/data/db/ | mkdir C:/data/db | mongod --dbpath ~/data/db | mongod --dbpath C:/data/db | npm run app",
+        "dev":"npm run server | npm run front_dev",
+        "prod":"npm ren server | npm run front"
     },
     "dependencies": {
         "async": "^2.3.0",

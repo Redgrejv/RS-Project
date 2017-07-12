@@ -3,7 +3,7 @@
     "token-secret": "secret_token_key",
     "key-session": "express_secret_key_session",
     "db": {
-        "uri": "mongodb://localhost/rs-project",
+        "uri": "mongodb://127.0.0.1:27017/rs-project",
         "options": {
             "server": {
                 "socketOptions": {

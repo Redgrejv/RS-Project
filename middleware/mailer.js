@@ -3,16 +3,15 @@ var Promise = require('bluebird');
 var User = require('../models/user').User;
 var HttpError = require('../error').HttpError;
 
-var transporter = nmail.createTransport({
-    host: 'smtp.example.com',
-    port: 465,
-    secure: true, // secure:true for port 465, secure:false for port 587
-    auth: {
-        user: 'redgrejv10@gmail.com',
-        pass: 'Redgrejv1995'
-    }
-});
+var email = require('emailjs');
 
+var emailServer = email.server.connect({
+    user: "da.redgrave@gmail.com",
+    password: "Zhurid1995",
+    port: 465,
+    host: "smtp.gmail.com",
+    ssl: true
+})
 
 module.exports = {
     sendAddUserToProject
@@ -20,19 +19,21 @@ module.exports = {
 
 function sendAddUserToProject(projectID, userEmail) {
     return new Promise(function (resolve, reject) {
-        User.find({ email: userEmail }, function (err, user) {
+        User.findOne({ email: userEmail }, function (err, user) {
             if (err) return reject(new HttpError(404, "Email не найден"));
 
             var mailOptions = {
-                from: 'redgrejv10@gmail.com',
+                from: 'da.redgrave@gmail.com',
                 to: user.email,
-                html: '<a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>Подтвердите ваше добавление в проект</a>'
+                subject: 'Подтверждение на добавление в проект',
+                text: 'Подтвердите свое добавление к проекту перейдя по ссылке.',
+                attachment: [{ data: '<a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>Подтвердите ваше добавление в проект</a>' }]
             }
 
-            transporter.sendMail(mailOptions, function (err, info) {
-                if (error) return reject(error);
+            emailServer.send(mailOptions, function (err, info) {
+                if (err) return reject(err);
 
-                resolve('Message %s sent: %s', info.messageId, info.response);
+                resolve('Message ' + info.messageId + ' sent: ' + info.message);
             })
         })
     })

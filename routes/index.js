@@ -87,7 +87,7 @@ module.exports = function (app, redisClient) {
 
                 redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
-                    updateUserLastActive(user_data.id);
+                    // updateUserLastActive(user_data.id);
                 });
 
                 req.session.lastActiveTime = Date.now();
@@ -176,17 +176,16 @@ module.exports = function (app, redisClient) {
             })
 
     });
-<<<<<<< HEAD
 
-    app.post('/api/projects/:projectID/users/', function (req, res, next) {
+    app.post('/api/projects/:projectID/users', function (req, res, next) {
         var projectID = req.params.projectID;
         var userEmail = req.body.email;
 
-        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
+        if (!valid.email(userEmail)) return next(new HttpError(400, 'Email не валидный'));
 
         mailer.sendAddUserToProject(projectID, userEmail)
             .then(function (status) {
-
+                res.json(status);
             })
             .catch(function (err) {
                 return next(err);
@@ -200,8 +199,6 @@ module.exports = function (app, redisClient) {
 
     })
 
-=======
->>>>>>> origin/34-
 };
 
 

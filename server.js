@@ -1,7 +1,3 @@
-/**
- * Created by redgr on 05.04.2017.
- */
-
 "use strict";
 
 var express = require('express');

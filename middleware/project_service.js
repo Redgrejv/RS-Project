@@ -6,7 +6,8 @@ module.exports = {
     insertProject,
     patchProject,
     deleteProject,
-    getAllProjects
+    getAllProjects,
+    addToProject
 }
 
 /**
@@ -66,9 +67,21 @@ function deleteProject(projectID) {
 function getAllProjects(userID) {
 
     return new Promise(function (resolve, reject) {
-        Project.find({ createdBy: userID }, function (err, projects) {
+        Project.find({ createdBy: userID, users: [userID] }, function (err, projects) {
             if (err) return reject(err);
             resolve(projects);
         })
     })
 };
+
+function addToProject(projectID, userID) {
+    return new Promise(function (resolve, reject) {
+        Project.update({ _id: projectID },
+            { users: [userID] },
+            function (err, project) {
+                if (err) return reject(err);
+
+                resolve(project);
+            })
+    })
+}

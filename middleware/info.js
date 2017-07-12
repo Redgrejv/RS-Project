@@ -4,7 +4,14 @@
 
 
 var pkginfo = require('pkginfo')(module);
+var Promise = require('bluebird');
 
-module.exports.getVersion = function(req, res, next) {
-    res.json(module.exports.version);
+module.exports = {
+    getVersion
+}
+
+function getVersion() {
+    return new Promise(function (resolve, reject) {
+        return resolve(module.exports.version);
+    })
 };

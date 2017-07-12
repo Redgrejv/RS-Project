@@ -37,6 +37,7 @@
         "mongoose": "latest",
         "mpromise": "^0.5.5",
         "nconf": "latest",
+        "nodemailer": "^4.0.1",
         "nodemon": "^1.11.0",
         "os-name": "^2.0.1",
         "passport": "^0.3.2",

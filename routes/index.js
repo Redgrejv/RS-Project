@@ -13,6 +13,7 @@ var project_service = require('../middleware/project_service');
 var valid = require('../utils/validation');
 var Promise = require('bluebird');
 var User = require('../models/user').User;
+var mailer = require('../middleware/mailer');
 
 module.exports = function (app, redisClient) {
 
@@ -143,9 +144,10 @@ module.exports = function (app, redisClient) {
     app.patch('/api/projects/:id', checkToken, function (req, res, next) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
+        var maxLength = 16;
 
-        if (!valid.names(newTitle, { minLength: 1, maxLength: 16 }))
-            return next(new HttpError(400, 'Поле заголовка не может быть пустым или превышать 16 символов'));
+        if (!valid.names(newTitle, { minLength: 1, maxLength: maxLength }))
+            return next(new HttpError(400, 'Поле заголовка не может быть пустым или превышать ' + maxLength + ' символов'));
 
 
         project_service.patchProject(projectID, newTitle)
@@ -169,6 +171,28 @@ module.exports = function (app, redisClient) {
             })
 
     });
+
+    app.post('/api/projects/:projectID/users/', function (req, res, next) {
+        var projectID = req.params.projectID;
+        var userEmail = req.body.email;
+
+        if (!valid.email(email)) return next(new HttpError(400, 'Email не валидный'));
+
+        mailer.sendAddUserToProject(projectID, userEmail)
+            .then(function (status) {
+
+            })
+            .catch(function (err) {
+                return next(err);
+            })
+    })
+
+    app.get('/api/projects/:projectID/users/:userID', function (req, res, next) {
+        var projectID = req.params.projectID;
+        var userID = req.params.userID;
+
+
+    })
 
 };
 

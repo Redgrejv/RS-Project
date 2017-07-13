@@ -67,7 +67,7 @@ function deleteProject(projectID) {
 function getAllProjects(userID) {
 
     return new Promise(function (resolve, reject) {
-        Project.find({ createdBy: userID, users: [userID] }, function (err, projects) {
+        Project.find({ $or: [{ createdBy: userID }, { users: userID }] }, function (err, projects) {
             if (err) return reject(err);
             resolve(projects);
         })

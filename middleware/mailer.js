@@ -1,4 +1,5 @@
-var nmail = require('nodemailer');
+var nodemailer = require('nodemailer');
+var smtpTransport = require("nodemailer-smtp-transport");
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 var HttpError = require('../error').HttpError;
@@ -7,12 +8,18 @@ var email = require('emailjs');
 
 var user = 'da.redgrave@gmail.com';
 
-var emailServer = email.server.connect({
-    user: user,
-    password: "Zhurid1995",
-    host: 'smtp.gmail.com',
-    ssl: true
-})
+var emailServer = nodemailer.createTransport(smtpTransport({
+    auth: {
+        user: user,   //email of sender
+        pass: 'Zhurid1995'    //password of sender
+    },
+    host: 'smtp.gmail.com',    //my email host
+    secureConnection: true,
+    port: 587,
+    tls: {
+        rejectUnauthorized: false
+    }
+}))
 
 module.exports = {
     sendAddUserToProject
@@ -31,7 +38,7 @@ function sendAddUserToProject(projectID, userEmail) {
                 attachment: [{ data: '<a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>Подтвердите ваше добавление в проект</a>' }]
             }
 
-            emailServer.send(mail, function (err, info) {
+            emailServer.sendMail(mail, function (err, info) {
                 if (err) return reject(err);
 
                 resolve('Message ' + info.messageId + ' sent: ' + info);

@@ -43,6 +43,7 @@
         "mpromise": "^0.5.5",
         "nconf": "latest",
         "nodemailer": "^4.0.1",
+        "nodemailer-smtp-pool": "^2.8.3",
         "nodemailer-smtp-transport": "^2.7.4",
         "nodemon": "^1.11.0",
         "os-name": "^2.0.1",

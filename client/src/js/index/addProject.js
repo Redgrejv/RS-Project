@@ -4,12 +4,11 @@ $(document).ready(function () {
 		event.preventDefault();
 		$('#overlay').fadeIn(400, function () {
 			$('.modal-window-add').css({ 'display': 'block', 'opacity': '1', 'top': '35%' });
+			$('#add-project-form__name').focus();
 		});
-		$('#add-project-form__name').val('');
 	});
 
 	$('#add-project-form__button').on('click', function (event) {
-		// $('#add-project-form__name').focus();
 		event.preventDefault();
 		$.ajax({
 			method: "POST",

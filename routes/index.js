@@ -58,6 +58,7 @@ module.exports = function (app, redisClient) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user_data.id);
 
+<<<<<<< HEAD
                 req.session.user = { lastActiveTime: Date.now() }
 
                 // req.jwtSession.create(user_data.id, function (err, token) {
@@ -65,6 +66,14 @@ module.exports = function (app, redisClient) {
                 //     console.log(req.jwtSession);
                 //     res.json({ token: token, user: user_data });
                 // })
+=======
+                if (global.socket) {
+                    global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
+                }
+
+                req.session.lastActiveTime = Date.now();
+                // session.updateSession(token, req.session);
+>>>>>>> ee10a4934babaa4ee37201401ca2687b2afb4a84
                 console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {

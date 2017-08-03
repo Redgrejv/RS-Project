@@ -39,10 +39,11 @@ header{
 
     &__header{
 	    background: #383c47;
+		display: flex;
+		justify-content: space-between;
     }
 
     &__header-text{
-	    display: inline-block;
 	    margin:0;
 	    font: bold 18px Gotham;
 	    color: white;
@@ -59,7 +60,6 @@ header{
 
     .icon-backburger{
 	    font-size: 20px;
-	    float: right;
     }   
 	.show-menu{
 		transform: scaleX(-1); 
@@ -96,13 +96,8 @@ header{
 		::-webkit-scrollbar-thumb{
     		border-width:1px 1px 1px 2px; 
     		border-color: none; 
-   			background-color: #fff;
+   			background-color: #4C5866;
 	
-		}
-		::-webkit-scrollbar-thumb:hover{
-    		border-width: 1px 1px 1px 2px;
-    		border-color: none;
-   			background-color: #777;
 		}
 		::-webkit-scrollbar-track{
    			border-width:0;
@@ -261,7 +256,7 @@ li:hover{
 }
 
 /*Модальное окно*/
-.modal-window-add, .modal-window-edit{  
+.modal-window-add, .modal-window-edit, .modal-window-delete, .modal-window-attention{  
 	position: fixed;
 	align-items: center;
     justify-content: center; 
@@ -279,6 +274,9 @@ li:hover{
  	padding: 15px;
  	border-radius: 3px;
  	box-shadow: 0px 9px 29px 3px rgba(0, 0, 0, 0.31);
+	 p{
+		 font: 17px Gotham;
+	 }
 }
 
 .icon-close{
@@ -308,7 +306,7 @@ li:hover{
 	background-color: gray;
 }
 
-.add-project-form, .edit-project-form{
+.add-project-form, .edit-project-form, .delete-project-form{
 	align-items: center;
 	padding: 10px;
 
@@ -336,8 +334,12 @@ li:hover{
 	    font: 18px Gotham;
 	    background-color: #383c47;
     }
+	#delete-project-form__yes{
+		float: left;
+		width: 49%;
+	}
+	#delete-project-form__no{
+		float: right;
+		width: 49%;
+	}
 }
-  
-.modal-window-edit{
-	display: none; 
-} 

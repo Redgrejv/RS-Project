@@ -2,14 +2,14 @@ var nodemailer = require('nodemailer');
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 var HttpError = require('../error').HttpError;
-
 var smtpPool = require('nodemailer-smtp-pool');
-var my_email = 'da.redgrave@gmail.com';
+
+var config = require('../config');
 
 var emailServer = nodemailer.createTransport(smtpPool({
     auth: {
-        user: 'da.redgrave@gmail.com',   //email of sender
-        pass: 'Zhurid1995'    //password of sender
+        user: config.get('email:login'),   //email of sender
+        pass: config.get('email:pass')    //password of sender
     },
     host: 'smtp.gmail.com',    //my email host
     ssl: true,
@@ -21,13 +21,18 @@ module.exports = {
     sendAddUserToProject
 }
 
+/**
+ * Добавление нового пользователя к проекту
+ * @param {ObjectID} projectID - ID проекта 
+ * @param {String} userEmail - Почтовый адрес получателя письма
+ */
 function sendAddUserToProject(projectID, userEmail) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: userEmail }, function (err, user) {
             if (err) return reject(new HttpError(404, "Email не найден"));
 
             var mail = {
-                from: 'Администрация сервиса RS-Project ' + my_email,
+                from: 'Администрация сервиса RS-Project ' + config.get('email:login'),
                 to: user.email,
                 subject: 'Подтверждение на добавление в проект',
                 html: '<h3>Подтвердите свое добавление к проекту перейдя по <a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>ссылке</a>.</h3>'

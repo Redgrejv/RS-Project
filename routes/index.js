@@ -14,6 +14,10 @@ var valid = require('../utils/validation');
 var Promise = require('bluebird');
 var User = require('../models/user').User;
 
+var session = require('../libs/redis-session');
+var Promise = require('bluebird');
+
+
 module.exports = function (app, redisClient) {
 
     // Завершение сессии пользователя
@@ -21,10 +25,12 @@ module.exports = function (app, redisClient) {
         req.session.destroy(function (err) {
             if (err) return next(err);
 
-            redisClient.set(req.params.id, 'nil');
-            res.send('Logout');
-        });
+            redisClient.del(req.tokenObj.token, function (err) {
+                if (err) return next(err);
 
+                res.json('Logout');
+            });
+        })
     })
 
     // Получение данных юзера по ID
@@ -52,16 +58,14 @@ module.exports = function (app, redisClient) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user_data.id);
 
-                if (global.socket) {
-                    global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
-                }
+                req.session.user = { lastActiveTime: Date.now() }
 
-                redisClient.set(user_data.id.toString(), token, function (err, res) {
-                    if (err) return next(err);
-                    updateUserLastActive(user_data.id);
-                    req.session.user = { userID: user_data.id }
-                });
-
+                // req.jwtSession.create(user_data.id, function (err, token) {
+                //     if (err) return next(err);
+                //     console.log(req.jwtSession);
+                //     res.json({ token: token, user: user_data });
+                // })
+                console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
                 return next(err);
@@ -84,9 +88,10 @@ module.exports = function (app, redisClient) {
                 redisClient.set(user_data.id.toString(), token, function (err, res) {
                     if (err) return next(err);
                     updateUserLastActive(user_data.id);
-                    req.session.user = { userID: user_data.id }
                 });
 
+                // req.session.lastActiveTime = Date.now();
+                // session.updateSession(token, req.session);
                 res.json({ token: token, user: user_data });
             })
             .catch(function (err) {
@@ -111,6 +116,7 @@ module.exports = function (app, redisClient) {
 
     // Получение всех проектов конкретного пользователя
     app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
+
         var userID = req.params.id;
 
         project_service.getAllProjects(userID)
@@ -169,7 +175,6 @@ module.exports = function (app, redisClient) {
             })
 
     });
-
 };
 
 
@@ -198,7 +203,7 @@ function choiseUserData(user) {
  */
 function generationToken(userID) {
     var payload = { id: userID };
-    var token = jwt.sign(payload, config.get('token-secret'));
+    var token = jwt.sign(payload, config.get('session:key'));
 
     return token;
 }
@@ -217,16 +222,16 @@ function getTokenObject(request) {
     }
 }
 
-/**     
-* Обновление времени последней активномти пользователя
-* @param  {ObjectId} userID - ID пользователя
-*/
-function updateUserLastActive(userID) {
-    User.findByIdAndUpdate(
-        userID,
-        { lastActiveTime: Date.now() },
-        { new: true },
-        function (err, model) {
-            if (err) return err;
-        });
-}
+// /**     
+// * Обновление времени последней активномти пользователя
+// * @param  {ObjectId} userID - ID пользователя
+// */
+// function updateUserLastActive(userID) {
+//     User.findByIdAndUpdate(
+//         userID,
+//         { lastActiveTime: Date.now() },
+//         { new: true },
+//         function (err, model) {
+//             if (err) return err;
+//         });
+// }

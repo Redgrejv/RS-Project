@@ -25,6 +25,7 @@ body{
 .login-block{
 	align-items: center;
 	width: 25%;
+	min-width: 250px;
 	background: #f7f7f7;
 	padding: 5% 3%;
 
@@ -94,25 +95,20 @@ body{
 
 }
 
-/*@media screen and (max-width: 1440px) {
-	.login-form__button-login{
-		font: bold 12px Play-Regular;
+@media screen and (max-width: 1440px) {
+	.login-block{
+		width: 28%;
 	}
-
 }
 
 @media screen and (max-width: 1024px) {
 	.login-block {
 		width: 50%;
+		&__login-form input{
+			font-size: 17px;
+		}
+		h1{
+			font-size:40px;
+		}
 	}
-	.login-form__button-login{
-		font: bold 15px Play-Regular;
-		height: 55px; 
-	}
-	.login-block__login-form input{
-		font: 20px Play-Regular;
-	}
-	.login-block h1{
-		font: normal 40px Gotham;
-	}
-}*/
+}

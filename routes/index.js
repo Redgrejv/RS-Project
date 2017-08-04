@@ -177,6 +177,7 @@ module.exports = function (app, redisClient) {
 
     });
 
+    // Отправка письма на добавление к проекту
     app.post('/api/projects/:projectID/users', function (req, res, next) {
         var projectID = req.params.projectID;
         var userEmail = req.body.email;
@@ -192,10 +193,18 @@ module.exports = function (app, redisClient) {
             })
     })
 
+    // Добавление к проекту пользователя
     app.get('/api/projects/:projectID/users/:userID', function (req, res, next) {
         var projectID = req.params.projectID;
         var userID = req.params.userID;
 
+        project_service.addToProject(projectID, userID)
+            .then(function (data) {
+                res.json(data);
+            })
+            .catch(function (err) {
+                return next(err);
+            })
 
     })
 

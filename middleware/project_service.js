@@ -74,6 +74,11 @@ function getAllProjects(userID) {
     })
 };
 
+/**
+ * 
+ * @param {ObjectID} projectID - ID проекта
+ * @param {ObjectID} userID - ID - пользователя
+ */
 function addToProject(projectID, userID) {
     return new Promise(function (resolve, reject) {
         Project.update({ _id: projectID },

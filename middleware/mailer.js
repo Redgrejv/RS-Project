@@ -24,7 +24,7 @@ module.exports = {
 /**
  * Добавление нового пользователя к проекту
  * @param {ObjectID} projectID - ID проекта 
- * @param {String} userEmail - Почтовый адрес получателя письма
+ * @param {String} userEmail - Email получателя письма
  */
 function sendAddUserToProject(projectID, userEmail) {
     return new Promise(function (resolve, reject) {
@@ -35,13 +35,13 @@ function sendAddUserToProject(projectID, userEmail) {
                 from: 'Администрация сервиса RS-Project ' + config.get('email:login'),
                 to: user.email,
                 subject: 'Подтверждение на добавление в проект',
-                html: '<h3>Подтвердите свое добавление к проекту перейдя по <a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>ссылке</a>.</h3>'
+                html: '<h3>Подтвердите свое добавление к проекту перейдя по текущей <a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>ссылке</a>.</h3>'
             }
 
             emailServer.sendMail(mail, function (err, info) {
                 if (err) return reject(err);
 
-                resolve('Message ' + info.messageId + ' sent: ' + info);
+                resolve('Сообщение успешно отправлено.');
             })
         })
     })

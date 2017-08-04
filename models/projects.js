@@ -22,7 +22,6 @@ var projectSchema = new Schema({
     },
     users: [{
         type: ObjectId,
-        require: true,
         ref: 'User'
     }],
     dateCreated: {

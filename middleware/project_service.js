@@ -1,6 +1,7 @@
 var HttpError = require('../error').HttpError;
 var Project = require('../models/projects').Project;
 var async = require('async');
+var ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
     insertProject,
@@ -54,7 +55,7 @@ function patchProject(projectID, newTitle) {
 function deleteProject(projectID) {
     return new Promise(function (resolve, reject) {
         Project.remove({ _id: projectID }, function (err, project) {
-            if (err) reject(err);
+            if (err) return reject(err);
             resolve(project);
         })
     })
@@ -81,10 +82,12 @@ function getAllProjects(userID) {
  */
 function addToProject(projectID, userID) {
     return new Promise(function (resolve, reject) {
-        Project.update({ _id: projectID },
-            { users: [userID] },
+        var uid = new ObjectID(userID);
+        Project.findByIdAndUpdate(projectID,
+            { $push: { 'users': { _id: uid } } },
             function (err, project) {
                 if (err) return reject(err);
+
 
                 resolve(project);
             })

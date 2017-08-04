@@ -33,7 +33,7 @@ function sendAddUserToProject(projectID, userEmail) {
 
             var mail = {
                 from: 'Администрация сервиса RS-Project ' + config.get('email:login'),
-                to: user.email,
+                to: userEmail,
                 subject: 'Подтверждение на добавление в проект',
                 html: '<h3>Подтвердите свое добавление к проекту перейдя по текущей <a href=\'http://localhost:3000/api/projects/' + projectID + '/users/' + user._id + '\'>ссылке</a>.</h3>'
             }

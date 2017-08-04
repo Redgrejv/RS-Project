@@ -200,7 +200,7 @@ module.exports = function (app, redisClient) {
 
         project_service.addToProject(projectID, userID)
             .then(function (data) {
-                res.json(data);
+                res.redirect('http://localhost:3333');
             })
             .catch(function (err) {
                 return next(err);

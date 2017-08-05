@@ -1,13 +1,12 @@
 {
     "port": 3000,
     "token-secret": "secret_token_key",
-    "key-session": "express_secret_key_session",
     "db": {
         "uri": "mongodb://127.0.0.1:27017/rs-project",
         "options": {
             "server": {
                 "socketOptions": {
-                    "keepAlive": 1
+                    "keepAlive": 5
                 }
             }
         }
@@ -15,5 +14,20 @@
     "email": {
         "login": "da.redgrave@gmail.com",
         "pass": "Zhurid1995"
+    },
+    "session": {
+        "secret": "express_secret_key_session",
+        "key": "sid",
+        "cookie": {
+            "path": "/",
+            "httpOnly": true,
+            "maxAge": null
+        }
+    },
+    "redis": {
+        "keyspace": "sess:",
+        "port": 6379,
+        "host": "localhost",
+        "appName": "RS-Project"
     }
 }

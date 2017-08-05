@@ -15,7 +15,7 @@ var Promise = require('bluebird');
 var User = require('../models/user').User;
 var mailer = require('../middleware/mailer');
 
-var session = require('../utils/redis-session');
+var session = require('../libs/redis-session');
 var Promise = require('bluebird');
 
 
@@ -59,12 +59,13 @@ module.exports = function (app, redisClient) {
                 var user_data = choiseUserData(user);
                 var token = generationToken(user_data.id);
 
-                if (global.socket) {
-                    global.socket.broadcast.emit('new user', { message: 'Новый пользователь зарегистрирован в сети!' });
-                }
+                req.session.user = { lastActiveTime: Date.now() }
 
-                req.session.lastActiveTime = Date.now();
-                // session.updateSession(token, req.session);
+                // req.jwtSession.create(user_data.id, function (err, token) {
+                //     if (err) return next(err);
+                //     console.log(req.jwtSession);
+                //     res.json({ token: token, user: user_data });
+                // })
                 console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
@@ -90,8 +91,8 @@ module.exports = function (app, redisClient) {
                     // updateUserLastActive(user_data.id);
                 });
 
-                req.session.lastActiveTime = Date.now();
-
+                // req.session.lastActiveTime = Date.now();
+                // session.updateSession(token, req.session);
                 res.json({ token: token, user: user_data });
             })
             .catch(function (err) {
@@ -236,7 +237,7 @@ function choiseUserData(user) {
  */
 function generationToken(userID) {
     var payload = { id: userID };
-    var token = jwt.sign(payload, config.get('token-secret'));
+    var token = jwt.sign(payload, config.get('session:key'));
 
     return token;
 }

@@ -88,7 +88,6 @@ function addToProject(projectID, userID) {
             function (err, project) {
                 if (err) return reject(err);
 
-
                 resolve(project);
             })
     })

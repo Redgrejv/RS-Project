@@ -76,6 +76,5 @@ server.listen(config.get('port'), function (req, res) {
 require('./libs/socket')(server);
 
 app.post('/temp', function (req, res, next) {
-
     res.json(req.body);
 })

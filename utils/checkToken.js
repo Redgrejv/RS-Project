@@ -9,7 +9,7 @@ var config = require('../config');
 
 module.exports = function (req, res, next) {
     var token = req.headers['authorization'];
-    console.log(req.session);
+
     if (!token) return next(new HttpError(400, 'Нет токена!'));
 
     try {

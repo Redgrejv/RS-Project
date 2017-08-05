@@ -119,7 +119,7 @@ module.exports = function (app, redisClient) {
     app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
 
         var userID = req.params.id;
-
+        console.log(req.session);
         project_service.getAllProjects(userID)
             .then(function (projects) {
                 res.json(projects);
@@ -133,7 +133,7 @@ module.exports = function (app, redisClient) {
     app.post('/api/projects', checkToken, function (req, res, next) {
         var title = req.body.title;
         var maxLength = 16;
-
+        console.log(req.sessionID);
         if (!valid.names(title, { minLength: 1, maxLength: maxLength }))
             return next(new HttpError(400, 'Поле заголовка не может быть пустым или первышать ' + maxLength + ' символов.'));
 
@@ -151,7 +151,7 @@ module.exports = function (app, redisClient) {
         var projectID = req.params.id;
         var newTitle = req.body.newTitle;
         var maxLength = 16;
-
+        console.log(req.sessionID);
         if (!valid.names(newTitle, { minLength: 1, maxLength: maxLength }))
             return next(new HttpError(400, 'Поле заголовка не может быть пустым или превышать ' + maxLength + ' символов'));
 

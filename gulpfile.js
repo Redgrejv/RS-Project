@@ -13,8 +13,8 @@ var gulp = require('gulp'),
     rimraf = require('rimraf'),
     webserver = require("gulp-webserver"),
     browserSync = require('browser-sync'),
-    reload = browserSync.reload;
-
+    reload = browserSync.reload,
+    config = require('./config');
 
 
 
@@ -234,8 +234,8 @@ gulp.task('webserver', function () {
                 ]
                 // index: '/views/index.html',
             },
-            host: 'localhost',
-            port: 3333,
+            host: config.get('site:host'),
+            port: config.get('site:port'),
             path: './',
             open: './client/views/index.html'
 

@@ -28,7 +28,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.bodyParser());
 app.use(express.cookieParser('/'));
 
 app.use(express.session({
@@ -36,9 +35,11 @@ app.use(express.session({
     secret: config.get('session:key'),
     // keyspace: config.get('session:keyspace'),
     ttl: 1800,
+    // cookie: config.get('session:cookie')
     // requestKey: "jwtSession",
     // requestArg: "jwtToken"
 }));
+app.use(express.bodyParser());
 
 app.use(require('./error/sendHttpError'));
 app.use(app.router);
@@ -66,33 +67,22 @@ app.use(function (err, req, res, next) {
 
 var server = http.createServer(app);
 
-server.listen(config.get('port'), function (req, res) {
-    console.log('Express server listening on port ' + config.get('port'));
+server.listen(config.get('server:port'), config.get('server:host'), function (req, res) {
+    console.log('Express server listening on host ' + config.get('server:host') + ' port ' + config.get('server:port'));
 });
 
 require('./libs/socket')(server);
 
-app.post('/temp', function (req, res, next) {
+
+
+
+
+
+app.get('/temp', function (req, res, next) {
     res.json(req.body);
 })
 
 
-// var express = require('express');
-// var cookieParser = require('cookie-parser');
-// var session = require('express-session');
-
-// var app = express();
-
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, Access-Control-Allow-Methods, Cache-Control', 'Set-Cookie');
-//     res.setHeader('Access-Control-Allow-Methods', ['GET', 'PATCH', 'POST', 'DELETE', 'PUT']);
-//     next();
-// });
-
-// app.use(cookieParser());
-// app.use(session({ secret: "Shh, its a secret!" }));
 
 app.get('/', function (req, res) {
     if (req.session.page_views) {
@@ -102,5 +92,5 @@ app.get('/', function (req, res) {
         req.session.page_views = 1;
         res.send("Welcome to this page for the first time!");
     }
+    console.log(req.sessionID + '\n' + req.session.cookie);
 });
-// app.listen(3000);

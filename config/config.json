@@ -1,5 +1,12 @@
 {
-    "port": 3000,
+    "site": {
+        "port": 3333,
+        "host": "localhost"
+    },
+    "server": {
+        "port": 3000,
+        "host": "localhost"
+    },
     "token-secret": "secret_token_key",
     "db": {
         "uri": "mongodb://127.0.0.1:27017/rs-project",
@@ -21,7 +28,7 @@
         "cookie": {
             "path": "/",
             "httpOnly": true,
-            "maxAge": null
+            "maxAge": 1800
         }
     },
     "redis": {

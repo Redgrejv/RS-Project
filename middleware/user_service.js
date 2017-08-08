@@ -40,7 +40,7 @@ function login(email, password) {
  */
 function signup(email, password, first_name, last_name) {
     return new Promise(function (resolve, reject) {
-        User.findOne({ email: email }, function (err, user) {
+        User.findOne({ email: email }, { salt: false, hashedPassword: false }, function (err, user) {
             if (user) return reject(new HttpError(400, 'Такой email уже используется'));
 
             var new_user = new User({
@@ -63,9 +63,9 @@ function signup(email, password, first_name, last_name) {
  * @param {ObjectId} userID - id пользователя 
  */
 function getUserById(userID) {
-    return new Promise(function (reject, resolve) {
-        User.findById(userID, function (err, user) {
-            if (err) return reject(new HttpError(404, 'Пользователь не найден' || err));
+    return new Promise(function (resolve, reject) {
+        User.findById(userID, { salt: false, hashedPassword: false }, function (err, user) {
+            if (err) return reject(new HttpError(404, 'Пользователь не найден') || err);
 
             resolve(user);
         })

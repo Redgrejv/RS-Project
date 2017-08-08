@@ -234,8 +234,8 @@ gulp.task('webserver', function () {
                 ]
                 // index: '/views/index.html',
             },
-            host: config.get('site:host'),
-            port: config.get('site:port'),
+            host: 'localhost',
+            port: 3333,
             path: './',
             open: './client/views/index.html'
 

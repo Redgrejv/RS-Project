@@ -20,6 +20,7 @@ var userSchema = new Schema({
     hashedPassword: {
         type: String,
         required: true
+
     },
     salt: {
         type: String,
@@ -45,7 +46,7 @@ var userSchema = new Schema({
         default: Date.now(),
         require: true
     }
-});
+}, { versionKey: false });
 
 userSchema.methods.encryptPassword = function (password) {
     return crypto.createHmac('sha1', this.salt).update(password).digest('hex');

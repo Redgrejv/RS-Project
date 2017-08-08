@@ -8,7 +8,8 @@ module.exports = {
     patchProject,
     deleteProject,
     getAllProjects,
-    addToProject
+    addToProject,
+    getAllUsersIDInProject
 }
 
 /**
@@ -91,4 +92,23 @@ function addToProject(projectID, userID) {
                 resolve(project);
             })
     })
+}
+
+
+function getAllUsersIDInProject(projectID) {
+    return new Promise(function (resolve, reject) {
+        Project.findById(projectID, function (err, project) {
+            if (err) return reject(err);
+
+            if (!project) return reject(new HttpError(404, 'Проект не найден'));
+
+            var arrID = [project.createdBy];
+            project.users.map(function (item) {
+                arrID.push(item);
+            })
+
+            resolve(arrID);
+        })
+    })
+
 }

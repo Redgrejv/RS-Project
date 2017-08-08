@@ -61,12 +61,6 @@ module.exports = function (app, redisClient) {
 
                 req.session.user = { lastActiveTime: Date.now() }
 
-                // req.jwtSession.create(user_data.id, function (err, token) {
-                //     if (err) return next(err);
-                //     console.log(req.jwtSession);
-                //     res.json({ token: token, user: user_data });
-                // })
-                console.log(req.session);
                 res.json({ token: token, user: user_data });
             }).catch(function (err) {
                 return next(err);
@@ -83,17 +77,14 @@ module.exports = function (app, redisClient) {
 
         user_service.signup(data.email, data.password, data.first_name, data.last_name)
             .then(function (user) {
-                var user_data = choiseUserData(user);
+                var user = choiseUserData(user);
                 var token = generationToken(user._id);
 
-                redisClient.set(user_data.id.toString(), token, function (err, res) {
+                redisClient.set(user.id.toString(), token, function (err, res) {
                     if (err) return next(err);
-                    // updateUserLastActive(user_data.id);
                 });
 
-                // req.session.lastActiveTime = Date.now();
-                // session.updateSession(token, req.session);
-                res.json({ token: token, user: user_data });
+                res.json({ token: token, user: user });
             })
             .catch(function (err) {
                 return next(err);
@@ -119,7 +110,7 @@ module.exports = function (app, redisClient) {
     app.get('/api/projects/:id/user', checkToken, function (req, res, next) {
 
         var userID = req.params.id;
-        console.log(req.session);
+
         project_service.getAllProjects(userID)
             .then(function (projects) {
                 res.json(projects);
@@ -202,6 +193,23 @@ module.exports = function (app, redisClient) {
         project_service.addToProject(projectID, userID)
             .then(function (data) {
                 res.redirect('http://localhost:3333');
+            })
+            .catch(function (err) {
+                return next(err);
+            })
+
+    });
+
+    app.get('/api/projects/:projectID', function (req, res, next) {
+        project_service.getAllUsersIDInProject(req.params.projectID)
+            .then(function (arrID) {
+                var arrUsers = arrID.map(function (item) {
+                    return user_service.getUserById(item)
+                });
+                return Promise.all(arrUsers);
+            })
+            .then(function (data) {
+                res.json(data);
             })
             .catch(function (err) {
                 return next(err);

@@ -9,12 +9,8 @@
             "request": "launch",
             "name": "nodemon",
             "runtimeExecutable": "nodemon",
-            "runtimeArgs": [
-                "--debug=5858"
-            ],
             "program": "${workspaceRoot}/server.js",
             "restart": true,
-            "port": 5858,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
         },
